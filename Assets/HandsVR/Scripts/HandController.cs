@@ -4,40 +4,35 @@ using System.Collections.Generic;
 
 public class HandController : MonoBehaviour {
 
-    #region Inspector Variables
-    [SerializeField] private GameObject ViveControllerRoot;       //(VRInput)										
+    #region Inspector Variables								
     [SerializeField] private Animator animHand;
+    [SerializeField] private Transform controllerGrabPoint; //Used to measure real distance from the object
+    public Transform modelGrabPoint;
     #endregion
 
     private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }	//(VRInput)
 	private SteamVR_TrackedObject trackedObj;																			//(VRInput)
 
-	public HandController otherHand;
-	public Transform controllerGrabPoint; //Used to measure real distance from the object
-    public Transform modelGrabPoint;
+	private List<Pickup> nearby = new List<Pickup>();
 
-	List<Pickup> nearby = new List<Pickup>();
-
-    private Pickup closestPickUp;
-    
+    private Pickup closestPickUp = null;   
 	private Pickup heldPickUp = null;	
    
-	public bool isLeftHand;
+	public bool isLeftHand { get; private set; }
 
     private float grabToHoldDistance = float.MaxValue;
 
     private AnimatorOverrideController baseRunTimeAnim;
 
 	void Start() {
-        if(ViveControllerRoot != null){
-			trackedObj = ViveControllerRoot.GetComponent<SteamVR_TrackedObject>();		//(VRInput)
-        }
+        trackedObj = GetComponentInParent<SteamVR_TrackedObject>();
+        isLeftHand = trackedObj.transform.name.ToLower().Contains("left");
 
         baseRunTimeAnim = new AnimatorOverrideController(animHand.runtimeAnimatorController);
 	}
 
     void Update(){
-        GetClosest();
+        FindClosestPickup();
         ProcessVRInput();
     }
 
@@ -70,7 +65,7 @@ public class HandController : MonoBehaviour {
         animHand.SetFloat("closeAmount", VRInput.Vive.GetTriggerPressAmount(controller));
 
         if (triggerButtonDown && CanGrab() && heldPickUp == null)
-            PickItUp();
+            PickUp();
 
 		if (gripButtonDown && heldPickUp != null){			//button used to drop objects
             DropIt();
@@ -78,7 +73,7 @@ public class HandController : MonoBehaviour {
     }
 
 	//This routine picks up the object and parents it to the handmesh grabpoint
-    void PickItUp() {
+    void PickUp() {
         if (closestPickUp.isBeingHeld)
             return;
 
@@ -102,13 +97,7 @@ public class HandController : MonoBehaviour {
         heldPickUp = null;
     }
 
-	float NormalizeDistance(float dist){    //set  0 - 1 scale to control default to prep animation
-                                            //Also contrain squeeze value here!
-		dist =(Mathf.Clamp((.0009f / (Mathf.Pow(dist / 2f, 2.4f))) + .15f, 0f, 1f)) ;
-		return dist;
-	}
-
-    void GetClosest(){		//used to find the nearest grab point
+    void FindClosestPickup(){		//used to find the nearest grab point
 
         if (nearby.Count == 0)
         {
