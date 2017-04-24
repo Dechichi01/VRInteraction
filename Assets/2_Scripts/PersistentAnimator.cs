@@ -16,11 +16,15 @@ public class PersistentAnimator {
         }
     }
 
+    private Dictionary<AnimatorOverrideController, AnimationClip[]> animOverrideBKs;
+
     public PersistentAnimator()
     {
         if (_instance == null)
+        {
             _instance = this;
-
+            animOverrideBKs = new Dictionary<AnimatorOverrideController, AnimationClip[]>();
+        }
     }
 
 	public void ChangeAnimRunTime_SmoothTransition(Animator anim, AnimatorOverrideController animOverride, MonoBehaviour mono)
@@ -32,37 +36,61 @@ public class PersistentAnimator {
         }
 
         AnimatorClipInfo[] clipInfos = anim.GetCurrentAnimatorClipInfo(0);
-        AnimationClip[] clipsBK = new AnimationClip[clipInfos.Length];
+
+        if (!animOverrideBKs.ContainsKey(animOverride))
+        {
+            AnimationClip[] clipsBK = new AnimationClip[clipInfos.Length];
+            for (int i = 0; i < clipInfos.Length; i++)
+            {
+                AnimationClip clip = clipInfos[i].clip;
+                clipsBK[i] = animOverride[clip.name];
+            }
+
+            animOverrideBKs.Add(animOverride, clipsBK);
+        }
 
         for (int i = 0; i < clipInfos.Length; i++)
         {
             AnimationClip clip = clipInfos[i].clip;
-            clipsBK[i] = animOverride[clip.name];
             animOverride[clip.name] = clip;
         }
 
         anim.runtimeAnimatorController = animOverride;
 
-        mono.StartCoroutine(ChangeAnimAfterTransition(clipsBK, animOverride, anim, anim.GetCurrentAnimatorStateInfo(0).fullPathHash));
+        mono.StartCoroutine(ChangeAnimAfterTransition(animOverride, anim, anim.GetCurrentAnimatorStateInfo(0).fullPathHash));
     }
 
-    private IEnumerator ChangeAnimAfterTransition(AnimationClip[] clipsBK, AnimatorOverrideController animOverride, Animator anim,
+    private IEnumerator ChangeAnimAfterTransition(AnimatorOverrideController animOverride, Animator anim,
         int initialStateNameHash)
     {
         yield return new WaitForSecondsRealtime(0.05f);
 
         while (anim.IsInTransition(0)) yield return null;
 
-        for (int i = 0; i < clipsBK.Length; i++)
+        if (animOverrideBKs.ContainsKey(animOverride))
         {
-            if (clipsBK[i] != null)
-                animOverride[clipsBK[i].name] = clipsBK[i];
+            AnimationClip[] clipsBK = animOverrideBKs[animOverride];
+            for (int i = 0; i < clipsBK.Length; i++)
+            {
+                if (clipsBK[i] != null)
+                    animOverride[clipsBK[i].name] = clipsBK[i];
+            }
         }
 
-        if (initialStateNameHash == anim.GetCurrentAnimatorStateInfo(0).fullPathHash)
+        Debug.Log(anim.runtimeAnimatorController.name);
+
+        if (initialStateNameHash == anim.GetCurrentAnimatorStateInfo(0).fullPathHash)//havent't change state, make sure to reload state to change animation
             anim.CrossFade(initialStateNameHash, 5f, 0, 0);
     }
+
 }
+
+public class AnimatorClipsBK
+{
+    AnimatorOverrideController animOverride;
+    AnimationClip[] clipsBK;
+}
+
 
 public class AnimatorSnapShot
 {

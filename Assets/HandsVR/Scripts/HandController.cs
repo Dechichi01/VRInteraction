@@ -10,7 +10,7 @@ public class HandController : MonoBehaviour {
     public Transform modelGrabPoint;
     #endregion
 
-    private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }	//(VRInput)
+    public SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }	//(VRInput)
 	private SteamVR_TrackedObject trackedObj;																			//(VRInput)
 
 	private List<Pickup> nearby = new List<Pickup>();
@@ -32,11 +32,16 @@ public class HandController : MonoBehaviour {
 	}
 
     void Update(){
-        FindClosestPickup();
         ProcessVRInput();
     }
 
-	void OnTriggerEnter(Collider obj){						// Whenever a new object hits the trigger, it adds it to a nearby list
+
+    private void LateUpdate()
+    {
+        FindClosestPickup();
+    }
+
+    void OnTriggerEnter(Collider obj){						// Whenever a new object hits the trigger, it adds it to a nearby list
         Pickup pickUp = obj.gameObject.GetComponent<Pickup>();
 
 		if(pickUp != null && !nearby.Contains(pickUp))
@@ -57,44 +62,65 @@ public class HandController : MonoBehaviour {
         }
 	}
 
-    void ProcessVRInput(){
-		bool gripButtonDown = controller.GetPressDown(VRInput.Vive.gripButton);		//(VRInput)
-		bool triggerButtonDown = controller.GetPressDown(VRInput.Vive.triggerButton);	//(VRInput)
-		bool triggerButtonUp = controller.GetPressUp(VRInput.Vive.triggerButton);		//(VRInput)
-
-        animHand.SetFloat("closeAmount", VRInput.Vive.GetTriggerPressAmount(controller));
-
-        if (triggerButtonDown && CanGrab() && heldPickUp == null)
-            PickUp();
-
-		if (gripButtonDown && heldPickUp != null){			//button used to drop objects
-            DropIt();
-        }
+    public void OnTriggerPress()
+    {
+        Pickup pickup = heldPickUp ?? closestPickUp;
+        if (pickup != null) pickup.OnTriggerPress(this);
     }
 
-	//This routine picks up the object and parents it to the handmesh grabpoint
-    void PickUp() {
-        if (closestPickUp.isBeingHeld)
+    public void OnTriggerRelease()
+    {
+        Pickup pickup = heldPickUp ?? closestPickUp;
+        if (pickup != null) pickup.OnTriggerRelease(this);
+    }
+
+    public void OnGripPress()
+    {
+        Pickup pickup = heldPickUp ?? closestPickUp;
+        if (pickup != null) pickup.OnGripPress(this);
+    }
+
+    public void SetHoldPickUp(Pickup pickUp)
+    {
+        if (pickUp != closestPickUp)
             return;
 
-        heldPickUp = closestPickUp;
-        heldPickUp.GetPicked(this);
+        heldPickUp = pickUp;
 
         animHand.SetBool("Grab", true);
         animHand.SetFloat("Squeeze", heldPickUp.squeeze);
 
-		GetComponent<Collider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
     }
-    
-	//Drops the object and resumes the hands colider to sence for more objects
-    public void DropIt(){
+
+    public void DropHeldPickUp(Pickup caller)
+    {
+        if (heldPickUp != caller)
+            return;
+
         animHand.SetBool("Grab", false);
-		
-		GetComponent<Collider>().enabled = true;
-		
-        heldPickUp.GetDropped(controller.velocity);
+
+        GetComponent<Collider>().enabled = true;
 
         heldPickUp = null;
+
+    }
+
+    void ProcessVRInput(){
+        bool gripButtonDown = controller.GetPressDown(VRInput.Vive.gripButton);     //(VRInput)
+        bool triggerButtonDown = controller.GetPressDown(VRInput.Vive.triggerButton);   //(VRInput)
+        bool triggerButtonUp = controller.GetPressUp(VRInput.Vive.triggerButton);		//(VRInput)
+
+        animHand.SetFloat("closeAmount", VRInput.Vive.GetTriggerPressAmount(controller));
+
+        if (triggerButtonDown)
+            OnTriggerPress();
+
+        if (triggerButtonUp)
+            OnTriggerRelease();
+
+        if (gripButtonDown)
+            OnGripPress();
     }
 
     void FindClosestPickup(){		//used to find the nearest grab point
@@ -124,10 +150,12 @@ public class HandController : MonoBehaviour {
         }
     }
 
-	//This is used to asses weather the object is in grabrange
-	bool CanGrab(){
-        return closestPickUp != null && grabToHoldDistance < closestPickUp.grabRange;
-	}
+    public bool CanGrab(Pickup pickUp)
+    {
+        if (heldPickUp != null) return false;
+        FindClosestPickup();
+        return pickUp == closestPickUp && grabToHoldDistance < pickUp.grabRange;
+    }
 
     private void SetCurrentClosest(Pickup closest)
     {

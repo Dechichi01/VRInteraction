@@ -2,7 +2,8 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Pickup : MonoBehaviour {
+public class Pickup : MonoBehaviour
+{
 
     #region Inspector Variables
     public Transform holdPoint;
@@ -31,27 +32,21 @@ public class Pickup : MonoBehaviour {
         holder = null;
     }
 
-    public void GetPicked(HandController holder)
+    public void OnTriggerPress(HandController holder)
     {
-        this.holder = holder;
-
-        transform.parent = holder.modelGrabPoint;
-        SetPositionAndRotation();
-
-        rby.useGravity = false;
-        rby.isKinematic = true;
+        if (!isBeingHeld && holder.CanGrab(this))
+            GetPicked(holder);
     }
 
-    public void GetDropped(Vector3 throwVelocity)
+    public void OnTriggerRelease(HandController holder)
     {
-        holder = null;
+        if (this.holder == holder)
+            GetDropped(holder.controller.velocity);
+    }
 
-        transform.parent = null;
+    public void OnGripPress(HandController holder)
+    {
 
-        rby.useGravity = true;
-        rby.isKinematic = false;
-
-        rby.velocity = throwVelocity;
     }
 
     public void SetPositionAndRotation()
@@ -74,7 +69,7 @@ public class Pickup : MonoBehaviour {
                 if (useMirroredRotations)
                 {
                     rightHeldPosition = new Vector3(-transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
-                    rightHeldRotation = new Quaternion(transform.localRotation.x, -transform.localRotation.y, 
+                    rightHeldRotation = new Quaternion(transform.localRotation.x, -transform.localRotation.y,
                         -transform.localRotation.z, transform.localRotation.w).eulerAngles;
                 }
             }
@@ -91,11 +86,38 @@ public class Pickup : MonoBehaviour {
             }
         }
     }
-    
+
     public void SetAnimOverride(Animator anim)
     {
         if (animOverride != null)
             PersistentAnimator.instance.ChangeAnimRunTime_SmoothTransition(anim, animOverride, this);
+    }
+
+    private void GetPicked(HandController holder)
+    {
+        this.holder = holder;
+
+        holder.SetHoldPickUp(this);
+
+        transform.parent = holder.modelGrabPoint;
+        SetPositionAndRotation();
+
+        rby.useGravity = false;
+        rby.isKinematic = true;
+    }
+
+    private void GetDropped(Vector3 throwVelocity)
+    {
+        holder.DropHeldPickUp(this);
+
+        holder = null;
+
+        transform.parent = null;
+
+        rby.useGravity = true;
+        rby.isKinematic = false;
+
+        rby.velocity = throwVelocity;
     }
 
 }
