@@ -40,13 +40,15 @@ public class Pickup : MonoBehaviour
 
     public void OnTriggerRelease(HandController holder)
     {
+        return;
         if (this.holder == holder)
             GetDropped(holder.controller.velocity);
     }
 
     public void OnGripPress(HandController holder)
     {
-
+        if (this.holder == holder)
+            GetDropped(holder.controller.velocity);
     }
 
     public void SetPositionAndRotation()

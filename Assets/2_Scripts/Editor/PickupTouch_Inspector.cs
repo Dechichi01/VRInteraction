@@ -52,4 +52,9 @@ public class PickupTouch_Inspector : Editor {
                 pickUp.UpdateOffSetsFromCurrentPos();
         }
     }
+
+    private void OnDestroy()
+    {
+        Tools.hidden = false;
+    }
 }
