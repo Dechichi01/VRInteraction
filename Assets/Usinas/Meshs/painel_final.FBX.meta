@@ -1,0 +1,2430 @@
+fileFormatVersion: 2
+guid: fb9e4266d865dc442b22c235591627c5
+timeCreated: 1476120031
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: obj_baseBotao
+    100002: obj_botao_comum
+    100004: obj_botao_vert1
+    100006: obj_botao_vert2
+    100008: obj_botao_vert3
+    100010: obj_btn_vol1
+    100012: obj_btn_vol3
+    100014: obj_conjunto_cabo
+    100016: obj_fios_branco001
+    100018: obj_fios_preto001
+    100020: obj_interruptor1
+    100022: obj_interruptor2
+    100024: obj_interruptor3
+    100026: obj_interruptor4
+    100028: obj_interruptor5
+    100030: obj_interruptor6
+    100032: obj_interruptor7
+    100034: obj_painel_macaneta
+    100036: obj_painel_porta
+    100038: obj_painel_porta_borracha
+    100040: obj_painel_porta_joint1
+    100042: obj_painel_porta_joint2
+    100044: obj_painel_porta_joint3
+    100046: obj_painel_porta_joint4
+    100048: obj_painel_porta_joint5
+    100050: obj_painel_porta_trinco
+    100052: obj_painel_traseira
+    100054: //RootNode
+    400000: obj_baseBotao
+    400002: obj_botao_comum
+    400004: obj_botao_vert1
+    400006: obj_botao_vert2
+    400008: obj_botao_vert3
+    400010: obj_btn_vol1
+    400012: obj_btn_vol3
+    400014: obj_conjunto_cabo
+    400016: obj_fios_branco001
+    400018: obj_fios_preto001
+    400020: obj_interruptor1
+    400022: obj_interruptor2
+    400024: obj_interruptor3
+    400026: obj_interruptor4
+    400028: obj_interruptor5
+    400030: obj_interruptor6
+    400032: obj_interruptor7
+    400034: obj_painel_macaneta
+    400036: obj_painel_porta
+    400038: obj_painel_porta_borracha
+    400040: obj_painel_porta_joint1
+    400042: obj_painel_porta_joint2
+    400044: obj_painel_porta_joint3
+    400046: obj_painel_porta_joint4
+    400048: obj_painel_porta_joint5
+    400050: obj_painel_porta_trinco
+    400052: obj_painel_traseira
+    400054: //RootNode
+    2300000: obj_baseBotao
+    2300002: obj_botao_comum
+    2300004: obj_botao_vert1
+    2300006: obj_botao_vert2
+    2300008: obj_botao_vert3
+    2300010: obj_btn_vol1
+    2300012: obj_btn_vol3
+    2300014: obj_conjunto_cabo
+    2300016: obj_fios_branco001
+    2300018: obj_fios_preto001
+    2300020: obj_interruptor1
+    2300022: obj_interruptor2
+    2300024: obj_interruptor3
+    2300026: obj_interruptor4
+    2300028: obj_interruptor5
+    2300030: obj_interruptor6
+    2300032: obj_interruptor7
+    2300034: obj_painel_macaneta
+    2300036: obj_painel_porta
+    2300038: obj_painel_porta_borracha
+    2300040: obj_painel_porta_joint1
+    2300042: obj_painel_porta_joint2
+    2300044: obj_painel_porta_joint3
+    2300046: obj_painel_porta_joint4
+    2300048: obj_painel_porta_joint5
+    2300050: obj_painel_porta_trinco
+    2300052: obj_painel_traseira
+    3300000: obj_baseBotao
+    3300002: obj_botao_comum
+    3300004: obj_botao_vert1
+    3300006: obj_botao_vert2
+    3300008: obj_botao_vert3
+    3300010: obj_btn_vol1
+    3300012: obj_btn_vol3
+    3300014: obj_conjunto_cabo
+    3300016: obj_fios_branco001
+    3300018: obj_fios_preto001
+    3300020: obj_interruptor1
+    3300022: obj_interruptor2
+    3300024: obj_interruptor3
+    3300026: obj_interruptor4
+    3300028: obj_interruptor5
+    3300030: obj_interruptor6
+    3300032: obj_interruptor7
+    3300034: obj_painel_macaneta
+    3300036: obj_painel_porta
+    3300038: obj_painel_porta_borracha
+    3300040: obj_painel_porta_joint1
+    3300042: obj_painel_porta_joint2
+    3300044: obj_painel_porta_joint3
+    3300046: obj_painel_porta_joint4
+    3300048: obj_painel_porta_joint5
+    3300050: obj_painel_porta_trinco
+    3300052: obj_painel_traseira
+    4300000: obj_painel_porta_joint5
+    4300002: obj_painel_porta_joint4
+    4300004: obj_painel_traseira
+    4300006: obj_painel_porta_joint3
+    4300008: obj_botao_comum
+    4300010: obj_painel_porta
+    4300012: obj_painel_macaneta
+    4300014: obj_painel_porta_trinco
+    4300016: obj_painel_porta_borracha
+    4300018: obj_painel_porta_joint1
+    4300020: obj_btn_vol1
+    4300022: obj_painel_porta_joint2
+    4300024: obj_botao_vert2
+    4300026: obj_interruptor1
+    4300028: obj_botao_vert1
+    4300030: obj_conjunto_cabo
+    4300032: obj_fios_preto001
+    4300034: obj_botao_vert3
+    4300036: obj_fios_branco001
+    4300038: obj_baseBotao
+    4300040: obj_interruptor3
+    4300042: obj_interruptor5
+    4300044: obj_interruptor4
+    4300046: obj_interruptor7
+    4300048: obj_interruptor2
+    4300050: obj_interruptor6
+    4300052: obj_btn_vol3
+    7400000: p_idle-macaneta
+    7400002: p_all_animations
+    7400004: p_abrir_painel1
+    7400006: p_abrir_painel
+    7400008: p_idle-rele_do_tap
+    7400010: p_rotate2
+    7400012: p_rele_do_tap-idle
+    7400014: p_idle-btn_urgencia
+    7400016: p_btn_ugencia-idle
+    7400018: p_idle-tap_medicao
+    7400020: p_rotate3
+    7400022: p_tap_medicao-idle
+    7400024: p_idle-rele_tensao
+    7400026: p_rele_tensao-idle
+    7400028: p_rotate1
+    7400030: p_idle
+    7400032: p_rele_do_tap3
+    7400034: p_rele_do_tap1
+    7400036: p_rele_do_tap2
+    7400038: p_rele_do_disjuntor1
+    7400040: p_rele_do_disjuntor2
+    7400042: p_rele_do_disjuntor3
+    7400044: p_rele_do_disjuntor4
+    7400046: p_rele_do_disjuntor5
+    7400048: p_rele_do_disjuntor6
+    7400050: p_rele_do_disjuntor7
+    7400052: p_ajuste_rele_do_tap
+    7400054: p_rotate2_h
+    7400056: p_rotate2_antiH
+    7400058: p_rotate2_antiH-idle
+    7400060: p_ajuste_tap_medicao
+    7400062: p_rotate3_h
+    7400064: p_rotate3_antiH
+    7400066: p_rotate3_antiH-idle
+    7400068: p_btn_urgencia
+    7400070: p_fechar_porta
+    9500000: //RootNode
+    11100000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: p_all_animations
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 1090.0001
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_idle-macaneta
+      takeName: Take 001
+      firstFrame: 35
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rotate1
+      takeName: Take 001
+      firstFrame: 60
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_abrir_painel1
+      takeName: Take 001
+      firstFrame: 80
+      lastFrame: 120
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_idle
+      takeName: Take 001
+      firstFrame: 120
+      lastFrame: 122
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rele_do_tap3
+      takeName: Take 001
+      firstFrame: 200
+      lastFrame: 250
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rele_do_tap1
+      takeName: Take 001
+      firstFrame: 250
+      lastFrame: 300
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rele_do_tap2
+      takeName: Take 001
+      firstFrame: 300
+      lastFrame: 350
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rele_do_disjuntor1
+      takeName: Take 001
+      firstFrame: 350
+      lastFrame: 400
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rele_do_disjuntor2
+      takeName: Take 001
+      firstFrame: 400
+      lastFrame: 450
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rele_do_disjuntor3
+      takeName: Take 001
+      firstFrame: 450
+      lastFrame: 500
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rele_do_disjuntor4
+      takeName: Take 001
+      firstFrame: 500
+      lastFrame: 550
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rele_do_disjuntor5
+      takeName: Take 001
+      firstFrame: 550
+      lastFrame: 600
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rele_do_disjuntor6
+      takeName: Take 001
+      firstFrame: 600
+      lastFrame: 650
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rele_do_disjuntor7
+      takeName: Take 001
+      firstFrame: 650
+      lastFrame: 700
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_ajuste_rele_do_tap
+      takeName: Take 001
+      firstFrame: 700
+      lastFrame: 720
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rotate2_h
+      takeName: Take 001
+      firstFrame: 720
+      lastFrame: 750
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rotate2_antiH
+      takeName: Take 001
+      firstFrame: 750
+      lastFrame: 780
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rotate2_antiH-idle
+      takeName: Take 001
+      firstFrame: 780
+      lastFrame: 810
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_ajuste_tap_medicao
+      takeName: Take 001
+      firstFrame: 810
+      lastFrame: 840
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rotate3_h
+      takeName: Take 001
+      firstFrame: 840
+      lastFrame: 870
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rotate3_antiH
+      takeName: Take 001
+      firstFrame: 870
+      lastFrame: 900
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_rotate3_antiH-idle
+      takeName: Take 001
+      firstFrame: 900
+      lastFrame: 920
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_btn_urgencia
+      takeName: Take 001
+      firstFrame: 920
+      lastFrame: 1000
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_fechar_porta
+      takeName: Take 001
+      firstFrame: 1000
+      lastFrame: 1070
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: p_abrir_painel
+      takeName: Take 001
+      firstFrame: 60
+      lastFrame: 120
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: obj_baseBotao
+        weight: 1
+      - path: obj_botao_comum
+        weight: 1
+      - path: obj_botao_vert1
+        weight: 1
+      - path: obj_botao_vert2
+        weight: 1
+      - path: obj_botao_vert3
+        weight: 1
+      - path: obj_btn_vol1
+        weight: 1
+      - path: obj_btn_vol3
+        weight: 1
+      - path: obj_conjunto_cabo
+        weight: 1
+      - path: obj_fios_branco001
+        weight: 1
+      - path: obj_fios_preto001
+        weight: 1
+      - path: obj_interruptor1
+        weight: 1
+      - path: obj_interruptor2
+        weight: 1
+      - path: obj_interruptor3
+        weight: 1
+      - path: obj_interruptor4
+        weight: 1
+      - path: obj_interruptor5
+        weight: 1
+      - path: obj_interruptor6
+        weight: 1
+      - path: obj_interruptor7
+        weight: 1
+      - path: obj_painel_porta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_macaneta
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_borracha
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_joint1
+        weight: 1
+      - path: obj_painel_porta/obj_painel_porta_trinco
+        weight: 1
+      - path: obj_painel_porta_joint2
+        weight: 1
+      - path: obj_painel_porta_joint3
+        weight: 1
+      - path: obj_painel_porta_joint4
+        weight: 1
+      - path: obj_painel_porta_joint5
+        weight: 1
+      - path: obj_painel_traseira
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
