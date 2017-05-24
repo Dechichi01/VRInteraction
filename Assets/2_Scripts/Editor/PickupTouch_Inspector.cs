@@ -13,7 +13,10 @@ public class PickupTouch_Inspector : Editor {
         pickUp = (Pickup)target;
         
         if (DrawDefaultInspector())
+        {
             pickUp.SetPositionAndRotation();
+            pickUp.UpdateSqueezeValue();
+        }
     }
 
     private void OnSceneGUI()

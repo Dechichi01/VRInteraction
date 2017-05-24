@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FixedEquipment_Ray : SelectableObject_Ray {
+/*public class FixedEquipment_Ray : SelectableObject_Ray {
 
     public Transform arrivalLocation;
 
@@ -47,3 +47,4 @@ public class FixedEquipment_Ray : SelectableObject_Ray {
         playerCtrl.canMove = true;
     }
 }
+*/

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pickup_Ray : SelectableObject_Ray {
+/*public class Pickup_Ray : SelectableObject_Ray {
 
     Transform initialParent;    
     Vector3 initialPosition;
@@ -119,3 +119,4 @@ public class Pickup_Ray : SelectableObject_Ray {
     }
 
 }
+*/

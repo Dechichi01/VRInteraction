@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Pickup : MonoBehaviour
+public class Pickup : Interactable
 {
-
     #region Inspector Variables
-    public Transform holdPoint;
-
-    public bool useMirroredRotations = true;
-    public float grabRange = .2f;
-    //degree of squeezing
-    public float squeeze;
+    [SerializeField] protected bool releaseWithGripOnly;
+    [SerializeField] protected bool useMirroredRotations = true;
+    [SerializeField] protected float grabRange = .2f;
+    [SerializeField] [Range(0,1)] protected float squeeze;
+    [SerializeField] private AnimatorOverrideController animOverride;
     #endregion
 
     [HideInInspector] [SerializeField] protected Vector3 rightHeldPosition;
@@ -19,38 +18,53 @@ public class Pickup : MonoBehaviour
     [HideInInspector] [SerializeField] protected Vector3 rightHeldRotation;
     [HideInInspector] [SerializeField] protected Vector3 leftHeldRotation;
 
-    [SerializeField] private AnimatorOverrideController animOverride;
-
     public bool isBeingHeld { get { return holder != null; } }
 
     protected HandController holder = null;
     protected Rigidbody rby;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         rby = GetComponent<Rigidbody>();
         holder = null;
     }
 
-    public void OnTriggerPress(HandController holder)
+    public override void OnTriggerPress(VRInteraction caller, VRWand_Controller wand)
     {
-        if (!isBeingHeld && holder.CanGrab(this))
-            GetPicked(holder);
+        if (!isBeingHeld && caller.CanManipulate(this))
+        {
+            GetPicked(caller);
+        }
     }
 
-    public void OnTriggerRelease(HandController holder)
+    public override void OnTriggerRelease(VRInteraction caller, VRWand_Controller wand)
     {
-        return;
-        if (this.holder == holder)
-            GetDropped(holder.controller.velocity);
+        if (!releaseWithGripOnly && holder == caller)
+        {
+            GetDropped(wand.throwVelocity);
+        }
     }
 
-    public void OnGripPress(HandController holder)
+    public override void OnGripPress(VRInteraction caller, VRWand_Controller wand)
     {
-        if (this.holder == holder)
-            GetDropped(holder.controller.velocity);
+        if (holder == caller)
+        {
+            GetDropped(wand.throwVelocity);
+        }
     }
 
+    public override void OnGripRelease(VRInteraction caller, VRWand_Controller wand)
+    {
+        
+    }
+
+    public override bool CanBeManipulated(Transform other)
+    {
+        return base.CanBeManipulated(other) && GetInteractionDistance(other) < grabRange;
+    }
+
+    #region Used by inspector only
     public void SetPositionAndRotation()
     {
         if (isBeingHeld)
@@ -89,19 +103,27 @@ public class Pickup : MonoBehaviour
         }
     }
 
+    public void UpdateSqueezeValue()
+    {
+        if (isBeingHeld)
+        {
+            OnManipulationStarted(holder);
+        }
+    }
+    #endregion
+
     public void SetAnimOverride(Animator anim)
     {
         if (animOverride != null)
+        {
             PersistentAnimator.instance.ChangeAnimRunTime_SmoothTransition(anim, animOverride, this);
+        }
     }
 
-    private void GetPicked(HandController holder)
+    private void GetPicked(VRInteraction interaction)
     {
-        this.holder = holder;
+        interaction.SetManipulatedInteractable(this);
 
-        holder.SetHoldPickUp(this);
-
-        transform.parent = holder.modelGrabPoint;
         SetPositionAndRotation();
 
         rby.useGravity = false;
@@ -110,11 +132,7 @@ public class Pickup : MonoBehaviour
 
     private void GetDropped(Vector3 throwVelocity)
     {
-        holder.DropHeldPickUp(this);
-
-        holder = null;
-
-        transform.parent = null;
+        holder.SetManipulatedInteractable(null);
 
         rby.useGravity = true;
         rby.isKinematic = false;
@@ -122,4 +140,50 @@ public class Pickup : MonoBehaviour
         rby.velocity = throwVelocity;
     }
 
+    public override void OnSelected(VRInteraction caller)
+    {
+        HandController hand = caller as HandController;
+        if (hand != null)
+        {
+            SetAnimOverride(hand.animHand);
+        }
+    }
+
+    public override void OnDeselected(VRInteraction caller)
+    {
+        HandController hand = caller as HandController;
+        if (hand != null)
+        {
+            hand.RecoverBaseAnimator();
+        }
+    }
+
+    public override void OnManipulationStarted(VRInteraction caller)
+    {
+        HandController hand = caller as HandController;
+        if (hand != null)
+        {
+            hand.animHand.SetBool("Grab", true);
+            hand.animHand.SetFloat("Squeeze", squeeze);
+        }
+
+        holder = hand;
+
+        holder.SetManipulatedInteractable(this);
+
+        transform.parent = holder.modelGrabPoint;
+    }
+
+    public override void OnManipulationEnded(VRInteraction caller)
+    {
+        HandController hand = caller as HandController;
+        if (hand != null)
+        {
+            hand.animHand.SetBool("Grab", false);
+        }
+
+        holder = null;
+
+        transform.parent = null;
+    }
 }

@@ -1,169 +1,99 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
-public class HandController : MonoBehaviour {
+public abstract class HandController : VRInteraction {
 
     #region Inspector Variables								
-    [SerializeField] private Animator animHand;
-    [SerializeField] private Transform controllerGrabPoint; //Used to measure real distance from the object
+    [SerializeField] private Animator _animHand;
     public Transform modelGrabPoint;
-    #endregion
+    public LayerMask interactMask;
+    #endregion																		
 
-    public SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }	//(VRInput)
-	private SteamVR_TrackedObject trackedObj;																			//(VRInput)
-
-	private List<Pickup> nearby = new List<Pickup>();
-
-    private Pickup closestPickUp = null;   
-	private Pickup heldPickUp = null;	
+    protected VRWand_Controller wand;
    
+    public Animator animHand { get { return _animHand; } }
 	public bool isLeftHand { get; private set; }
-
-    private float grabToHoldDistance = float.MaxValue;
 
     private AnimatorOverrideController baseRunTimeAnim;
 
-	void Start() {
-        trackedObj = GetComponentInParent<SteamVR_TrackedObject>();
-        isLeftHand = trackedObj.transform.name.ToLower().Contains("left");
+	protected override void Start() {
+        base.Start();
+        wand = GetComponentInParent<VRWand_Controller>();
+        isLeftHand = wand.isLeftHand;
 
-        baseRunTimeAnim = new AnimatorOverrideController(animHand.runtimeAnimatorController);
+        baseRunTimeAnim = new AnimatorOverrideController(_animHand.runtimeAnimatorController);
+
+        SetCollisionRestrictions();
 	}
 
-    void Update(){
-        ProcessVRInput();
+    protected virtual void Update()
+    {
+        _animHand.SetFloat("closeAmount", wand.triggerPressAmount);
     }
 
-
-    private void LateUpdate()
+    protected override void DisableInteration()
     {
-        FindClosestPickup();
-    }
-
-    void OnTriggerEnter(Collider obj){						// Whenever a new object hits the trigger, it adds it to a nearby list
-        Pickup pickUp = obj.gameObject.GetComponent<Pickup>();
-
-		if(pickUp != null && !nearby.Contains(pickUp))
-            nearby.Add(pickUp);
-	}
-
-    void OnTriggerExit(Collider obj){                       // Removes the object from nearby list as it exits trigger
-        Pickup pickup = obj.gameObject.GetComponent<Pickup>();
-
-        if (pickup != null)
-        {
-            nearby.Remove(pickup);
-            if (pickup == closestPickUp)
-            {
-                animHand.SetBool("Prep", false);
-                SetCurrentClosest(null);
-            }
-        }
-	}
-
-    public void OnTriggerPress()
-    {
-        Pickup pickup = heldPickUp ?? closestPickUp;
-        if (pickup != null) pickup.OnTriggerPress(this);
-    }
-
-    public void OnTriggerRelease()
-    {
-        Pickup pickup = heldPickUp ?? closestPickUp;
-        if (pickup != null) pickup.OnTriggerRelease(this);
-    }
-
-    public void OnGripPress()
-    {
-        Pickup pickup = heldPickUp ?? closestPickUp;
-        if (pickup != null) pickup.OnGripPress(this);
-    }
-
-    public void SetHoldPickUp(Pickup pickUp)
-    {
-        if (pickUp != closestPickUp)
-            return;
-
-        heldPickUp = pickUp;
-
-        animHand.SetBool("Grab", true);
-        animHand.SetFloat("Squeeze", heldPickUp.squeeze);
-
+        base.DisableInteration();
         GetComponent<Collider>().enabled = false;
     }
 
-    public void DropHeldPickUp(Pickup caller)
+    protected override void EnableInteration()
     {
-        if (heldPickUp != caller)
-            return;
-
-        animHand.SetBool("Grab", false);
-
+        base.EnableInteration();
         GetComponent<Collider>().enabled = true;
-
-        heldPickUp = null;
-
     }
 
-    void ProcessVRInput(){
-        bool gripButtonDown = controller.GetPressDown(VRInput.Vive.gripButton);     //(VRInput)
-        bool triggerButtonDown = controller.GetPressDown(VRInput.Vive.triggerButton);   //(VRInput)
-        bool triggerButtonUp = controller.GetPressUp(VRInput.Vive.triggerButton);		//(VRInput)
-
-        animHand.SetFloat("closeAmount", VRInput.Vive.GetTriggerPressAmount(controller));
-
-        if (triggerButtonDown)
-            OnTriggerPress();
-
-        if (triggerButtonUp)
-            OnTriggerRelease();
-
-        if (gripButtonDown)
-            OnGripPress();
-    }
-
-    void FindClosestPickup(){		//used to find the nearest grab point
-
-        if (nearby.Count == 0)
+    public override void OnTriggerPress(VRWand_Controller wand)
+    {
+        if (interactable != null)
         {
-            closestPickUp = null;
-            grabToHoldDistance = float.MaxValue;
-            return;
-        }
-
-        Pickup previousClosest = closestPickUp;
-        closestPickUp = nearby[0];
-        grabToHoldDistance = Vector3.Distance(closestPickUp.holdPoint.position, controllerGrabPoint.position);
-		foreach (var nearbyObj in nearby) {
-			float sqrDist = (nearbyObj.holdPoint.position - controllerGrabPoint.position).sqrMagnitude;
-            if (sqrDist < Mathf.Pow(grabToHoldDistance, 2)){
-                grabToHoldDistance = Mathf.Pow(sqrDist, 0.5f);
-				closestPickUp = nearbyObj;
-			}
-		}
-
-        if (previousClosest != closestPickUp)
-        {
-            SetCurrentClosest(closestPickUp);
-            animHand.SetBool("Prep", true);
+            interactable.OnTriggerPress(this, wand);
         }
     }
 
-    public bool CanGrab(Pickup pickUp)
+    public override void OnTriggerRelease(VRWand_Controller wand)
     {
-        if (heldPickUp != null) return false;
-        FindClosestPickup();
-        return pickUp == closestPickUp && grabToHoldDistance < pickUp.grabRange;
+        if (interactable != null)
+        {
+            interactable.OnTriggerRelease(this, wand);
+        }
     }
 
-    private void SetCurrentClosest(Pickup closest)
+    public override void OnGripPress(VRWand_Controller wand)
     {
-        closestPickUp = closest;
-        if (closestPickUp != null)
-            closestPickUp.SetAnimOverride(animHand);
-        else
-            PersistentAnimator.instance.ChangeAnimRunTime_SmoothTransition(animHand, baseRunTimeAnim, this);
+        if (interactable != null)
+        {
+            interactable.OnGripPress(this, wand);
+        }
+    }
+
+    public override void OnGripRelease(VRWand_Controller wand)
+    {
+        if (interactable != null)
+        {
+            interactable.OnTriggerRelease(this, wand);
+        }
+    }
+
+    private void SetCollisionRestrictions()
+    {
+        int objectLayer = gameObject.layer;
+        
+        for (int i = 0; i < 32; i++)
+        {
+            Physics.IgnoreLayerCollision(objectLayer, i, true);
+            if (((1<<i) & interactMask) > 0)
+            {
+                Physics.IgnoreLayerCollision(objectLayer, i, false);
+            }
+        }
+    }
+
+    public void RecoverBaseAnimator()
+    {
+        PersistentAnimator.instance.ChangeAnimRunTime_SmoothTransition(_animHand, baseRunTimeAnim, this);
     }
 
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class VolumeController_Ray : TwoStateInteractable_Ray {
+/*public class VolumeController_Ray : TwoStateInteractable_Ray {
 
     public AnimationClip grabAnim;
     public AnimationClip volRotateAnim;
@@ -44,4 +44,4 @@ public class VolumeController_Ray : TwoStateInteractable_Ray {
         return true;
     }
 
-}
+}*/

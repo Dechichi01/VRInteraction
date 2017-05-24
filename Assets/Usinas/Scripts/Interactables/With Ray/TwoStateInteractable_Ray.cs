@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class TwoStateInteractable_Ray : SelectableObject_Ray {
+/*public class TwoStateInteractable_Ray : SelectableObject_Ray {
 
     protected Animation anim;
     public AnimationClip turnOnAnim;
@@ -10,7 +10,7 @@ public class TwoStateInteractable_Ray : SelectableObject_Ray {
     private PanelController panelCtrl;
 
     [SerializeField]
-    protected HandController2 rightHand;
+    protected HandController_Ray rightHand;
 
     [SerializeField]
     protected VRWand_Controller wand;
@@ -59,4 +59,4 @@ public class TwoStateInteractable_Ray : SelectableObject_Ray {
         wand.ToggleLineRenderer();
     }
 	
-}
+}*/

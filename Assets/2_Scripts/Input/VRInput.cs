@@ -4,7 +4,6 @@ using UnityEngine;
 
 public static class VRInput
 {
-
     public static class Vive
     {
         public static Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
@@ -19,5 +18,4 @@ public static class VRInput
         }
 
     }
-
 }
