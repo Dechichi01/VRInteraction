@@ -1,7 +1,8 @@
-﻿/*using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class HandController_Ray : MonoBehaviour {
+public class HandController_Ray : HandController {
 
     public LineRenderer lineRenderer;
     public Transform pickupHolder;
@@ -11,16 +12,15 @@ public class HandController_Ray : MonoBehaviour {
     public AnimationClip controllerOnAnim;
     public AnimationClip controllerOffAnim;
 
-    private Animation anim;
-
     private Vector3 startLocalPos;
     private Quaternion startLocalRot;
-	// Use this for initialization
-	void Start () {
-        anim = GetComponent<Animation>();
+
+    protected override void Start()
+    {
+        base.Start();
         startLocalPos = transform.localPosition;
         startLocalRot = transform.localRotation;
-	}
+    }
 	
     public void ControllerOn(VRInteraction interaction, VRWand_Controller wand)
     {
@@ -34,7 +34,7 @@ public class HandController_Ray : MonoBehaviour {
         if (previousLineRenderer != null)
             rayInteract.SetLineRenderer(previousLineRenderer);
 
-        anim.Play(controllerOnAnim.name);
+        animHand.Play(controllerOnAnim.name);
         startLocalPos = transform.localPosition;
     }
 
@@ -51,7 +51,7 @@ public class HandController_Ray : MonoBehaviour {
 
         previousLineRenderer = rayInteract.GetLineRenderer();
         rayInteract.SetLineRenderer(lineRenderer);
-        anim.Play(controllerOffAnim.name);
+        animHand.Play(controllerOffAnim.name);
     }
 
     public void PerformAnimation(Transform panel, Animation componentAnim, string[] animNames, bool isVolumeCtrl = false)
@@ -73,7 +73,7 @@ public class HandController_Ray : MonoBehaviour {
 
     public void PlayAnimation(string s1)
     {
-        anim.Play(ChangeToControllerAnim(s1));
+        animHand.Play(ChangeToControllerAnim(s1));
     }
 
     //Used for iteractions that involves animation
@@ -102,20 +102,20 @@ public class HandController_Ray : MonoBehaviour {
             componentAnim[turnOnAnimName].speed = -1.0f;
             componentAnim[turnOnAnimName].time = componentAnim[turnOnAnimName].length;
 
-            anim[animation].speed = -1.0f;
-            anim[animation].time = anim[animation].length;
+            animHand[animation].speed = -1.0f;
+            animHand[animation].time = animHand[animation].length;
         }
         else
         {
             componentAnim[turnOnAnimName].speed = 1.0f;
             componentAnim[turnOnAnimName].time = 0;
 
-            anim[animation].speed = 1.0f;
-            anim[animation].time = 0;
+            animHand[animation].speed = 1.0f;
+            animHand[animation].time = 0;
         }
 
         componentAnim.Play(turnOnAnimName);
-        anim.Play(animation);
+        animHand.Play(animation);
 
         while (percent<1)
         {
@@ -128,7 +128,7 @@ public class HandController_Ray : MonoBehaviour {
         transform.position = end;
 
         //Wait for animation to finish
-        while (anim.IsPlaying(animation)) yield return null;
+        while (animHand.IsPlaying(animation)) yield return null;
 
         //Debug.Log(isVolCtrl);
         if (!isVolCtrl) StartCoroutine(Positionate_PanelHand(parent, componentAnim, animNames, isVolCtrl));
@@ -146,7 +146,7 @@ public class HandController_Ray : MonoBehaviour {
             string releaseAnim = animNames[2];
             string releaseAnim_h = ChangeToControllerAnim(releaseAnim);
             componentAnim.Play(releaseAnim);
-            anim.Play(releaseAnim_h);
+            animHand.Play(releaseAnim_h);
         }
 
         Vector3 start = transform.localPosition;
@@ -186,19 +186,19 @@ public class HandController_Ray : MonoBehaviour {
         float rot = sign*Mathf.Abs((parent.localRotation * Quaternion.Euler(0f, 0f, -initialRotZ)).z); ;
 
         float animTime = 0f;
-        while (animTime != anim[rotAnim_h].length)
+        while (animTime != animHand[rotAnim_h].length)
         {
             //Lock CCW rotations and prevents animations jump due to rotation sign change 
-            if (sign*parent.localRotation.z <= 0 && !(sign*rot > 0.7f && animTime < 0.1f*anim[rotAnim_h].length)) 
-                animTime = Mathf.InverseLerp(initialRotZ, finalRotZ, rot) * anim[rotAnim_h].length;
+            if (sign*parent.localRotation.z <= 0 && !(sign*rot > 0.7f && animTime < 0.1f*animHand[rotAnim_h].length)) 
+                animTime = Mathf.InverseLerp(initialRotZ, finalRotZ, rot) * animHand[rotAnim_h].length;
 
             componentAnim[rotAnim].speed = 0;
             componentAnim.Play(rotAnim);
             componentAnim[rotAnim].time = (sign ==1)?animTime:(1-animTime);
 
-            anim[rotAnim_h].speed = 0;
-            anim.Play(rotAnim_h);
-            anim[rotAnim_h].time = (sign == 1) ? animTime : (1 - animTime);
+            animHand[rotAnim_h].speed = 0;
+            animHand.Play(rotAnim_h);
+            animHand[rotAnim_h].time = (sign == 1) ? animTime : (1 - animTime);
 
             yield return null;
 
@@ -230,7 +230,7 @@ public class HandController_Ray : MonoBehaviour {
         string animation = ChangeToControllerAnim(handAnim);
 
         componentAnim.Play(handAnim);
-        anim.Play(animation);
+        animHand.Play(animation);
         Debug.Log("APARECdfasdfasfsadfasdfdsadfsE");
         Debug.LogWarning("askjsakjsakjsajkaskj");
         while (percent < 1)
@@ -263,4 +263,9 @@ public class HandController_Ray : MonoBehaviour {
         transform.localPosition = end;
         transform.localRotation = endRot;
     }
-}*/
+
+    public override void SelectInteractableFromRange()
+    {
+        throw new NotImplementedException();
+    }
+}
