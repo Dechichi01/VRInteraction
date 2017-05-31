@@ -2,39 +2,44 @@
 using System.Collections;
 using System;
 
-/*public class VRRayInteraction : VRInteraction {
-
-    public LayerMask interactMask;
+public class VRRayInteraction : HandController
+{
     [SerializeField]
-    private LineRenderer lineRenderer;
-    public Transform aimTargetPrefab;
+    private LineRenderer lineRndr;
 
-    private Transform aimTargetInstance;
+    private Vector3 startLocalPos;
+    private Quaternion startLocalRot;
+
     private bool castRay = true;
     
-    void OnEnable()
-    {
-        SetLineRenderer(lineRenderer);
+    public Vector3 GetLineStartPos() { return lineRndr.GetPosition(0); }
+    public Vector3 GetLineEndPos() { return lineRndr.GetPosition(1); }
 
-        aimTargetInstance = Instantiate(aimTargetPrefab) as Transform;
-        aimTargetInstance.gameObject.SetActive(false);
+    protected override void Start()
+    {
+        base.Start();
+        InitializeLineRenderer();
+
     }
 
     public void ToggleState()
     {
         castRay = !castRay;
         if (lineRenderer)
+        {
+
+        }
             lineRenderer.gameObject.SetActive(!lineRenderer.gameObject.activeSelf);
         if (aimTargetInstance)
             aimTargetInstance.gameObject.SetActive(!aimTargetInstance.gameObject.activeSelf);
     }
 
-    public void SetLineRenderer(LineRenderer lr)
+    public void InitializeLineRenderer()
     {
-        lr.SetWidth(0.002f, 0.002f);
-        lineRenderer.gameObject.SetActive(false);
-        lr.gameObject.SetActive(true);
-        lineRenderer = lr;
+        lineRndr.startWidth = 0.002f;
+        lineRndr.endWidth = 0.002f;
+
+        lineRndr.gameObject.SetActive(true);
     }
 
     public LineRenderer GetLineRenderer() { return lineRenderer; }
@@ -108,4 +113,4 @@ using System;
         ToggleState();
     }
 
-}*/
+}

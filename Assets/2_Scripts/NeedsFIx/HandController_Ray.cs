@@ -4,13 +4,7 @@ using System;
 
 public class HandController_Ray : HandController {
 
-    public LineRenderer lineRenderer;
-    public Transform pickupHolder;
-    private LineRenderer previousLineRenderer;
-    private Transform previousPickupHolder;
-
-    public AnimationClip controllerOnAnim;
-    public AnimationClip controllerOffAnim;
+    [SerializeField] private LineRenderer lineRndr;
 
     private Vector3 startLocalPos;
     private Quaternion startLocalRot;
@@ -21,7 +15,24 @@ public class HandController_Ray : HandController {
         startLocalPos = transform.localPosition;
         startLocalRot = transform.localRotation;
     }
-	
+
+    public override void SelectInteractableFromRange()
+    {
+
+        throw new NotImplementedException();
+    }
+
+    protected override void EnableInteration()
+    {
+        base.EnableInteration();
+        lineRndr.gameObject.SetActive(true);
+    }
+    protected override void DisableInteration()
+    {
+        base.DisableInteration();
+        lineRndr.gameObject.SetActive(false);
+    }
+
     public void ControllerOn(VRInteraction interaction, VRWand_Controller wand)
     {
         wand.transform.FindChild("Model").gameObject.SetActive(true);
@@ -50,7 +61,7 @@ public class HandController_Ray : HandController {
         }
 
         previousLineRenderer = rayInteract.GetLineRenderer();
-        rayInteract.SetLineRenderer(lineRenderer);
+        rayInteract.InitializeLineRenderer(lineRndr);
         animHand.Play(controllerOffAnim.name);
     }
 
@@ -262,10 +273,5 @@ public class HandController_Ray : HandController {
 
         transform.localPosition = end;
         transform.localRotation = endRot;
-    }
-
-    public override void SelectInteractableFromRange()
-    {
-        throw new NotImplementedException();
     }
 }
