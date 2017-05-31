@@ -169,8 +169,6 @@ public class Pickup : Interactable
 
         holder = hand;
 
-        holder.SetManipulatedInteractable(this);
-
         transform.parent = holder.modelGrabPoint;
     }
 

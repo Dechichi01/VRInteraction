@@ -19,6 +19,19 @@ public abstract class VRInteraction : MonoBehaviour {
     public abstract void OnGripPress(VRWand_Controller wand);
     public abstract void OnGripRelease(VRWand_Controller wand);
 
+    protected virtual void Start()
+    {
+        EnableInteration();
+    }
+
+    protected virtual void LateUpdate()
+    {
+        if (interactionEnabled)
+        {
+            SelectInteractableFromRange();
+        }
+    }
+
     protected virtual void DisableInteration()
     {
         interactionEnabled = false;
@@ -34,6 +47,14 @@ public abstract class VRInteraction : MonoBehaviour {
     {
         if (interactable != null)
         {
+            if (currSelectedInteractable != null)
+            {
+                if (currSelectedInteractable == interactable)
+                {
+                    return;
+                }
+                DeselectInteractable(currSelectedInteractable);
+            }
             SelectInteractable(interactable);
         }
         else if (currSelectedInteractable != null)
@@ -95,6 +116,14 @@ public abstract class VRInteraction : MonoBehaviour {
     {
         if (interactable != null)
         {
+            if (currManipulatedInteractable != null)
+            {
+                if (currManipulatedInteractable == interactable)
+                {
+                    return;
+                }
+                ReleaseManipulatedInteractable(currManipulatedInteractable);
+            }
             ManipulateInteractable(interactable);
         }
         else if (currManipulatedInteractable != null)
@@ -136,18 +165,4 @@ public abstract class VRInteraction : MonoBehaviour {
         return true;
     }
     #endregion
-
-    protected virtual void Start()
-    {
-        EnableInteration();
-    }
-
-    protected virtual void LateUpdate()
-    {
-        if (interactionEnabled)
-        {
-            SelectInteractableFromRange();
-        }
-    }
-
 }
