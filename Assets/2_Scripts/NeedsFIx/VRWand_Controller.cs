@@ -27,7 +27,8 @@ public class VRWand_Controller : MonoBehaviour {
 
     private void Awake()
     {
-        vrInteraction = GetComponentInChildren<VRInteraction>();
+        vrInteraction = transform.GetActiveComponentInChildren<VRInteraction>();
+        Debug.Log(vrInteraction is HandController_Ray);
         trackedObj = GetComponent<SteamVR_TrackedObject>();
         isLeftHand = trackedObj.transform.name.ToLower().Contains("left");
     }

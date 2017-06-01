@@ -11,7 +11,7 @@ public abstract class HandController : VRInteraction {
     public LayerMask interactMask;
     #endregion																		
 
-    protected VRWand_Controller wand;
+    public VRWand_Controller wand { get; protected set; }
    
     public Animator animHand { get { return _animHand; } }
 	public bool isLeftHand { get; private set; }

@@ -2,17 +2,24 @@
 using System.Collections;
 using System;
 
-[RequireComponent (typeof(BoxCollider))]
+//[RequireComponent (typeof(BoxCollider))]
 public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
 
     [SerializeField] protected Transform interactionPoint;
 
     protected LayerMask interactableLayer;
-    protected bool canInteract { get { return gameObject.layer.Equals(LayerMask.NameToLayer("Interactable")); } }
+    protected bool canInteract;
 
-    virtual protected void Start()
+    protected virtual void Start()
     {
+        canInteract = true;
         EnableInteractions();
+        SetDefaultLayer();
+    }
+
+    protected virtual void OnEnable()
+    {
+        SetDefaultLayer();
     }
 
     public float GetInteractionDistance(Transform other)
@@ -38,6 +45,11 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
     public virtual bool CanBeManipulated(Transform other)
     {
         return canInteract;
+    }
+
+    protected virtual void SetDefaultLayer()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Interactable");
     }
 
     public abstract void OnSelected(VRInteraction caller);

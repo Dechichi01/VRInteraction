@@ -3,14 +3,13 @@ using System.Collections;
 using System;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Pickup : Interactable
+public abstract class Pickup : Interactable
 {
     #region Inspector Variables
     [SerializeField] protected bool releaseWithGripOnly;
     [SerializeField] protected bool useMirroredRotations = true;
-    [SerializeField] protected float grabRange = .2f;
     [SerializeField] [Range(0,1)] protected float squeeze;
-    [SerializeField] private AnimatorOverrideController animOverride;
+    [SerializeField] protected AnimatorOverrideController animOverride;
     #endregion
 
     [HideInInspector] [SerializeField] protected Vector3 rightHeldPosition;
@@ -22,6 +21,9 @@ public class Pickup : Interactable
 
     protected HandController holder = null;
     protected Rigidbody rby;
+
+    protected abstract void GetPicked(VRInteraction interaction);
+    protected abstract void GetDropped(Vector3 throwVelocity);
 
     protected override void Start()
     {
@@ -57,11 +59,6 @@ public class Pickup : Interactable
     public override void OnGripRelease(VRInteraction caller, VRWand_Controller wand)
     {
         
-    }
-
-    public override bool CanBeManipulated(Transform other)
-    {
-        return base.CanBeManipulated(other) && GetInteractionDistance(other) < grabRange;
     }
 
     #region Used by inspector only
@@ -118,26 +115,6 @@ public class Pickup : Interactable
         {
             PersistentAnimator.instance.ChangeAnimRunTime_SmoothTransition(anim, animOverride, this);
         }
-    }
-
-    private void GetPicked(VRInteraction interaction)
-    {
-        interaction.SetManipulatedInteractable(this);
-
-        SetPositionAndRotation();
-
-        rby.useGravity = false;
-        rby.isKinematic = true;
-    }
-
-    private void GetDropped(Vector3 throwVelocity)
-    {
-        holder.SetManipulatedInteractable(null);
-
-        rby.useGravity = true;
-        rby.isKinematic = false;
-
-        rby.velocity = throwVelocity;
     }
 
     public override void OnSelected(VRInteraction caller)

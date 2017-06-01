@@ -22,9 +22,14 @@ public class HandController_Ray : HandController {
     protected override void Update()
     {
         base.Update();
-        if (currSelectedInteractable != null)
+
+        if (wand.triggerPressAmount > 0 && interactionEnabled)
         {
-            Debug.Log(currSelectedInteractable.name);
+            DisableInteration();
+        }
+        else if (wand.triggerPressAmount == 0 && !interactionEnabled && currManipulatedInteractable == null)
+        {
+            EnableInteration();
         }
     }
 
@@ -46,14 +51,15 @@ public class HandController_Ray : HandController {
         bool bHitInteractable = Physics.Raycast(new Ray(start, direction), out hit, length, interactMask);
         if (bHitInteractable)
         {
-            Interactable interactable = hit.collider.transform.GetComponent<Interactable>();
+            Interactable interactable = hit.collider.transform.GetActiveComponent<Interactable>();
             if (interactable == null)
             {
                 Debug.LogError("Collided object in the interact layer isn't an interactable.");
                 return;
             }
-
+            
             SetSelectedInteractable(interactable);
+            animHand.SetBool("Prep", true);
 
             end = hit.point;
 
@@ -65,10 +71,16 @@ public class HandController_Ray : HandController {
         else if (currSelectedInteractable != null)//nothing hit
         {
             SetSelectedInteractable(null);
+            animHand.SetBool("Prep", false);
         }
 
         lineRndr.SetPosition(0, start);
         lineRndr.SetPosition(1, end);
+    }
+
+    public void SetRenderLine(bool value)
+    {
+        lineRndr.gameObject.SetActive(value);
     }
 
     public void InitializeLineRenderer()
@@ -77,9 +89,12 @@ public class HandController_Ray : HandController {
         lineRndr.startWidth = 0.004f;
         lineRndr.endWidth = 0.004f;
 
+        Transform previousParent = lineRndr.transform.parent;
         lineRndr.transform.SetParent(pointReference, false);
 
         lineRndr.transform.localPosition = Vector3.zero;
+
+        lineRndr.transform.parent = previousParent;
 
         lineRndr.gameObject.SetActive(true);
     }

@@ -38,7 +38,7 @@ public class HandController_Touch : HandController {
 
     void OnTriggerEnter(Collider obj)
     {						
-        Pickup pickUp = obj.gameObject.GetComponent<Pickup>();
+        Pickup pickUp = obj.gameObject.GetActiveComponent<Pickup>();
 
         if (pickUp != null && !interactablesInRange.Contains(pickUp))
         {
@@ -48,7 +48,7 @@ public class HandController_Touch : HandController {
 
     void OnTriggerExit(Collider obj)
     {                      
-        Pickup pickup = obj.gameObject.GetComponent<Pickup>();
+        Pickup pickup = obj.gameObject.GetActiveComponent<Pickup>();
 
         if (pickup != null)
         {

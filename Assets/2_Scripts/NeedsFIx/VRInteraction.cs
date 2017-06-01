@@ -7,7 +7,7 @@ public abstract class VRInteraction : MonoBehaviour {
 
     [SerializeField] protected Transform interactionPoint;
 
-    protected bool interactionEnabled = true;
+    public bool interactionEnabled { get; protected set; }
 
     protected Interactable currSelectedInteractable { get; private set; }
     protected Interactable currManipulatedInteractable { get; private set; }
