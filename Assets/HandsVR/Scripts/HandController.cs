@@ -7,6 +7,7 @@ public abstract class HandController : VRInteraction {
 
     #region Inspector Variables								
     [SerializeField] private Animator _animHand;
+    [SerializeField] private AnimatorOverrideController baseRunTimeAnim;
     public Transform modelGrabPoint;
     public LayerMask interactMask;
     #endregion																		
@@ -16,16 +17,13 @@ public abstract class HandController : VRInteraction {
     public Animator animHand { get { return _animHand; } }
 	public bool isLeftHand { get; private set; }
 
-    private AnimatorOverrideController baseRunTimeAnim;
-
 	protected override void Start() {
         base.Start();
         wand = GetComponentInParent<VRWand_Controller>();
         isLeftHand = wand.isLeftHand;
 
-        baseRunTimeAnim = new AnimatorOverrideController(_animHand.runtimeAnimatorController);
-
         SetCollisionRestrictions();
+        RecoverBaseAnimator();
 	}
 
     protected virtual void Update()

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Pickup_Ray : Pickup {
 
-    [SerializeField] private float aproxTime = .5f;
-
     private Vector3 referencePos;
     private HandController_Ray currSelectingCtrl;
 
@@ -13,7 +11,15 @@ public class Pickup_Ray : Pickup {
     {
         if (currSelectingCtrl != null)
         {
-            transform.position = Vector3.Lerp(referencePos, currSelectingCtrl.modelGrabPoint.position, currSelectingCtrl.wand.triggerPressAmount);
+            float percent = currSelectingCtrl.wand.triggerPressAmount;
+            if (percent > 0.1f)
+            {
+                if (!rby.isKinematic)
+                {
+                    rby.isKinematic = true;
+                }
+                transform.position = Vector3.Lerp(referencePos, currSelectingCtrl.modelGrabPoint.position, percent);
+            }
         }
     }
 
@@ -37,9 +43,6 @@ public class Pickup_Ray : Pickup {
             referencePos = transform.position;
             rayCtrl.SetRenderLine(false);
             currSelectingCtrl = rayCtrl;
-
-            rby.useGravity = false;
-            rby.isKinematic = true;
         }
     }
 
@@ -60,6 +63,8 @@ public class Pickup_Ray : Pickup {
     public override void OnManipulationStarted(VRInteraction caller)
     {
         base.OnManipulationStarted(caller);
+        rby.useGravity = false;
+        rby.isKinematic = true;
         currSelectingCtrl = null;
     }
 

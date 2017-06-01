@@ -12,10 +12,10 @@ public abstract class Pickup : Interactable
     [SerializeField] protected AnimatorOverrideController animOverride;
     #endregion
 
-    [HideInInspector] [SerializeField] protected Vector3 rightHeldPosition;
-    [HideInInspector] [SerializeField] protected Vector3 leftHeldPosition;
-    [HideInInspector] [SerializeField] protected Vector3 rightHeldRotation;
-    [HideInInspector] [SerializeField] protected Vector3 leftHeldRotation;
+    [SerializeField] protected Vector3 rightHeldPosition;
+    [SerializeField] protected Vector3 leftHeldPosition;
+    [SerializeField] protected Vector3 rightHeldRotation;
+    [SerializeField] protected Vector3 leftHeldRotation;
 
     public bool isBeingHeld { get { return holder != null; } }
 
