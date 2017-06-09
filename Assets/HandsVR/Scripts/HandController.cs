@@ -9,20 +9,28 @@ public abstract class HandController : VRInteraction {
     [SerializeField] private Animator _animHand;
     [SerializeField] private AnimatorOverrideController baseRunTimeAnim;
     public Transform modelGrabPoint;
-    public LayerMask interactMask;
     #endregion																		
 
-    public VRWand_Controller wand { get; protected set; }
-   
+    protected VRWand_Controller _wand;
+    public VRWand_Controller wand
+    {
+        get
+        {
+            if (_wand == null)
+            {
+                _wand = GetComponentInParent<VRWand_Controller>();
+            }
+            return _wand;
+        }
+    }
     public Animator animHand { get { return _animHand; } }
 	public bool isLeftHand { get; private set; }
 
 	protected override void Start() {
         base.Start();
-        wand = GetComponentInParent<VRWand_Controller>();
+        _wand = GetComponentInParent<VRWand_Controller>();
         isLeftHand = wand.isLeftHand;
 
-        SetCollisionRestrictions();
         RecoverBaseAnimator();
 	}
 
@@ -72,20 +80,6 @@ public abstract class HandController : VRInteraction {
         if (interactable != null)
         {
             interactable.OnTriggerRelease(this, wand);
-        }
-    }
-
-    private void SetCollisionRestrictions()
-    {
-        int objectLayer = gameObject.layer;
-        
-        for (int i = 0; i < 32; i++)
-        {
-            Physics.IgnoreLayerCollision(objectLayer, i, true);
-            if (((1<<i) & interactMask) > 0)
-            {
-                Physics.IgnoreLayerCollision(objectLayer, i, false);
-            }
         }
     }
 

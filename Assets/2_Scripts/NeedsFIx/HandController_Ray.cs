@@ -8,14 +8,9 @@ public class HandController_Ray : HandController {
     [SerializeField] private LineRenderer lineRndr;
     [SerializeField] private Transform walkTarget;
 
-    private Vector3 startLocalPos;
-    private Quaternion startLocalRot;
-
     protected override void Start()
     {
         base.Start();
-        startLocalPos = transform.localPosition;
-        startLocalRot = transform.localRotation;
         InitializeLineRenderer();
     }
 
@@ -31,6 +26,21 @@ public class HandController_Ray : HandController {
         {
             EnableInteration();
         }
+    }
+
+    private void OnEnable()
+    {
+        OnSelectAddListener(OnSelectInteractable);
+        OnDeselectAddListener(OnDeselectInteractable);
+    }
+
+    private void OnDisable()
+    {
+        OnSelectRemoveListener(OnSelectInteractable);
+        OnDeselectRemoveListener(OnDeselectInteractable);
+
+        SetSelectedInteractable(null);
+        SetManipulatedInteractable(null);
     }
 
     public override void SelectInteractableFromRange()
@@ -110,31 +120,19 @@ public class HandController_Ray : HandController {
         lineRndr.gameObject.SetActive(false);
     }
 
-    protected override bool SelectInteractable(Interactable interactable)
+    private void OnSelectInteractable(Interactable interactable)
     {
-        if (base.SelectInteractable(interactable))
+        if (interactable is WalkableGrid)
         {
-            if (interactable is WalkableGrid)
-            {
-                walkTarget.gameObject.SetActive(true);
-            }
-            return true;
+            walkTarget.gameObject.SetActive(true);
         }
-
-        return false;
     }
 
-    protected override bool DeselectInteractable(Interactable interactable)
+    private void OnDeselectInteractable(Interactable interactable)
     {
-        if (base.DeselectInteractable(interactable))
+        if (interactable is WalkableGrid)
         {
-            if (interactable is WalkableGrid)
-            {
-                walkTarget.gameObject.SetActive(true);
-            }
-            return true;
+            walkTarget.gameObject.SetActive(true);
         }
-
-        return false;
     }
 }

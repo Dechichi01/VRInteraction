@@ -4,6 +4,12 @@ using System;
 
 public class WalkableGrid : Interactable
 {
+    protected override void SetDefaultLayer()
+    {
+        base.SetDefaultLayer();
+        gameObject.layer = LayerMask.NameToLayer("WalkableGrid");
+    }
+
     public override void OnDeselected(VRInteraction caller)
     {
         

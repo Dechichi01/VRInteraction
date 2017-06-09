@@ -2,13 +2,16 @@
 using System.Collections;
 using System;
 
-//[RequireComponent (typeof(BoxCollider))]
+[RequireComponent (typeof(BoxCollider))]
 public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
 
     [SerializeField] protected Transform interactionPoint;
+    public Transform GetInteractionPoint() { return interactionPoint; }
 
     protected LayerMask interactableLayer;
     protected bool canInteract;
+    public bool isSelected { get; private set; }
+    public bool isManipulated { get; private set; }
 
     protected virtual void Start()
     {
@@ -52,10 +55,22 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
         gameObject.layer = LayerMask.NameToLayer("Interactable");
     }
 
-    public abstract void OnSelected(VRInteraction caller);
-    public abstract void OnDeselected(VRInteraction caller);
-    public abstract void OnManipulationStarted(VRInteraction caller);
-    public abstract void OnManipulationEnded(VRInteraction caller);
+    public virtual void OnSelected(VRInteraction caller)
+    {
+        isSelected = true;
+    }
+    public virtual void OnDeselected(VRInteraction caller)
+    {
+        isSelected = false;
+    }
+    public virtual void OnManipulationStarted(VRInteraction caller)
+    {
+        isManipulated = true;
+    }
+    public virtual void OnManipulationEnded(VRInteraction caller)
+    {
+        isManipulated = false;
+    }
 
     public abstract void OnTriggerPress(VRInteraction caller, VRWand_Controller wand);
 

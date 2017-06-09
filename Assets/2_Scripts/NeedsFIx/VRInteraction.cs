@@ -1,17 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public abstract class VRInteraction : MonoBehaviour {
 
     protected List<Interactable> interactablesInRange = new List<Interactable>();
 
     [SerializeField] protected Transform interactionPoint;
+    public LayerMask interactMask;
 
     public bool interactionEnabled { get; protected set; }
 
     protected Interactable currSelectedInteractable { get; private set; }
     protected Interactable currManipulatedInteractable { get; private set; }
     protected Interactable interactable { get { return currManipulatedInteractable ?? currSelectedInteractable; } }
+
+    private Action<Interactable> OnSelect;
+    private Action<Interactable> OnDeselect;
+    private Action<Interactable> OnManipulationStart;
+    private Action<Interactable> OnManipulationEnd;
 
     public abstract void SelectInteractableFromRange();
     public abstract void OnTriggerPress(VRWand_Controller wand);
@@ -22,6 +29,7 @@ public abstract class VRInteraction : MonoBehaviour {
     protected virtual void Start()
     {
         EnableInteration();
+        SetCollisionRestrictions();
     }
 
     protected virtual void LateUpdate()
@@ -41,6 +49,62 @@ public abstract class VRInteraction : MonoBehaviour {
     {
         interactionEnabled = true;
     }
+
+    private void SetCollisionRestrictions()
+    {
+        int objectLayer = gameObject.layer;
+
+        for (int i = 0; i < 32; i++)
+        {
+            Physics.IgnoreLayerCollision(objectLayer, i, true);
+            if (((1 << i) & interactMask) > 0)
+            {
+                Physics.IgnoreLayerCollision(objectLayer, i, false);
+            }
+        }
+    }
+
+    #region Callbacks
+    public void OnSelectAddListener(Action<Interactable> action)
+    {
+        OnSelect += action;
+    }
+
+    public void OnSelectRemoveListener(Action<Interactable> action)
+    {
+        OnSelect -= action;
+    }
+
+    public void OnDeselectAddListener(Action<Interactable> action)
+    {
+        OnDeselect += action;
+    }
+
+    public void OnDeselectRemoveListener(Action<Interactable> action)
+    {
+        OnDeselect -= action;
+    }
+
+    public void OnManipulationStartAddListener(Action<Interactable> action)
+    {
+        OnManipulationStart += action;
+    }
+
+    public void OnManipulationStartRemoveListener(Action<Interactable> action)
+    {
+        OnManipulationStart -= action;
+    }
+
+    public void OnManipulationEndListener(Action<Interactable> action)
+    {
+        OnManipulationEnd += action;
+    }
+
+    public void OnManipulationEndRemoveListener(Action<Interactable> action)
+    {
+        OnManipulationEnd -= action;
+    }
+    #endregion
 
     #region ObjectSelection
     public void SetSelectedInteractable(Interactable interactable)
@@ -63,7 +127,7 @@ public abstract class VRInteraction : MonoBehaviour {
         }
     }
 
-    protected virtual bool SelectInteractable(Interactable interactable)
+    private bool SelectInteractable(Interactable interactable)
     {
         if (interactable == null)
         {
@@ -73,11 +137,16 @@ public abstract class VRInteraction : MonoBehaviour {
 
         currSelectedInteractable = interactable;
         interactable.OnSelected(this);
+        
+        if (OnSelect != null)
+        {
+            OnSelect(interactable);
+        }
 
         return true;
     }
 
-    protected virtual bool DeselectInteractable(Interactable interactable)
+    private bool DeselectInteractable(Interactable interactable)
     {
         if (interactable == null)
         {
@@ -95,6 +164,11 @@ public abstract class VRInteraction : MonoBehaviour {
         currSelectedInteractable = null;
 
         interactable.OnDeselected(this);
+
+        if (OnDeselect != null)
+        {
+            OnDeselect(interactable);
+        }
 
         return true;
     }
@@ -132,7 +206,7 @@ public abstract class VRInteraction : MonoBehaviour {
         }
     }
 
-    protected virtual bool ManipulateInteractable(Interactable interactable)
+    private bool ManipulateInteractable(Interactable interactable)
     {
         if (!CanManipulate(interactable))
         {
@@ -144,10 +218,15 @@ public abstract class VRInteraction : MonoBehaviour {
 
         interactable.OnManipulationStarted(this);
 
+        if (OnManipulationStart != null)
+        {
+            OnManipulationStart(interactable);
+        }
+
         return true;
     }
 
-    protected virtual bool ReleaseManipulatedInteractable(Interactable interactable)
+    private bool ReleaseManipulatedInteractable(Interactable interactable)
     {
         if (interactable == null || currManipulatedInteractable != interactable)
         {
@@ -162,7 +241,13 @@ public abstract class VRInteraction : MonoBehaviour {
 
         interactable.OnManipulationEnded(this);
 
+        if (OnManipulationEnd != null)
+        {
+            OnManipulationEnd(interactable);
+        }
+
         return true;
     }
     #endregion
+
 }

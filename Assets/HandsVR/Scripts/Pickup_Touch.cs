@@ -16,7 +16,7 @@ public class Pickup_Touch : Pickup
 
     protected override void SetDefaultLayer()
     {
-        gameObject.layer = LayerMask.NameToLayer("Interactable");
+        gameObject.layer = LayerMask.NameToLayer("Interactable_Touch");
     }
 
     public override bool CanBeManipulated(Transform other)

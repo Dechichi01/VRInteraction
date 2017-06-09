@@ -25,9 +25,28 @@ public class VRWand_Controller : MonoBehaviour {
     public float triggerPressAmount { get { return VRInput.Vive.GetTriggerPressAmount(controller); } }
     #endregion
 
+    #region Getters/Setters
+    public bool SetVRInteraction(VRInteraction interaction)
+    {
+        if (interaction != null)
+        {
+            if (vrInteraction != null)
+            {
+                vrInteraction.enabled = false;
+            }
+            vrInteraction = interaction;
+            vrInteraction.enabled = true;
+
+            return true;
+        }
+
+        return false;
+    }
+    #endregion
+
     private void Awake()
     {
-        vrInteraction = transform.GetActiveComponentInChildren<VRInteraction>();
+        SetVRInteraction(transform.GetActiveComponentInChildren<VRInteraction>());
         trackedObj = GetComponent<SteamVR_TrackedObject>();
         isLeftHand = trackedObj.transform.name.ToLower().Contains("left");
     }

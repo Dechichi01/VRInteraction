@@ -2,7 +2,6 @@
 using System.Collections;
 using System;
 
-[RequireComponent(typeof(Rigidbody))]
 public abstract class Pickup : Interactable
 {
     #region Inspector Variables
@@ -17,6 +16,19 @@ public abstract class Pickup : Interactable
     [SerializeField] protected Vector3 rightHeldRotation;
     [SerializeField] protected Vector3 leftHeldRotation;
 
+    private Transform _tRoot;
+    protected Transform tRoot
+    {
+        get
+        {
+            if (_tRoot == null)
+            {
+                _tRoot = transform.root;
+            }
+            return _tRoot;
+        }
+    }
+
     public bool isBeingHeld { get { return holder != null; } }
 
     protected HandController holder = null;
@@ -28,7 +40,8 @@ public abstract class Pickup : Interactable
     protected override void Start()
     {
         base.Start();
-        rby = GetComponent<Rigidbody>();
+        _tRoot = transform.root;
+        rby = GetComponentInParent<Rigidbody>();
         holder = null;
     }
 
@@ -66,8 +79,8 @@ public abstract class Pickup : Interactable
     {
         if (isBeingHeld)
         {
-            transform.localPosition = (holder.isLeftHand) ? leftHeldPosition : rightHeldPosition;
-            transform.localRotation = (holder.isLeftHand) ? Quaternion.Euler(leftHeldRotation) : Quaternion.Euler(rightHeldRotation);
+            tRoot.localPosition = (holder.isLeftHand) ? leftHeldPosition : rightHeldPosition;
+            tRoot.localRotation = (holder.isLeftHand) ? Quaternion.Euler(leftHeldRotation) : Quaternion.Euler(rightHeldRotation);
         }
     }
 
@@ -77,24 +90,24 @@ public abstract class Pickup : Interactable
         {
             if (holder.isLeftHand)
             {
-                leftHeldPosition = transform.localPosition;
-                leftHeldRotation = transform.localRotation.eulerAngles;
+                leftHeldPosition = tRoot.localPosition;
+                leftHeldRotation = tRoot.localRotation.eulerAngles;
                 if (useMirroredRotations)
                 {
-                    rightHeldPosition = new Vector3(-transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
-                    rightHeldRotation = new Quaternion(transform.localRotation.x, -transform.localRotation.y,
-                        -transform.localRotation.z, transform.localRotation.w).eulerAngles;
+                    rightHeldPosition = new Vector3(-tRoot.localPosition.x, tRoot.localPosition.y, tRoot.localPosition.z);
+                    rightHeldRotation = new Quaternion(tRoot.localRotation.x, -tRoot.localRotation.y,
+                        -tRoot.localRotation.z, tRoot.localRotation.w).eulerAngles;
                 }
             }
             else
             {
-                rightHeldPosition = transform.localPosition;
-                rightHeldRotation = transform.localRotation.eulerAngles;
+                rightHeldPosition = tRoot.localPosition;
+                rightHeldRotation = tRoot.localRotation.eulerAngles;
                 if (useMirroredRotations)
                 {
-                    leftHeldPosition = new Vector3(-transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
-                    leftHeldRotation = new Quaternion(transform.localRotation.x, -transform.localRotation.y,
-                        -transform.localRotation.z, transform.localRotation.w).eulerAngles;
+                    leftHeldPosition = new Vector3(-tRoot.localPosition.x, tRoot.localPosition.y, tRoot.localPosition.z);
+                    leftHeldRotation = new Quaternion(tRoot.localRotation.x, -tRoot.localRotation.y,
+                        -tRoot.localRotation.z, tRoot.localRotation.w).eulerAngles;
                 }
             }
         }
@@ -119,6 +132,7 @@ public abstract class Pickup : Interactable
 
     public override void OnSelected(VRInteraction caller)
     {
+        base.OnSelected(caller);
         HandController hand = caller as HandController;
         if (hand != null)
         {
@@ -128,6 +142,7 @@ public abstract class Pickup : Interactable
 
     public override void OnDeselected(VRInteraction caller)
     {
+        base.OnDeselected(caller);
         HandController hand = caller as HandController;
         if (hand != null)
         {
@@ -137,6 +152,7 @@ public abstract class Pickup : Interactable
 
     public override void OnManipulationStarted(VRInteraction caller)
     {
+        base.OnManipulationStarted(caller);
         HandController hand = caller as HandController;
         if (hand != null)
         {
@@ -146,11 +162,12 @@ public abstract class Pickup : Interactable
 
         holder = hand;
 
-        transform.parent = holder.modelGrabPoint;
+        tRoot.parent = holder.modelGrabPoint;
     }
 
     public override void OnManipulationEnded(VRInteraction caller)
     {
+        base.OnManipulationEnded(caller);
         HandController hand = caller as HandController;
         if (hand != null)
         {
@@ -159,6 +176,6 @@ public abstract class Pickup : Interactable
 
         holder = null;
 
-        transform.parent = null;
+        tRoot.parent = null;
     }
 }

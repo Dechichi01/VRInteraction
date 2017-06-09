@@ -18,7 +18,7 @@ public class Pickup_Ray : Pickup {
                 {
                     rby.isKinematic = true;
                 }
-                transform.position = Vector3.Lerp(referencePos, currSelectingCtrl.modelGrabPoint.position, percent);
+                tRoot.position = Vector3.Lerp(referencePos, currSelectingCtrl.modelGrabPoint.position, percent);
             }
         }
     }
@@ -40,7 +40,7 @@ public class Pickup_Ray : Pickup {
         HandController_Ray rayCtrl = caller as HandController_Ray;
         if (rayCtrl != null)
         {
-            referencePos = transform.position;
+            referencePos = tRoot.position;
             rayCtrl.SetRenderLine(false);
             currSelectingCtrl = rayCtrl;
         }

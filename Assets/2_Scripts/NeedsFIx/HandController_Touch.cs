@@ -4,6 +4,31 @@ using UnityEngine;
 
 public class HandController_Touch : HandController {
 
+    private void OnEnable()
+    {
+        OnSelectAddListener(SetAnimPrep);
+        OnDeselectAddListener(UnsetAnimPrep);
+    }
+
+    private void OnDisable()
+    {
+        OnSelectRemoveListener(SetAnimPrep);
+        OnDeselectRemoveListener(UnsetAnimPrep);
+
+        SetSelectedInteractable(null);
+        SetManipulatedInteractable(null);
+    }
+
+    private void SetAnimPrep(Interactable interactable)
+    {
+        animHand.SetBool("Prep", true);
+    }
+    
+    private void UnsetAnimPrep(Interactable interactable)
+    {
+        animHand.SetBool("Prep", false);
+    }
+
     public override void SelectInteractableFromRange()
     {
         float distToInteractable = float.MaxValue;
@@ -32,32 +57,26 @@ public class HandController_Touch : HandController {
         if (previousClosest != currClosest)
         {
             SetSelectedInteractable(currClosest);
-            animHand.SetBool("Prep", true);
         }
     }
 
     void OnTriggerEnter(Collider obj)
     {						
-        Pickup pickUp = obj.gameObject.GetActiveComponent<Pickup>();
+        Interactable interactable = obj.gameObject.GetActiveComponent<Interactable>();
 
-        if (pickUp != null && !interactablesInRange.Contains(pickUp))
+        if (interactable != null && !interactablesInRange.Contains(interactable))
         {
-            interactablesInRange.Add(pickUp);
+            interactablesInRange.Add(interactable);
         }
     }
 
     void OnTriggerExit(Collider obj)
-    {                      
-        Pickup pickup = obj.gameObject.GetActiveComponent<Pickup>();
+    {
+        Interactable interactable = obj.gameObject.GetActiveComponent<Interactable>();
 
-        if (pickup != null)
+        if (interactable != null)
         {
-            interactablesInRange.Remove(pickup);
-            if (pickup == currSelectedInteractable)
-            {
-                animHand.SetBool("Prep", false);
-                SetSelectedInteractable(null);
-            }
+            interactablesInRange.Remove(interactable);
         }
     }
 }
