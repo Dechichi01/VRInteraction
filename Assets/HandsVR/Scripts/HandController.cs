@@ -39,9 +39,9 @@ public abstract class HandController : VRInteraction {
         _animHand.SetFloat("closeAmount", wand.triggerPressAmount);
     }
 
-    protected virtual void OnEnable()
+    protected override void OnEnable()
     {
-        
+        base.OnEnable();
     }
 
     protected override void DisableInteration()

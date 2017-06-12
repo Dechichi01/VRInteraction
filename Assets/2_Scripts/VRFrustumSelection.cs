@@ -55,8 +55,9 @@ public class VRFrustumSelection : VRInteraction
         }
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         OnSelectAddListener(ShowSelectNote);
         OnDeselectAddListener(HideSelectNote);
 
@@ -67,8 +68,9 @@ public class VRFrustumSelection : VRInteraction
         }
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         OnSelectRemoveListener(ShowSelectNote);
         OnDeselectRemoveListener(HideSelectNote);
 

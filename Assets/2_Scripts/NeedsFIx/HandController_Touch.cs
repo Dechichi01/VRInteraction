@@ -11,8 +11,9 @@ public class HandController_Touch : HandController {
         OnDeselectAddListener(UnsetAnimPrep);
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         OnSelectRemoveListener(SetAnimPrep);
         OnDeselectRemoveListener(UnsetAnimPrep);
 

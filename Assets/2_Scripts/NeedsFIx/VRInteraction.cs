@@ -43,6 +43,17 @@ public abstract class VRInteraction : MonoBehaviour {
         }
     }
 
+    protected virtual void OnEnable()
+    {
+
+    }
+
+    protected virtual void OnDisable()
+    {
+        SetManipulatedInteractable(null);
+        SetSelectedInteractable(null);
+    }
+
     protected virtual void DisableInteration()
     {
         interactionEnabled = false;
@@ -108,6 +119,30 @@ public abstract class VRInteraction : MonoBehaviour {
         OnManipulationEnd -= action;
     }
     #endregion
+
+    public void CopyInteractionState(VRInteraction other)
+    {
+        if (other == this)
+        {
+            return;
+        }
+
+        switch(other.state)
+        {
+            case InteractionState.Idle:
+                SetSelectedInteractable(null);
+                SetManipulatedInteractable(null);
+                break;
+            case InteractionState.Selecting:
+                SetManipulatedInteractable(null);
+                SetSelectedInteractable(other.currSelectedInteractable);
+                break;
+            case InteractionState.Manipulating:
+                SetSelectedInteractable(other.currSelectedInteractable);
+                SetManipulatedInteractable(other.currManipulatedInteractable);
+                break;
+        }
+    }
 
     #region ObjectSelection
     public void SetSelectedInteractable(Interactable interactable)

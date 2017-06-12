@@ -36,8 +36,9 @@ public class HandController_Ray : HandController {
         SetRenderLine(true);
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         OnSelectRemoveListener(OnSelectInteractable);
         OnDeselectRemoveListener(OnDeselectInteractable);
 
