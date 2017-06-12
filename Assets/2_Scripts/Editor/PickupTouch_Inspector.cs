@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Pickup))]
+[CustomEditor(typeof(Pickup), true)]
 public class PickupTouch_Inspector : Editor {
 
     Pickup pickUp;
@@ -25,9 +25,9 @@ public class PickupTouch_Inspector : Editor {
 
         pickUp = (Pickup)target;
 
-        Vector3 pos = pickUp.transform.position;
-        Quaternion rot = pickUp.transform.rotation;
-        Vector3 localScale = pickUp.transform.localScale;
+        Vector3 pos = pickUp.tRoot.position;
+        Quaternion rot = pickUp.tRoot.rotation;
+        Vector3 localScale = pickUp.tRoot.localScale;
 
         EditorGUI.BeginChangeCheck();
 
@@ -48,11 +48,13 @@ public class PickupTouch_Inspector : Editor {
         {
             Undo.RecordObject(pickUp.transform, "Transform Handle");
             Undo.RecordObject(pickUp, "Pickup values");
-            pickUp.transform.position = pos;
-            pickUp.transform.rotation = rot;
-            pickUp.transform.localScale = localScale;
+            pickUp.tRoot.position = pos;
+            pickUp.tRoot.rotation = rot;
+            pickUp.tRoot.localScale = localScale;
             if (Application.isPlaying)
+            {
                 pickUp.UpdateOffSetsFromCurrentPos();
+            }
         }
     }
 

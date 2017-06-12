@@ -21,6 +21,20 @@ public class VRViewportSelectManager : VRFrustumSelection {
         SetWandInteraction(InteractionType.Touch);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log("Ray");
+            SetWandInteraction(InteractionType.Ray);
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            Debug.Log("Touch");
+            SetWandInteraction(InteractionType.Touch);
+        }
+    }
+
     private void SetWandInteraction(InteractionType interactionType)
     {
         switch (interactionType)

@@ -23,7 +23,7 @@ public abstract class HandController : VRInteraction {
             return _wand;
         }
     }
-    public Animator animHand { get { return _animHand; } }
+    protected Animator animHand { get { return _animHand; } }
 	public bool isLeftHand { get; private set; }
 
 	protected override void Start() {
@@ -37,6 +37,11 @@ public abstract class HandController : VRInteraction {
     protected virtual void Update()
     {
         _animHand.SetFloat("closeAmount", wand.triggerPressAmount);
+    }
+
+    protected virtual void OnEnable()
+    {
+        
     }
 
     protected override void DisableInteration()
@@ -83,9 +88,31 @@ public abstract class HandController : VRInteraction {
         }
     }
 
+    public void SetGrabAnimParams(Pickup pickup)
+    {
+        if (pickup == currManipulatedInteractable)
+        {
+            animHand.SetBool("Grab", true);
+            animHand.SetFloat("Squeeze", pickup.GetSqueezeValue());
+        }
+    }
+
+    public void SetReleaseAnimParams(Pickup pickup)
+    {
+        animHand.SetBool("Grab", false);
+    }
+
+    public void SetAnimOverride(AnimatorOverrideController animOverride)
+    {
+        if (animOverride != null)
+        {
+            PersistentAnimator.instance.ChangeAnimRunTime_SmoothTransition(animHand, animOverride, this);
+        }
+    }
+
     public void RecoverBaseAnimator()
     {
-        PersistentAnimator.instance.ChangeAnimRunTime_SmoothTransition(_animHand, baseRunTimeAnim, this);
+        SetAnimOverride(baseRunTimeAnim);
     }
 
 }

@@ -28,10 +28,12 @@ public class HandController_Ray : HandController {
         }
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         OnSelectAddListener(OnSelectInteractable);
         OnDeselectAddListener(OnDeselectInteractable);
+        SetRenderLine(true);
     }
 
     private void OnDisable()
@@ -41,6 +43,7 @@ public class HandController_Ray : HandController {
 
         SetSelectedInteractable(null);
         SetManipulatedInteractable(null);
+        SetRenderLine(false);
     }
 
     public override void SelectInteractableFromRange()
@@ -114,6 +117,7 @@ public class HandController_Ray : HandController {
         base.EnableInteration();
         lineRndr.gameObject.SetActive(true);
     }
+
     protected override void DisableInteration()
     {
         base.DisableInteration();

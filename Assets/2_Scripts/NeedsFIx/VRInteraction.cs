@@ -9,11 +9,13 @@ public abstract class VRInteraction : MonoBehaviour {
     [SerializeField] protected Transform interactionPoint;
     public LayerMask interactMask;
 
-    public bool interactionEnabled { get; protected set; }
+    public bool interactionEnabled { get; private set; }
 
     protected Interactable currSelectedInteractable { get; private set; }
     protected Interactable currManipulatedInteractable { get; private set; }
     protected Interactable interactable { get { return currManipulatedInteractable ?? currSelectedInteractable; } }
+
+    public InteractionState state { get; private set; }
 
     private Action<Interactable> OnSelect;
     private Action<Interactable> OnDeselect;
@@ -28,6 +30,7 @@ public abstract class VRInteraction : MonoBehaviour {
 
     protected virtual void Start()
     {
+        state = InteractionState.Idle;
         EnableInteration();
         SetCollisionRestrictions();
     }
@@ -137,6 +140,7 @@ public abstract class VRInteraction : MonoBehaviour {
 
         currSelectedInteractable = interactable;
         interactable.OnSelected(this);
+        state = InteractionState.Selecting;
         
         if (OnSelect != null)
         {
@@ -162,6 +166,7 @@ public abstract class VRInteraction : MonoBehaviour {
         }
 
         currSelectedInteractable = null;
+        state = InteractionState.Idle;
 
         interactable.OnDeselected(this);
 
@@ -217,6 +222,7 @@ public abstract class VRInteraction : MonoBehaviour {
         DisableInteration();
 
         interactable.OnManipulationStarted(this);
+        state = InteractionState.Manipulating;
 
         if (OnManipulationStart != null)
         {
@@ -238,6 +244,7 @@ public abstract class VRInteraction : MonoBehaviour {
         EnableInteration();
 
         currManipulatedInteractable = null;
+        state = currSelectedInteractable != null ? InteractionState.Selecting : InteractionState.Idle;
 
         interactable.OnManipulationEnded(this);
 
@@ -251,3 +258,5 @@ public abstract class VRInteraction : MonoBehaviour {
     #endregion
 
 }
+
+public enum InteractionState { Idle = 0, Selecting = 1, Manipulating = 2 }

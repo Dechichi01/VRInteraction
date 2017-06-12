@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class HandController_Touch : HandController {
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         OnSelectAddListener(SetAnimPrep);
         OnDeselectAddListener(UnsetAnimPrep);
     }

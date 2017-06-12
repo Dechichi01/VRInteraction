@@ -11,13 +11,13 @@ public abstract class Pickup : Interactable
     [SerializeField] protected AnimatorOverrideController animOverride;
     #endregion
 
-    [SerializeField] protected Vector3 rightHeldPosition;
-    [SerializeField] protected Vector3 leftHeldPosition;
-    [SerializeField] protected Vector3 rightHeldRotation;
-    [SerializeField] protected Vector3 leftHeldRotation;
+    [SerializeField] [HideInInspector] protected Vector3 rightHeldPosition;
+    [SerializeField] [HideInInspector] protected Vector3 leftHeldPosition;
+    [SerializeField] [HideInInspector] protected Vector3 rightHeldRotation;
+    [SerializeField] [HideInInspector] protected Vector3 leftHeldRotation;
 
     private Transform _tRoot;
-    protected Transform tRoot
+    public Transform tRoot
     {
         get
         {
@@ -36,6 +36,11 @@ public abstract class Pickup : Interactable
 
     protected abstract void GetPicked(VRInteraction interaction);
     protected abstract void GetDropped(Vector3 throwVelocity);
+
+    public float GetSqueezeValue()
+    {
+        return squeeze;
+    }
 
     protected override void Start()
     {
@@ -122,21 +127,13 @@ public abstract class Pickup : Interactable
     }
     #endregion
 
-    public void SetAnimOverride(Animator anim)
-    {
-        if (animOverride != null)
-        {
-            PersistentAnimator.instance.ChangeAnimRunTime_SmoothTransition(anim, animOverride, this);
-        }
-    }
-
     public override void OnSelected(VRInteraction caller)
     {
         base.OnSelected(caller);
         HandController hand = caller as HandController;
         if (hand != null)
         {
-            SetAnimOverride(hand.animHand);
+            hand.SetAnimOverride(animOverride);
         }
     }
 
@@ -156,13 +153,10 @@ public abstract class Pickup : Interactable
         HandController hand = caller as HandController;
         if (hand != null)
         {
-            hand.animHand.SetBool("Grab", true);
-            hand.animHand.SetFloat("Squeeze", squeeze);
+            holder = hand;
+            tRoot.parent = holder.modelGrabPoint;
+            hand.SetGrabAnimParams(this);
         }
-
-        holder = hand;
-
-        tRoot.parent = holder.modelGrabPoint;
     }
 
     public override void OnManipulationEnded(VRInteraction caller)
@@ -171,7 +165,7 @@ public abstract class Pickup : Interactable
         HandController hand = caller as HandController;
         if (hand != null)
         {
-            hand.animHand.SetBool("Grab", false);
+            hand.SetReleaseAnimParams(this);
         }
 
         holder = null;
