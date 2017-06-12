@@ -34,8 +34,16 @@ public abstract class Pickup : Interactable
     protected HandController holder = null;
     protected Rigidbody rby;
 
-    protected abstract void GetPicked(VRInteraction interaction);
-    protected abstract void GetDropped(Vector3 throwVelocity);
+    protected virtual void GetPicked(VRInteraction interaction)
+    {
+        interaction.SetManipulatedInteractable(this);
+    }
+
+    protected virtual void GetDropped(Vector3 throwVelocity)
+    {
+        holder.SetManipulatedInteractable(null);
+        rby.velocity = throwVelocity;
+    }
 
     public float GetSqueezeValue()
     {
@@ -156,6 +164,10 @@ public abstract class Pickup : Interactable
             holder = hand;
             tRoot.parent = holder.modelGrabPoint;
             hand.SetGrabAnimParams(this);
+
+            SetPositionAndRotation();
+            rby.useGravity = false;
+            rby.isKinematic = true;
         }
     }
 
@@ -171,5 +183,8 @@ public abstract class Pickup : Interactable
         holder = null;
 
         tRoot.parent = null;
+
+        rby.useGravity = true;
+        rby.isKinematic = false;
     }
 }

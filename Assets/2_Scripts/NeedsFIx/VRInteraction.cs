@@ -15,7 +15,21 @@ public abstract class VRInteraction : MonoBehaviour {
     protected Interactable currManipulatedInteractable { get; private set; }
     protected Interactable interactable { get { return currManipulatedInteractable ?? currSelectedInteractable; } }
 
-    public InteractionState state { get; private set; }
+    public InteractionState state
+    {
+        get
+        {
+            if (currManipulatedInteractable != null)
+            {
+                return InteractionState.Manipulating;
+            }
+            if (currSelectedInteractable != null)
+            {
+                return InteractionState.Selecting;
+            }
+            return InteractionState.Idle;
+        }
+    }
 
     private Action<Interactable> OnSelect;
     private Action<Interactable> OnDeselect;
@@ -30,7 +44,6 @@ public abstract class VRInteraction : MonoBehaviour {
 
     protected virtual void Start()
     {
-        state = InteractionState.Idle;
         EnableInteration();
         SetCollisionRestrictions();
     }
@@ -120,30 +133,6 @@ public abstract class VRInteraction : MonoBehaviour {
     }
     #endregion
 
-    public void CopyInteractionState(VRInteraction other)
-    {
-        if (other == this)
-        {
-            return;
-        }
-
-        switch(other.state)
-        {
-            case InteractionState.Idle:
-                SetSelectedInteractable(null);
-                SetManipulatedInteractable(null);
-                break;
-            case InteractionState.Selecting:
-                SetManipulatedInteractable(null);
-                SetSelectedInteractable(other.currSelectedInteractable);
-                break;
-            case InteractionState.Manipulating:
-                SetSelectedInteractable(other.currSelectedInteractable);
-                SetManipulatedInteractable(other.currManipulatedInteractable);
-                break;
-        }
-    }
-
     #region ObjectSelection
     public void SetSelectedInteractable(Interactable interactable)
     {
@@ -175,7 +164,6 @@ public abstract class VRInteraction : MonoBehaviour {
 
         currSelectedInteractable = interactable;
         interactable.OnSelected(this);
-        state = InteractionState.Selecting;
         
         if (OnSelect != null)
         {
@@ -201,7 +189,6 @@ public abstract class VRInteraction : MonoBehaviour {
         }
 
         currSelectedInteractable = null;
-        state = InteractionState.Idle;
 
         interactable.OnDeselected(this);
 
@@ -257,7 +244,6 @@ public abstract class VRInteraction : MonoBehaviour {
         DisableInteration();
 
         interactable.OnManipulationStarted(this);
-        state = InteractionState.Manipulating;
 
         if (OnManipulationStart != null)
         {
@@ -279,7 +265,6 @@ public abstract class VRInteraction : MonoBehaviour {
         EnableInteration();
 
         currManipulatedInteractable = null;
-        state = currSelectedInteractable != null ? InteractionState.Selecting : InteractionState.Idle;
 
         interactable.OnManipulationEnded(this);
 

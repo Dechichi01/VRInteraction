@@ -32,8 +32,10 @@ public class VRWand_Controller : MonoBehaviour {
         {
             if (vrInteraction != null)
             {
-                interaction.enabled = true;
-                interaction.CopyInteractionState(vrInteraction);
+                if (vrInteraction.state == InteractionState.Manipulating)
+                {
+                    return false;
+                }
                 vrInteraction.enabled = false;
             }
 

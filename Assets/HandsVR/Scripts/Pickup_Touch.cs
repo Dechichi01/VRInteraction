@@ -23,24 +23,4 @@ public class Pickup_Touch : Pickup
     {
         return base.CanBeManipulated(other) && GetInteractionDistance(other) < grabRange;
     }
-
-    protected override void GetPicked(VRInteraction interaction)
-    {
-        interaction.SetManipulatedInteractable(this);
-
-        SetPositionAndRotation();
-
-        rby.useGravity = false;
-        rby.isKinematic = true;
-    }
-
-    protected override void GetDropped(Vector3 throwVelocity)
-    {
-        holder.SetManipulatedInteractable(null);
-
-        rby.useGravity = true;
-        rby.isKinematic = false;
-
-        rby.velocity = throwVelocity;
-    }
 }
