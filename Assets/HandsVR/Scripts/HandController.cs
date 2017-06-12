@@ -42,6 +42,7 @@ public abstract class HandController : VRInteraction {
     protected override void OnEnable()
     {
         base.OnEnable();
+
     }
 
     protected override void DisableInteration()
