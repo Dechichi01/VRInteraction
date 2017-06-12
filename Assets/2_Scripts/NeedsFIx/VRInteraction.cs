@@ -9,7 +9,7 @@ public abstract class VRInteraction : MonoBehaviour {
     [SerializeField] protected Transform interactionPoint;
     public LayerMask interactMask;
 
-    public bool interactionEnabled { get; private set; }
+    public bool selecitonEnabled { get; private set; }
 
     protected Interactable currSelectedInteractable { get; private set; }
     protected Interactable currManipulatedInteractable { get; private set; }
@@ -44,13 +44,12 @@ public abstract class VRInteraction : MonoBehaviour {
 
     protected virtual void Start()
     {
-        EnableInteration();
-        SetCollisionRestrictions();
+        EnableSelection();
     }
 
     protected virtual void LateUpdate()
     {
-        if (interactionEnabled)
+        if (selecitonEnabled)
         {
             SelectInteractableFromRange();
         }
@@ -58,7 +57,7 @@ public abstract class VRInteraction : MonoBehaviour {
 
     protected virtual void OnEnable()
     {
-
+        SetCollisionRestrictions();
     }
 
     protected virtual void OnDisable()
@@ -67,14 +66,14 @@ public abstract class VRInteraction : MonoBehaviour {
         SetSelectedInteractable(null);
     }
 
-    protected virtual void DisableInteration()
+    protected virtual void DisableSelection()
     {
-        interactionEnabled = false;
+        selecitonEnabled = false;
     }
 
-    protected virtual void EnableInteration()
+    protected virtual void EnableSelection()
     {
-        interactionEnabled = true;
+        selecitonEnabled = true;
     }
 
     private void SetCollisionRestrictions()
@@ -241,7 +240,7 @@ public abstract class VRInteraction : MonoBehaviour {
         }
 
         currManipulatedInteractable = interactable;
-        DisableInteration();
+        DisableSelection();
 
         interactable.OnManipulationStarted(this);
 
@@ -262,7 +261,7 @@ public abstract class VRInteraction : MonoBehaviour {
             return false;
         }
 
-        EnableInteration();
+        EnableSelection();
 
         currManipulatedInteractable = null;
 

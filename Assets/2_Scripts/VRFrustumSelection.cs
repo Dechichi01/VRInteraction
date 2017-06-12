@@ -99,7 +99,7 @@ public class VRFrustumSelection : VRInteraction
 
     private void OnOtherInteractionSelect(Interactable interactable)
     {
-        DisableInteration();
+        DisableSelection();
     }
 
     private void OnOtherInteractionDeselect(Interactable interactable)
@@ -107,7 +107,7 @@ public class VRFrustumSelection : VRInteraction
         SelectInteractableFromRange();
         if (currSelectedInteractable != null && !currSelectedInteractable.isSelected)
         {
-            EnableInteration();
+            EnableSelection();
         }
     }
 
@@ -193,9 +193,9 @@ public class VRFrustumSelection : VRInteraction
         
     }
 
-    protected override void DisableInteration()
+    protected override void DisableSelection()
     {
-        base.DisableInteration();
+        base.DisableSelection();
         SetSelectedInteractable(null);
     }
 }

@@ -42,18 +42,18 @@ public abstract class HandController : VRInteraction {
     protected override void OnEnable()
     {
         base.OnEnable();
-
+        RecoverBaseAnimator();
     }
 
-    protected override void DisableInteration()
+    protected override void DisableSelection()
     {
-        base.DisableInteration();
+        base.DisableSelection();
         GetComponent<Collider>().enabled = false;
     }
 
-    protected override void EnableInteration()
+    protected override void EnableSelection()
     {
-        base.EnableInteration();
+        base.EnableSelection();
         GetComponent<Collider>().enabled = true;
     }
 

@@ -18,13 +18,13 @@ public class HandController_Ray : HandController {
     {
         base.Update();
 
-        if (wand.triggerPressAmount > 0 && interactionEnabled)
+        if (wand.triggerPressAmount > 0 && selecitonEnabled)
         {
-            DisableInteration();
+            DisableSelection();
         }
-        else if (wand.triggerPressAmount == 0 && !interactionEnabled && currManipulatedInteractable == null)
+        else if (wand.triggerPressAmount == 0 && !selecitonEnabled && currManipulatedInteractable == null)
         {
-            EnableInteration();
+            EnableSelection();
         }
     }
 
@@ -49,7 +49,7 @@ public class HandController_Ray : HandController {
 
     public override void SelectInteractableFromRange()
     {
-        if (!interactionEnabled)
+        if (!selecitonEnabled)
         {
             return;
         }
@@ -113,15 +113,15 @@ public class HandController_Ray : HandController {
         lineRndr.gameObject.SetActive(true);
     }
 
-    protected override void EnableInteration()
+    protected override void EnableSelection()
     {
-        base.EnableInteration();
+        base.EnableSelection();
         lineRndr.gameObject.SetActive(true);
     }
 
-    protected override void DisableInteration()
+    protected override void DisableSelection()
     {
-        base.DisableInteration();
+        base.DisableSelection();
         lineRndr.gameObject.SetActive(false);
     }
 
