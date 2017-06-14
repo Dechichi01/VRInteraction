@@ -8,6 +8,9 @@ public class VRViewportSelectManager : VRFrustumSelection {
     private enum InteractionType { Touch = 1, Ray = 2}
     [SerializeField] private VRWand_Controller rightWand;
     [SerializeField] private VRWand_Controller leftWand;
+    [SerializeField] [Range(.1f,3f)] private float touchInteractionMaxDist = 1f;
+
+    private InteractionType currInteractionType;
 
     private HandController_Ray rayIntRight;
     private HandController_Ray rayIntLeft;
@@ -18,23 +21,30 @@ public class VRViewportSelectManager : VRFrustumSelection {
     {
         base.Start();
         CashRayAndTouchInteractions();
-        SetWandInteraction(InteractionType.Touch);
+        SetWandInteraction(InteractionType.Ray);
     }
 
-    private void Update()
+    protected override void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        base.LateUpdate();
+        if (currInteractionType != InteractionType.Touch)
         {
-            Debug.Log("Ray");
-            SetWandInteraction(InteractionType.Ray);
+            if (InTouchInteractionRange())
+            {
+                Debug.Log("changing to touch");
+                SetWandInteraction(InteractionType.Touch);
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        else
         {
-            Debug.Log("Touch");
-            SetWandInteraction(InteractionType.Touch);
+            if (!InTouchInteractionRange())
+            {
+                Debug.Log("Changing to ray");
+                SetWandInteraction(InteractionType.Ray);
+            }
         }
-    }
 
+    }
     private void SetWandInteraction(InteractionType interactionType)
     {
         switch (interactionType)
@@ -48,6 +58,8 @@ public class VRViewportSelectManager : VRFrustumSelection {
                 leftWand.SetVRInteraction(rayIntLeft);
                 break;
         }
+
+        currInteractionType = interactionType;
     }
 
     private void CashRayAndTouchInteractions()
@@ -60,5 +72,11 @@ public class VRViewportSelectManager : VRFrustumSelection {
 
         HandController[] allInteractions = new HandController[4] { touchIntLeft, touchIntRight, rayIntRight, rayIntLeft };
         Array.ForEach(allInteractions, i => { if (i != null) i.enabled = false; });
+    }
+
+    private bool InTouchInteractionRange()
+    {
+        return currSelectedInteractable != null &&
+            currSelectedInteractable.GetSquaredInteractionDistance(transform) < Mathf.Pow(touchInteractionMaxDist, 2);
     }
 }

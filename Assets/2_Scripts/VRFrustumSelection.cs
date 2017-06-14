@@ -143,13 +143,13 @@ public class VRFrustumSelection : VRInteraction
             }
         }
 
-        if (distToInteractable < disableThresholdDist)
-        {
-            SetSelectedInteractable(null);
-        }
-        else if (previousClosest != currClosest)
+        if (previousClosest != currClosest)
         {
             SetSelectedInteractable(currClosest);
+            if (distToInteractable < disableThresholdDist)
+            {
+                HideSelectNote(currClosest);
+            }
         }
     }
 
