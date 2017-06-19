@@ -146,9 +146,18 @@ public class VRFrustumSelection : VRInteraction
         if (previousClosest != currClosest)
         {
             SetSelectedInteractable(currClosest);
-            if (distToInteractable < disableThresholdDist)
+        }
+
+        //Hide/Show selection node 
+        if (currClosest != null)
+        {
+            if (noteSelectionImage.gameObject.activeSelf && distToInteractable < disableThresholdDist)
             {
                 HideSelectNote(currClosest);
+            }
+            else if (!noteSelectionImage.gameObject.activeSelf && distToInteractable > disableThresholdDist)
+            {
+                ShowSelectNote(currClosest);
             }
         }
     }
