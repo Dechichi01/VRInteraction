@@ -22,29 +22,9 @@ public class VRViewportSelectManager : VRFrustumSelection {
         base.Start();
         CashRayAndTouchInteractions();
         SetWandInteraction(InteractionType.Ray);
+        StartCoroutine(UpdateCurrentInteraction());
     }
 
-    protected override void LateUpdate()
-    {
-        base.LateUpdate();
-        if (currInteractionType != InteractionType.Touch)
-        {
-            if (InTouchInteractionRange())
-            {
-                Debug.Log("changing to touch");
-                SetWandInteraction(InteractionType.Touch);
-            }
-        }
-        else
-        {
-            if (!InTouchInteractionRange())
-            {
-                Debug.Log("Changing to ray");
-                SetWandInteraction(InteractionType.Ray);
-            }
-        }
-
-    }
     private void SetWandInteraction(InteractionType interactionType)
     {
         switch (interactionType)
@@ -78,5 +58,30 @@ public class VRViewportSelectManager : VRFrustumSelection {
     {
         return currSelectedInteractable != null &&
             currSelectedInteractable.GetSquaredInteractionDistance(transform) < Mathf.Pow(touchInteractionMaxDist, 2);
+    }
+
+    private IEnumerator UpdateCurrentInteraction()
+    {
+        while(true)
+        {
+            if (currInteractionType != InteractionType.Touch)
+            {
+                if (InTouchInteractionRange())
+                {
+                    Debug.Log("changing to touch");
+                    SetWandInteraction(InteractionType.Touch);
+                }
+            }
+            else
+            {
+                if (currSelectedInteractable != null && !InTouchInteractionRange())
+                {
+                    Debug.Log("Changing to ray");
+                    SetWandInteraction(InteractionType.Ray);
+                }
+            }
+
+            yield return new WaitForSeconds(1);
+        }
     }
 }

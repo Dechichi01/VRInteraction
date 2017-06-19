@@ -104,11 +104,7 @@ public class VRFrustumSelection : VRInteraction
 
     private void OnOtherInteractionDeselect(Interactable interactable)
     {
-        SelectInteractableFromRange();
-        if (currSelectedInteractable != null && !currSelectedInteractable.isSelected)
-        {
-            EnableSelection();
-        }
+        EnableSelection();
     }
 
     private void CashOtherInteractionsInParent()
@@ -132,7 +128,6 @@ public class VRFrustumSelection : VRInteraction
         Interactable currClosest = interactablesInRange[0];
 
         distToInteractable = currClosest.GetInteractionDistance(interactionPoint);
-
         foreach (var nearbyInteractable in interactablesInRange)
         {
             float sqrDist = nearbyInteractable.GetSquaredInteractionDistance(interactionPoint);

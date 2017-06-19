@@ -12,6 +12,7 @@ public class HandController_Ray : HandController {
     {
         base.Start();
         InitializeLineRenderer();
+        walkTarget.gameObject.SetActive(false);
     }
 
     protected override void Update()
@@ -47,6 +48,14 @@ public class HandController_Ray : HandController {
         SetRenderLine(false);
     }
 
+    public override void OnTriggerPress(VRWand_Controller wand)
+    {
+        base.OnTriggerPress(wand);
+        if (walkTarget.gameObject.activeSelf && currSelectedInteractable == null)
+        {
+            wand.playerVR.RequestMovement(walkTarget.transform.position);
+        }
+    }
     public override void SelectInteractableFromRange()
     {
         if (!selecitonEnabled)
@@ -68,24 +77,27 @@ public class HandController_Ray : HandController {
             Interactable interactable = hit.collider.transform.GetActiveComponent<Interactable>();
             if (interactable == null)
             {
-                Debug.LogError("Collided object in the interact layer isn't an interactable.");
-                return;
+                SetSelectedInteractable(null);
+                if (hit.transform.CompareTag("WalkableGrid"))
+                {
+                    SetWalkTargetPos(hit.point);
+                }
+                else
+                {
+                    Debug.LogError("Collided object in the interact layer isn't an interactable.");
+                    return;
+                }
             }
-            
-            SetSelectedInteractable(interactable);
-            animHand.SetBool("Prep", true);
+            else if (interactable != currSelectedInteractable)
+            {
+                SetSelectedInteractable(interactable);
+            }
 
             end = hit.point;
-
-            if (interactable is WalkableGrid)
-            {
-                walkTarget.position = hit.point;
-            }
         }
-        else if (currSelectedInteractable != null)//nothing hit
+        else//nothing hit
         {
             SetSelectedInteractable(null);
-            animHand.SetBool("Prep", false);
         }
 
         lineRndr.SetPosition(0, start);
@@ -97,6 +109,14 @@ public class HandController_Ray : HandController {
         lineRndr.gameObject.SetActive(value);
     }
 
+    private void SetWalkTargetPos(Vector3 pos)
+    {
+        walkTarget.position = pos;
+        if (!walkTarget.gameObject.activeSelf)
+        {
+            walkTarget.gameObject.SetActive(true);
+        }
+    }
     public void InitializeLineRenderer()
     {
         lineRndr.useWorldSpace = true;
@@ -127,17 +147,12 @@ public class HandController_Ray : HandController {
 
     private void OnSelectInteractable(Interactable interactable)
     {
-        if (interactable is WalkableGrid)
-        {
-            walkTarget.gameObject.SetActive(true);
-        }
+        walkTarget.gameObject.SetActive(false);
+        animHand.SetBool("Prep", true);
     }
 
     private void OnDeselectInteractable(Interactable interactable)
     {
-        if (interactable is WalkableGrid)
-        {
-            walkTarget.gameObject.SetActive(true);
-        }
+        animHand.SetBool("Prep", false);
     }
 }

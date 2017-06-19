@@ -42,7 +42,7 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
 
     protected virtual void EnableInteractions()
     {
-        gameObject.layer = LayerMask.NameToLayer("Interactable");
+        SetDefaultLayer();
     }
 
     public virtual bool CanBeManipulated(Transform other)

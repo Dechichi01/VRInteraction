@@ -3,7 +3,7 @@ using System.Collections;
 
 public class VRWand_Controller : MonoBehaviour {
 
-    #region Variables to be assigned in inspector
+    #region Variables to be assigned in inspector 
     public float throwSpeed = 2;
     #endregion
 
@@ -13,6 +13,7 @@ public class VRWand_Controller : MonoBehaviour {
     #endregion
 
     #region Private Variables
+    private VRPlayer_Controller _playerVR;
     private VRInteraction vrInteraction;
     #endregion
 
@@ -46,6 +47,18 @@ public class VRWand_Controller : MonoBehaviour {
         }
 
         return false;
+    }
+    public VRPlayer_Controller playerVR
+    {
+        get
+        {
+            if (_playerVR == null)
+            {
+                _playerVR = GetComponentInParent<VRPlayer_Controller>();
+            }
+
+            return _playerVR;
+        }
     }
     #endregion
 
