@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class VRViewportSelectManager : VRFrustumSelection, IVRSelectionManager {
+public class VRViewportSelectManager : VRFrustumSelection {
 
     [SerializeField] private bool controlRightWand = true;
     [SerializeField] private bool controlLeftWand = true;
@@ -17,28 +17,35 @@ public class VRViewportSelectManager : VRFrustumSelection, IVRSelectionManager {
     private HandController_Ray rayIntLeft;
     private HandController_Touch touchIntRight;
     private HandController_Touch touchIntLeft;
-
-    private Action<InteractionType> OnInteractionChanged;
    
     protected override void Start()
     {
         base.Start();
         CashRayAndTouchInteractions();
         SetWandInteraction(InteractionType.Ray);
-        StartCoroutine(UpdateCurrentInteraction());
+        //StartCoroutine(UpdateCurrentInteraction());
     }
 
-    public void OnChangeInteractionAddListener(Action<InteractionType> listener)
+    protected override void LateUpdate()
     {
-        OnInteractionChanged += listener;
+        base.LateUpdate();
+        if (currInteractionType != InteractionType.Touch)
+        {
+            if (InTouchInteractionRange())
+            {
+                SetWandInteraction(InteractionType.Touch);
+            }
+        }
+        else
+        {
+            if (currSelectedInteractable != null && !InTouchInteractionRange())
+            {
+                SetWandInteraction(InteractionType.Ray);
+            }
+        }
     }
 
-    public void OnChangeInteractionRemoveListener(Action<InteractionType> listener)
-    {
-        OnInteractionChanged -= listener;
-    }
-
-    public void SetWandInteraction(InteractionType interactionType)
+    private void SetWandInteraction(InteractionType interactionType)
     {
         switch (interactionType)
         {
@@ -65,10 +72,6 @@ public class VRViewportSelectManager : VRFrustumSelection, IVRSelectionManager {
         }
 
         currInteractionType = interactionType;
-        if (OnInteractionChanged != null)
-        {
-            OnInteractionChanged(interactionType);
-        }
     }
 
     private void CashRayAndTouchInteractions()
@@ -89,7 +92,7 @@ public class VRViewportSelectManager : VRFrustumSelection, IVRSelectionManager {
             currSelectedInteractable.GetSquaredInteractionDistance(transform) < Mathf.Pow(touchInteractionMaxDist, 2);
     }
 
-    private IEnumerator UpdateCurrentInteraction()
+    /*private IEnumerator UpdateCurrentInteraction()
     {
         while(true)
         {
@@ -110,7 +113,7 @@ public class VRViewportSelectManager : VRFrustumSelection, IVRSelectionManager {
 
             yield return new WaitForSeconds(1);
         }
-    }
+    }*/
 }
 
 public enum InteractionType { Touch = 1, Ray = 2 }
