@@ -34,25 +34,25 @@ public class Pickup_Ray : Pickup {
         gameObject.layer = LayerMask.NameToLayer("Interactable_Ray");
     }
 
-    public override void OnSelected(VRInteraction caller)
+    protected override void OnSelectCallback(VRInteraction caller)
     {
-        base.OnSelected(caller);
+        base.OnSelectCallback(caller);
         HandController_Ray rayCtrl = caller as HandController_Ray;
         if (rayCtrl != null)
         {
             referencePos = tRoot.position;
-            //rayCtrl.SetRenderLine(false);
+            rayCtrl.SetRenderLine(false);
             currSelectingCtrl = rayCtrl;
         }
     }
 
-    public override void OnDeselected(VRInteraction caller)
+    protected override void OnDeselectCallback(VRInteraction caller)
     {
-        base.OnDeselected(caller);
+        base.OnDeselectCallback(caller);
         HandController_Ray rayCtrl = caller as HandController_Ray;
         if (rayCtrl != null)
         {
-            //rayCtrl.SetRenderLine(true);
+            rayCtrl.SetRenderLine(true);
             currSelectingCtrl = null;
 
             rby.useGravity = true;
@@ -60,9 +60,9 @@ public class Pickup_Ray : Pickup {
         }
     }
 
-    public override void OnManipulationStarted(VRInteraction caller)
+    protected override void OnManipulationStartCallback(VRInteraction caller)
     {
-        base.OnManipulationStarted(caller);
+        base.OnManipulationStartCallback(caller);
         currSelectingCtrl = null;
     }
 }

@@ -15,6 +15,53 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
 
     private Collider coll;
 
+    private Action<VRInteraction> OnSelect;
+    private Action<VRInteraction> OnDeselect;
+    private Action<VRInteraction> OnManipulationStart;
+    private Action<VRInteraction> OnManipulationEnd;
+
+    #region Callbacks
+    public void OnSelectAddListener(Action<VRInteraction> action)
+    {
+        OnSelect += action;
+    }
+
+    public void OnSelectRemoveListener(Action<VRInteraction> action)
+    {
+        OnSelect -= action;
+    }
+
+    public void OnDeselectAddListener(Action<VRInteraction> action)
+    {
+        OnDeselect += action;
+    }
+
+    public void OnDeselectRemoveListener(Action<VRInteraction> action)
+    {
+        OnDeselect -= action;
+    }
+
+    public void OnManipulationStartAddListener(Action<VRInteraction> action)
+    {
+        OnManipulationStart += action;
+    }
+
+    public void OnManipulationStartRemoveListener(Action<VRInteraction> action)
+    {
+        OnManipulationStart -= action;
+    }
+
+    public void OnManipulationEndAddListener(Action<VRInteraction> action)
+    {
+        OnManipulationEnd += action;
+    }
+
+    public void OnManipulationEndRemoveListener(Action<VRInteraction> action)
+    {
+        OnManipulationEnd -= action;
+    }
+    #endregion
+
     protected virtual void Start()
     {
         coll = GetComponent<Collider>();
@@ -70,21 +117,37 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
         gameObject.layer = LayerMask.NameToLayer("Interactable");
     }
 
-    public virtual void OnSelected(VRInteraction caller)
+    public void OnSelected(VRInteraction caller)
     {
         isSelected = true;
+        if (OnSelect != null)
+        {
+            OnSelect(caller);
+        }
     }
-    public virtual void OnDeselected(VRInteraction caller)
+    public void OnDeselected(VRInteraction caller)
     {
         isSelected = false;
+        if (OnDeselect != null)
+        {
+            OnDeselect(caller);
+        }
     }
-    public virtual void OnManipulationStarted(VRInteraction caller)
+    public void OnManipulationStarted(VRInteraction caller)
     {
         isManipulated = true;
+        if (OnManipulationStart != null)
+        {
+            OnManipulationStart(caller);
+        }
     }
-    public virtual void OnManipulationEnded(VRInteraction caller)
+    public void OnManipulationEnded(VRInteraction caller)
     {
         isManipulated = false;
+        if (OnManipulationEnd != null)
+        {
+            OnManipulationEnd(caller);
+        }
     }
 
     public abstract void OnTriggerPress(VRInteraction caller, VRWand_Controller wand);

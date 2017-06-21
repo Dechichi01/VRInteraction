@@ -5,51 +5,43 @@ using System;
 
 public class MultInteractableManager : MonoBehaviour {
 
-    //MUDAR TUDO, INTERAGIR COM O INTERACTABLE, NÃO COM O MANAGER
-    [SerializeField] private GameObject interactionManager;
-    [SerializeField] private ManagedInteractable[] managedInteractables;
-
-    private IVRSelectionManager selectManager;
-
-    public IVRSelectionManager GetSelectManager() { return selectManager; }
-    public void SetSelectManager(IVRSelectionManager selectManager)
-    {
-        if (Application.isEditor)
-        {
-            this.selectManager = selectManager;
-        }
-    }
-
-    private void Awake()
-    {
-        selectManager = interactionManager.GetComponent<IVRSelectionManager>();
-    }
+    [SerializeField] private Interactable[] managedInteractables;
 
     private void OnEnable()
     {
-        selectManager.OnChangeInteractionAddListener(OnChangeInteraction);
+        foreach (var interactable in managedInteractables)
+        {
+            interactable.OnManipulationStartAddListener(OnInteractableStartManipulation);
+            interactable.OnManipulationEndAddListener(OnInteractableEndManipulation);
+        }
     }
 
     private void OnDisable()
     {
-        selectManager.OnChangeInteractionRemoveListener(OnChangeInteraction);
-    }
-
-    private void OnChangeInteraction(InteractionType intType)
-    {
-        Interactable interactableToEnable = Array.Find(managedInteractables, m => m.interactionType == intType).interactable;
-        if (interactableToEnable != null)
+        foreach (var interactable in managedInteractables)
         {
-            Array.ForEach(managedInteractables, m => m.interactable.enabled = false);
-            interactableToEnable.enabled = true;
+            interactable.OnManipulationStartRemoveListener(OnInteractableStartManipulation);
+            interactable.OnManipulationEndRemoveListener(OnInteractableEndManipulation);
         }
     }
 
-    [Serializable]
-	private struct ManagedInteractable
+    private void OnInteractableStartManipulation(VRInteraction caller)
     {
-        public Interactable interactable;
-        public InteractionType interactionType;
+        foreach (var interactable in managedInteractables)
+        {
+            if (!interactable.isManipulated)
+            {
+                interactable.enabled = false;
+            }
+        }
+    }
+
+    private void OnInteractableEndManipulation(VRInteraction caller)
+    {
+        if (!Array.Exists(managedInteractables, i => i.isManipulated))
+        {
+            Array.ForEach(managedInteractables, i => i.enabled = true);
+        }
     }
 }
 

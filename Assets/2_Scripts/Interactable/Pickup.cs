@@ -58,6 +58,24 @@ public abstract class Pickup : Interactable
         holder = null;
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        OnSelectAddListener(OnSelectCallback);
+        OnDeselectAddListener(OnDeselectCallback);
+        OnManipulationStartAddListener(OnManipulationStartCallback);
+        OnManipulationEndAddListener(OnManipualtionEndCallback);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        OnSelectRemoveListener(OnSelectCallback);
+        OnDeselectRemoveListener(OnDeselectCallback);
+        OnManipulationStartRemoveListener(OnManipulationStartCallback);
+        OnManipulationEndRemoveListener(OnManipualtionEndCallback);
+    }
+
     public override void OnTriggerPress(VRInteraction caller, VRWand_Controller wand)
     {
         if (!isBeingHeld && caller.CanManipulate(this))
@@ -135,9 +153,8 @@ public abstract class Pickup : Interactable
     }
     #endregion
 
-    public override void OnSelected(VRInteraction caller)
+    protected virtual void OnSelectCallback(VRInteraction caller)
     {
-        base.OnSelected(caller);
         HandController hand = caller as HandController;
         if (hand != null)
         {
@@ -145,9 +162,8 @@ public abstract class Pickup : Interactable
         }
     }
 
-    public override void OnDeselected(VRInteraction caller)
+    protected virtual void OnDeselectCallback(VRInteraction caller)
     {
-        base.OnDeselected(caller);
         HandController hand = caller as HandController;
         if (hand != null)
         {
@@ -155,9 +171,8 @@ public abstract class Pickup : Interactable
         }
     }
 
-    public override void OnManipulationStarted(VRInteraction caller)
+    protected virtual void OnManipulationStartCallback(VRInteraction caller)
     {
-        base.OnManipulationStarted(caller);
         HandController hand = caller as HandController;
         if (hand != null)
         {
@@ -171,9 +186,8 @@ public abstract class Pickup : Interactable
         }
     }
 
-    public override void OnManipulationEnded(VRInteraction caller)
+    protected virtual void OnManipualtionEndCallback(VRInteraction caller)
     {
-        base.OnManipulationEnded(caller);
         HandController hand = caller as HandController;
         if (hand != null)
         {
