@@ -4,7 +4,6 @@ using System;
 
 public class HandController_Ray : HandController {
 
-    [SerializeField] private Transform pointReference;
     [SerializeField] private LineRenderer lineRndr;
     [SerializeField] private Transform walkTarget;
 
@@ -122,13 +121,6 @@ public class HandController_Ray : HandController {
         lineRndr.useWorldSpace = true;
         lineRndr.startWidth = 0.004f;
         lineRndr.endWidth = 0.004f;
-
-        Transform previousParent = lineRndr.transform.parent;
-        lineRndr.transform.SetParent(pointReference, false);
-
-        lineRndr.transform.localPosition = Vector3.zero;
-
-        lineRndr.transform.parent = previousParent;
 
         lineRndr.gameObject.SetActive(true);
     }

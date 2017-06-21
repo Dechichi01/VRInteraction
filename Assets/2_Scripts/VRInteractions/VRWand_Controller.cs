@@ -48,6 +48,7 @@ public class VRWand_Controller : MonoBehaviour {
 
         return false;
     }
+
     public VRPlayer_Controller playerVR
     {
         get
