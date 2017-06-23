@@ -169,7 +169,7 @@ public abstract class Pickup : Interactable
         {
             holder = hand;
             pickupPrevParent = _pickupT.parent;
-            _pickupT.SetParent(holder.modelGrabPoint, pickupPrevParent == null);
+            _pickupT.SetParent(holder.modelGrabPoint);
             hand.SetGrabAnimParams(this);
 
             SetPositionAndRotation();
@@ -188,7 +188,7 @@ public abstract class Pickup : Interactable
 
         holder = null;
 
-        _pickupT.SetParent(pickupPrevParent, pickupPrevParent == null);
+        _pickupT.SetParent(pickupPrevParent);
 
         _rby.useGravity = true;
         _rby.isKinematic = false;

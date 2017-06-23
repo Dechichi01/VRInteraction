@@ -46,7 +46,7 @@ public class Rope : MonoBehaviour {
         HingeJoint joint = obj.AddComponent<HingeJoint>();
         joint.connectedBody = connectBody;
         joint.useSpring = true;
-        joint.enableCollision = true;
+        joint.enableCollision = false;
     }
 
     public void SetRopeParams()
