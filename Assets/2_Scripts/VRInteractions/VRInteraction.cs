@@ -246,6 +246,7 @@ public abstract class VRInteraction : MonoBehaviour {
             return false;
         }
 
+        interactablesInRange.Clear();
         currManipulatedInteractable = interactable;
         DisableSelection();
 

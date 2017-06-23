@@ -21,6 +21,7 @@ public abstract class Pickup : Interactable
 
     protected HandController holder = null;
     protected Rigidbody _rby;
+    private Transform pickupPrevParent = null;
 
     public Transform pickupT { get { return _pickupT; } }
     public Rigidbody rby { get { return _rby; } }
@@ -53,8 +54,8 @@ public abstract class Pickup : Interactable
         base.OnEnable();
         OnSelectAddListener(OnSelectCallback);
         OnDeselectAddListener(OnDeselectCallback);
-        OnManipulateAddListener(OnManipulationStartCallback);
-        OnReleaseAddListener(OnManipualtionEndCallback);
+        OnManipulateAddListener(OnManipulateCallback);
+        OnReleaseAddListener(OnReleaseCallback);
     }
 
     protected override void OnDisable()
@@ -62,8 +63,8 @@ public abstract class Pickup : Interactable
         base.OnDisable();
         OnSelectRemoveListener(OnSelectCallback);
         OnDeselectRemoveListener(OnDeselectCallback);
-        OnManipulateRemoveListener(OnManipulationStartCallback);
-        OnReleaseRemoveListener(OnManipualtionEndCallback);
+        OnManipulateRemoveListener(OnManipulateCallback);
+        OnReleaseRemoveListener(OnReleaseCallback);
     }
 
     public override void OnTriggerPress(VRInteraction caller, VRWand_Controller wand)
@@ -161,13 +162,14 @@ public abstract class Pickup : Interactable
         }
     }
 
-    protected virtual void OnManipulationStartCallback(VRInteraction caller)
+    protected virtual void OnManipulateCallback(VRInteraction caller)
     {
         HandController hand = caller as HandController;
         if (hand != null)
         {
             holder = hand;
-            _pickupT.parent = holder.modelGrabPoint;
+            pickupPrevParent = _pickupT.parent;
+            _pickupT.SetParent(holder.modelGrabPoint, pickupPrevParent == null);
             hand.SetGrabAnimParams(this);
 
             SetPositionAndRotation();
@@ -176,7 +178,7 @@ public abstract class Pickup : Interactable
         }
     }
 
-    protected virtual void OnManipualtionEndCallback(VRInteraction caller)
+    protected virtual void OnReleaseCallback(VRInteraction caller)
     {
         HandController hand = caller as HandController;
         if (hand != null)
@@ -186,7 +188,7 @@ public abstract class Pickup : Interactable
 
         holder = null;
 
-        _pickupT.parent = null;
+        _pickupT.SetParent(pickupPrevParent, pickupPrevParent == null);
 
         _rby.useGravity = true;
         _rby.isKinematic = false;

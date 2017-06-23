@@ -39,7 +39,6 @@ public class VRWand_Controller : MonoBehaviour {
                 }
                 vrInteraction.enabled = false;
             }
-
             vrInteraction = interaction;
             vrInteraction.enabled = true;
 

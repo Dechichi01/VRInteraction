@@ -2,16 +2,33 @@
 using System.Collections;
 using System;
 
+[RequireComponent(typeof(MeshCollider))]
+[RequireComponent(typeof(FrustumMesh))]
 public class HandController_Ray : HandController {
 
     [SerializeField] private LineRenderer lineRndr;
     [SerializeField] private Transform walkTarget;
 
+    private MeshCollider meshColl;
+    private FrustumMesh frustumMesh;
+    
     protected override void Start()
     {
         base.Start();
+
         InitializeLineRenderer();
         walkTarget.gameObject.SetActive(false);
+
+        meshColl = GetComponent<MeshCollider>();
+        frustumMesh = GetComponent<FrustumMesh>();
+        frustumMesh.GetMeshRenderer().enabled = false;
+        frustumMesh.GenerateMesh();
+        meshColl.sharedMesh = frustumMesh.GetMesh();
+        meshColl.convex = true;
+        meshColl.isTrigger = true;
+
+        frustumMesh.transform.position = lineRndr.transform.position;
+        frustumMesh.transform.rotation = lineRndr.transform.rotation;
     }
 
     protected override void Update()
@@ -48,6 +65,26 @@ public class HandController_Ray : HandController {
         walkTarget.gameObject.SetActive(false);
     }
 
+    void OnTriggerEnter(Collider obj)
+    {
+        Interactable interactable = obj.gameObject.GetActiveComponent<Interactable>();
+        if (interactable != null && !interactablesInRange.Contains(interactable))
+        {
+            interactablesInRange.Add(interactable);
+        }
+    }
+
+    void OnTriggerExit(Collider obj)
+    {
+        Interactable interactable = obj.gameObject.GetActiveComponent<Interactable>();
+        Debug.Log("Trigger exit");
+        if (interactable != null)
+        {
+            Debug.Log("Exiting: " + interactable.transform.root.name);
+            interactablesInRange.Remove(interactable);
+        }
+    }
+
     public override void OnTriggerPress(VRWand_Controller wand)
     {
         base.OnTriggerPress(wand);
@@ -56,6 +93,7 @@ public class HandController_Ray : HandController {
             wand.playerVR.RequestMovement(walkTarget.transform.position);
         }
     }
+
     public override void SelectInteractableFromRange()
     {
         if (!selecitonEnabled)
@@ -63,45 +101,54 @@ public class HandController_Ray : HandController {
             return;
         }
 
+        //Update line renderer
         Vector3 direction = lineRndr.transform.forward;
 
-        float length = 50f;
         Vector3 start = lineRndr.transform.position;
-        Vector3 end = start + direction * length;
-
-        RaycastHit hit;
-
-        bool bHitInteractable = Physics.Raycast(new Ray(start, direction), out hit, length, interactMask);
-        if (bHitInteractable)
-        {
-            Interactable interactable = hit.collider.transform.GetActiveComponent<Interactable>();
-            if (interactable == null)
-            {
-                SetSelectedInteractable(null);
-                if (hit.transform.CompareTag("WalkableGrid"))
-                {
-                    SetWalkTargetPos(hit.point);
-                }
-                else
-                {
-                    Debug.LogError(string.Format("Collided object ({0}) in the interact layer isn't an interactable.", hit.collider.name));
-                    return;
-                }
-            }
-            else if (interactable != currSelectedInteractable)
-            {
-                SetSelectedInteractable(interactable);
-            }
-
-            end = hit.point;
-        }
-        else//nothing hit
-        {
-            SetSelectedInteractable(null);
-        }
-
+        Vector3 end = start + direction * 50f;
         lineRndr.SetPosition(0, start);
         lineRndr.SetPosition(1, end);
+        
+        //Select closest
+        float distToInteractable = float.MaxValue;
+
+        if (interactablesInRange.Count == 0)
+        {
+            SetSelectedInteractable(null);
+            return;
+        }
+
+        Interactable previousClosest = currSelectedInteractable;
+        Interactable currClosest = interactablesInRange[0];
+
+        distToInteractable = currClosest.GetInteractionDistance(interactionPoint);
+        foreach (var nearbyInteractable in interactablesInRange)
+        {
+            float sqrDist = nearbyInteractable.GetSquaredInteractionDistance(interactionPoint);
+            if (sqrDist < Mathf.Pow(distToInteractable, 2))
+            {
+                distToInteractable = Mathf.Pow(sqrDist, 0.5f);
+                currClosest = nearbyInteractable;
+            }
+        }
+
+        if (previousClosest != currClosest)
+        {
+            SetSelectedInteractable(currClosest);
+        }
+
+        if (currSelectedInteractable != null)
+        {
+            lineRndr.SetPosition(1, currSelectedInteractable.GetInteractionPoint().position);
+        }
+    }
+
+    private void UpdateWalkTarget()
+    {
+        if (!walkTarget.gameObject.activeSelf)
+        {
+            return;
+        }
     }
 
     public void SetRenderLine(bool value)

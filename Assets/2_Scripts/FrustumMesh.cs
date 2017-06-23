@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FrustumMesh : UniqueMesh {
 
-    private float _distance = 10f;
+    [SerializeField] [HideInInspector] private float _distance = 10f;
     public float distance
     {
         get { return _distance; }
@@ -14,7 +14,7 @@ public class FrustumMesh : UniqueMesh {
         }
     }
 
-    private float _halfAngle = 20f;
+    [SerializeField] [HideInInspector] private float _halfAngle = 20f;
     public float halfAngle
     {
         get { return _halfAngle; }

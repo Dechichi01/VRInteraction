@@ -60,9 +60,9 @@ public class Pickup_Ray : Pickup {
         }
     }
 
-    protected override void OnManipulationStartCallback(VRInteraction caller)
+    protected override void OnManipulateCallback(VRInteraction caller)
     {
-        base.OnManipulationStartCallback(caller);
+        base.OnManipulateCallback(caller);
         currSelectingCtrl = null;
     }
 }
