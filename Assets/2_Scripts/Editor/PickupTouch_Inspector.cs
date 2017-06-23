@@ -25,9 +25,9 @@ public class PickupTouch_Inspector : Editor {
 
         pickUp = (Pickup)target;
 
-        Vector3 pos = pickUp.tRoot.position;
-        Quaternion rot = pickUp.tRoot.rotation;
-        Vector3 localScale = pickUp.tRoot.localScale;
+        Vector3 pos = pickUp.pickupT.position;
+        Quaternion rot = pickUp.pickupT.rotation;
+        Vector3 localScale = pickUp.pickupT.localScale;
 
         EditorGUI.BeginChangeCheck();
 
@@ -48,9 +48,9 @@ public class PickupTouch_Inspector : Editor {
         {
             Undo.RecordObject(pickUp.transform, "Transform Handle");
             Undo.RecordObject(pickUp, "Pickup values");
-            pickUp.tRoot.position = pos;
-            pickUp.tRoot.rotation = rot;
-            pickUp.tRoot.localScale = localScale;
+            pickUp.pickupT.position = pos;
+            pickUp.pickupT.rotation = rot;
+            pickUp.pickupT.localScale = localScale;
             if (Application.isPlaying)
             {
                 pickUp.UpdateOffSetsFromCurrentPos();

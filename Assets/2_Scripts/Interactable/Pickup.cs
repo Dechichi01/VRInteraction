@@ -5,6 +5,7 @@ using System;
 public abstract class Pickup : Interactable
 {
     #region Inspector Variables
+    [SerializeField] protected Transform _pickupT;
     [SerializeField] protected bool releaseWithGripOnly;
     [SerializeField] protected bool useMirroredRotations = true;
     [SerializeField] [Range(0,1)] protected float squeeze;
@@ -16,23 +17,13 @@ public abstract class Pickup : Interactable
     [SerializeField] [HideInInspector] protected Vector3 rightHeldRotation;
     [SerializeField] [HideInInspector] protected Vector3 leftHeldRotation;
 
-    private Transform _tRoot;
-    public Transform tRoot
-    {
-        get
-        {
-            if (_tRoot == null)
-            {
-                _tRoot = transform.root;
-            }
-            return _tRoot;
-        }
-    }
-
     public bool isBeingHeld { get { return holder != null; } }
 
     protected HandController holder = null;
-    protected Rigidbody rby;
+    protected Rigidbody _rby;
+
+    public Transform pickupT { get { return _pickupT; } }
+    public Rigidbody rby { get { return _rby; } }
 
     protected virtual void GetPicked(VRInteraction interaction)
     {
@@ -42,7 +33,7 @@ public abstract class Pickup : Interactable
     protected virtual void GetDropped(Vector3 throwVelocity)
     {
         holder.SetManipulatedInteractable(null);
-        rby.velocity = throwVelocity;
+        _rby.velocity = throwVelocity;
     }
 
     public float GetSqueezeValue()
@@ -53,8 +44,7 @@ public abstract class Pickup : Interactable
     protected override void Start()
     {
         base.Start();
-        _tRoot = transform.root;
-        rby = GetComponentInParent<Rigidbody>();
+        _rby = pickupT.GetComponent<Rigidbody>();
         holder = null;
     }
 
@@ -63,8 +53,8 @@ public abstract class Pickup : Interactable
         base.OnEnable();
         OnSelectAddListener(OnSelectCallback);
         OnDeselectAddListener(OnDeselectCallback);
-        OnManipulationStartAddListener(OnManipulationStartCallback);
-        OnManipulationEndAddListener(OnManipualtionEndCallback);
+        OnManipulateAddListener(OnManipulationStartCallback);
+        OnReleaseAddListener(OnManipualtionEndCallback);
     }
 
     protected override void OnDisable()
@@ -72,8 +62,8 @@ public abstract class Pickup : Interactable
         base.OnDisable();
         OnSelectRemoveListener(OnSelectCallback);
         OnDeselectRemoveListener(OnDeselectCallback);
-        OnManipulationStartRemoveListener(OnManipulationStartCallback);
-        OnManipulationEndRemoveListener(OnManipualtionEndCallback);
+        OnManipulateRemoveListener(OnManipulationStartCallback);
+        OnReleaseRemoveListener(OnManipualtionEndCallback);
     }
 
     public override void OnTriggerPress(VRInteraction caller, VRWand_Controller wand)
@@ -110,8 +100,8 @@ public abstract class Pickup : Interactable
     {
         if (isBeingHeld)
         {
-            tRoot.localPosition = (holder.isLeftHand) ? leftHeldPosition : rightHeldPosition;
-            tRoot.localRotation = (holder.isLeftHand) ? Quaternion.Euler(leftHeldRotation) : Quaternion.Euler(rightHeldRotation);
+            _pickupT.localPosition = (holder.isLeftHand) ? leftHeldPosition : rightHeldPosition;
+            _pickupT.localRotation = (holder.isLeftHand) ? Quaternion.Euler(leftHeldRotation) : Quaternion.Euler(rightHeldRotation);
         }
     }
 
@@ -121,24 +111,24 @@ public abstract class Pickup : Interactable
         {
             if (holder.isLeftHand)
             {
-                leftHeldPosition = tRoot.localPosition;
-                leftHeldRotation = tRoot.localRotation.eulerAngles;
+                leftHeldPosition = _pickupT.localPosition;
+                leftHeldRotation = _pickupT.localRotation.eulerAngles;
                 if (useMirroredRotations)
                 {
-                    rightHeldPosition = new Vector3(-tRoot.localPosition.x, tRoot.localPosition.y, tRoot.localPosition.z);
-                    rightHeldRotation = new Quaternion(tRoot.localRotation.x, -tRoot.localRotation.y,
-                        -tRoot.localRotation.z, tRoot.localRotation.w).eulerAngles;
+                    rightHeldPosition = new Vector3(-_pickupT.localPosition.x, _pickupT.localPosition.y, _pickupT.localPosition.z);
+                    rightHeldRotation = new Quaternion(_pickupT.localRotation.x, -_pickupT.localRotation.y,
+                        -_pickupT.localRotation.z, _pickupT.localRotation.w).eulerAngles;
                 }
             }
             else
             {
-                rightHeldPosition = tRoot.localPosition;
-                rightHeldRotation = tRoot.localRotation.eulerAngles;
+                rightHeldPosition = _pickupT.localPosition;
+                rightHeldRotation = _pickupT.localRotation.eulerAngles;
                 if (useMirroredRotations)
                 {
-                    leftHeldPosition = new Vector3(-tRoot.localPosition.x, tRoot.localPosition.y, tRoot.localPosition.z);
-                    leftHeldRotation = new Quaternion(tRoot.localRotation.x, -tRoot.localRotation.y,
-                        -tRoot.localRotation.z, tRoot.localRotation.w).eulerAngles;
+                    leftHeldPosition = new Vector3(-_pickupT.localPosition.x, _pickupT.localPosition.y, _pickupT.localPosition.z);
+                    leftHeldRotation = new Quaternion(_pickupT.localRotation.x, -_pickupT.localRotation.y,
+                        -_pickupT.localRotation.z, _pickupT.localRotation.w).eulerAngles;
                 }
             }
         }
@@ -148,7 +138,7 @@ public abstract class Pickup : Interactable
     {
         if (isBeingHeld)
         {
-            OnManipulationStarted(holder);
+            OnManipulated(holder);
         }
     }
     #endregion
@@ -177,12 +167,12 @@ public abstract class Pickup : Interactable
         if (hand != null)
         {
             holder = hand;
-            tRoot.parent = holder.modelGrabPoint;
+            _pickupT.parent = holder.modelGrabPoint;
             hand.SetGrabAnimParams(this);
 
             SetPositionAndRotation();
-            rby.useGravity = false;
-            rby.isKinematic = true;
+            _rby.useGravity = false;
+            _rby.isKinematic = true;
         }
     }
 
@@ -196,9 +186,9 @@ public abstract class Pickup : Interactable
 
         holder = null;
 
-        tRoot.parent = null;
+        _pickupT.parent = null;
 
-        rby.useGravity = true;
-        rby.isKinematic = false;
+        _rby.useGravity = true;
+        _rby.isKinematic = false;
     }
 }

@@ -11,8 +11,8 @@ public class MultInteractableManager : MonoBehaviour {
     {
         foreach (var interactable in managedInteractables)
         {
-            interactable.OnManipulationStartAddListener(OnInteractableStartManipulation);
-            interactable.OnManipulationEndAddListener(OnInteractableEndManipulation);
+            interactable.OnManipulateAddListener(OnInteractableStartManipulation);
+            interactable.OnReleaseAddListener(OnInteractableEndManipulation);
         }
     }
 
@@ -20,8 +20,8 @@ public class MultInteractableManager : MonoBehaviour {
     {
         foreach (var interactable in managedInteractables)
         {
-            interactable.OnManipulationStartRemoveListener(OnInteractableStartManipulation);
-            interactable.OnManipulationEndRemoveListener(OnInteractableEndManipulation);
+            interactable.OnManipulateRemoveListener(OnInteractableStartManipulation);
+            interactable.OnReleaseRemoveListener(OnInteractableEndManipulation);
         }
     }
 

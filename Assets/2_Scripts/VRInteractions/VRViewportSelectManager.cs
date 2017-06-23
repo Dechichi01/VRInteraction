@@ -23,12 +23,12 @@ public class VRViewportSelectManager : VRFrustumSelection {
         base.Start();
         CashRayAndTouchInteractions();
         SetWandInteraction(InteractionType.Ray);
-        //StartCoroutine(UpdateCurrentInteraction());
     }
 
     protected override void LateUpdate()
     {
         base.LateUpdate();
+
         if (currInteractionType != InteractionType.Touch)
         {
             if (InTouchInteractionRange())
@@ -72,6 +72,7 @@ public class VRViewportSelectManager : VRFrustumSelection {
         }
 
         currInteractionType = interactionType;
+        interactablesInRange.Clear();
     }
 
     private void CashRayAndTouchInteractions()
@@ -91,29 +92,6 @@ public class VRViewportSelectManager : VRFrustumSelection {
         return currSelectedInteractable != null &&
             currSelectedInteractable.GetSquaredInteractionDistance(transform) < Mathf.Pow(touchInteractionMaxDist, 2);
     }
-
-    /*private IEnumerator UpdateCurrentInteraction()
-    {
-        while(true)
-        {
-            if (currInteractionType != InteractionType.Touch)
-            {
-                if (InTouchInteractionRange())
-                {
-                    SetWandInteraction(InteractionType.Touch);
-                }
-            }
-            else
-            {
-                if (currSelectedInteractable != null && !InTouchInteractionRange())
-                {
-                    SetWandInteraction(InteractionType.Ray);
-                }
-            }
-
-            yield return new WaitForSeconds(1);
-        }
-    }*/
 }
 
 public enum InteractionType { Touch = 1, Ray = 2 }

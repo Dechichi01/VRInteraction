@@ -56,6 +56,21 @@ public static class MonoBehaviorExtensions
     }
 }
 
+public static class GameObjectExtensions
+{
+    public static void SetLayer(this GameObject go, string layerName)
+    {
+        int layer = LayerMask.NameToLayer(layerName);
+        if (layer < 0)
+        {
+            Debug.LogError(String.Format("Layer with name {0} does not exist. {1}", layerName, Constants.ErrorMsgs.LayerMissing));
+            return;
+        }
+
+        go.layer = layer;
+    }
+}
+
 public static class CanvasExtensions
 {
     public static Vector2 WorldToCanvas(this Canvas canvas, RectTransform canvasRect, Vector3 worldPos, Camera camera = null)

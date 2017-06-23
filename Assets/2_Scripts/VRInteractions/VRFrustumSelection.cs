@@ -160,7 +160,6 @@ public class VRFrustumSelection : VRInteraction
     void OnTriggerEnter(Collider obj)
     {
         Interactable interactable = obj.gameObject.GetActiveComponent<Interactable>();
-
         if (interactable != null && !interactablesInRange.Contains(interactable))
         {
             interactablesInRange.Add(interactable);

@@ -13,12 +13,13 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
     public bool isSelected { get; private set; }
     public bool isManipulated { get; private set; }
 
-    private Collider coll;
+    private Collider _coll;
+    public Collider coll { get { return _coll; } }
 
     private Action<VRInteraction> OnSelect;
     private Action<VRInteraction> OnDeselect;
-    private Action<VRInteraction> OnManipulationStart;
-    private Action<VRInteraction> OnManipulationEnd;
+    private Action<VRInteraction> OnManipulate;
+    private Action<VRInteraction> OnRelease;
 
     #region Callbacks
     public void OnSelectAddListener(Action<VRInteraction> action)
@@ -41,30 +42,30 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
         OnDeselect -= action;
     }
 
-    public void OnManipulationStartAddListener(Action<VRInteraction> action)
+    public void OnManipulateAddListener(Action<VRInteraction> action)
     {
-        OnManipulationStart += action;
+        OnManipulate += action;
     }
 
-    public void OnManipulationStartRemoveListener(Action<VRInteraction> action)
+    public void OnManipulateRemoveListener(Action<VRInteraction> action)
     {
-        OnManipulationStart -= action;
+        OnManipulate -= action;
     }
 
-    public void OnManipulationEndAddListener(Action<VRInteraction> action)
+    public void OnReleaseAddListener(Action<VRInteraction> action)
     {
-        OnManipulationEnd += action;
+        OnRelease += action;
     }
 
-    public void OnManipulationEndRemoveListener(Action<VRInteraction> action)
+    public void OnReleaseRemoveListener(Action<VRInteraction> action)
     {
-        OnManipulationEnd -= action;
+        OnRelease -= action;
     }
     #endregion
 
     protected virtual void Start()
     {
-        coll = GetComponent<Collider>();
+        _coll = GetComponent<Collider>();
         canInteract = true;
         EnableInteractions();
         SetDefaultLayer();
@@ -72,18 +73,18 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
 
     protected virtual void OnEnable()
     {
-        if (coll != null)
+        if (_coll != null)
         {
-            coll.enabled = true;
+            _coll.enabled = true;
         }
         SetDefaultLayer();
     }
 
     protected virtual void OnDisable()
     {
-        if (coll != null)
+        if (_coll != null)
         {
-            coll.enabled = false;
+            _coll.enabled = false;
         }
     }
 
@@ -99,7 +100,7 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
 
     protected virtual void DisableInteractions()
     {
-        gameObject.layer = LayerMask.NameToLayer("NonInteractable");
+
     }
 
     protected virtual void EnableInteractions()
@@ -114,7 +115,7 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
 
     protected virtual void SetDefaultLayer()
     {
-        gameObject.layer = LayerMask.NameToLayer("Interactable");
+        gameObject.SetLayer(Constants.DefaultLayerNames.Interactable);
     }
 
     public void OnSelected(VRInteraction caller)
@@ -133,20 +134,20 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
             OnDeselect(caller);
         }
     }
-    public void OnManipulationStarted(VRInteraction caller)
+    public void OnManipulated(VRInteraction caller)
     {
         isManipulated = true;
-        if (OnManipulationStart != null)
+        if (OnManipulate != null)
         {
-            OnManipulationStart(caller);
+            OnManipulate(caller);
         }
     }
-    public void OnManipulationEnded(VRInteraction caller)
+    public void OnReleased(VRInteraction caller)
     {
         isManipulated = false;
-        if (OnManipulationEnd != null)
+        if (OnRelease != null)
         {
-            OnManipulationEnd(caller);
+            OnRelease(caller);
         }
     }
 

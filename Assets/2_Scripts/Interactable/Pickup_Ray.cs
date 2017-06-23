@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Pickup_Ray : Pickup {
 
-    private Vector3 referencePos;
-    private HandController_Ray currSelectingCtrl;
+    protected Vector3 referencePos;
+    protected HandController_Ray currSelectingCtrl;
 
     private void Update()
     {
@@ -14,11 +14,11 @@ public class Pickup_Ray : Pickup {
             float percent = currSelectingCtrl.wand.triggerPressAmount;
             if (percent > 0.1f)
             {
-                if (!rby.isKinematic)
+                if (!_rby.isKinematic)
                 {
-                    rby.isKinematic = true;
+                    _rby.isKinematic = true;
                 }
-                tRoot.position = Vector3.Lerp(referencePos, currSelectingCtrl.modelGrabPoint.position, percent);
+                _pickupT.position = Vector3.Lerp(referencePos, currSelectingCtrl.modelGrabPoint.position, percent);
             }
         }
     }
@@ -31,7 +31,7 @@ public class Pickup_Ray : Pickup {
 
     protected override void SetDefaultLayer()
     {
-        gameObject.layer = LayerMask.NameToLayer("Interactable_Ray");
+        gameObject.SetLayer(Constants.DefaultLayerNames.Interactable_Ray);
     }
 
     protected override void OnSelectCallback(VRInteraction caller)
@@ -40,7 +40,7 @@ public class Pickup_Ray : Pickup {
         HandController_Ray rayCtrl = caller as HandController_Ray;
         if (rayCtrl != null)
         {
-            referencePos = tRoot.position;
+            referencePos = _pickupT.position;
             rayCtrl.SetRenderLine(false);
             currSelectingCtrl = rayCtrl;
         }
@@ -55,8 +55,8 @@ public class Pickup_Ray : Pickup {
             rayCtrl.SetRenderLine(true);
             currSelectingCtrl = null;
 
-            rby.useGravity = true;
-            rby.isKinematic = false;
+            _rby.useGravity = true;
+            _rby.isKinematic = false;
         }
     }
 

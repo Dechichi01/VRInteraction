@@ -33,8 +33,8 @@ public abstract class VRInteraction : MonoBehaviour {
 
     private Action<Interactable> OnSelect;
     private Action<Interactable> OnDeselect;
-    private Action<Interactable> OnManipulationStart;
-    private Action<Interactable> OnManipulationEnd;
+    private Action<Interactable> OnManipulate;
+    private Action<Interactable> OnRelease;
 
     public abstract void SelectInteractableFromRange();
     public abstract void OnTriggerPress(VRWand_Controller wand);
@@ -64,6 +64,7 @@ public abstract class VRInteraction : MonoBehaviour {
     {
         SetManipulatedInteractable(null);
         SetSelectedInteractable(null);
+        interactablesInRange.Clear();
     }
 
     protected virtual void DisableSelection()
@@ -79,6 +80,12 @@ public abstract class VRInteraction : MonoBehaviour {
     private void SetCollisionRestrictions()
     {
         int objectLayer = gameObject.layer;
+        
+        if (interactMask == 0)
+        {
+            Debug.LogError("Leaving interactMask to 'Default' will cause collision issues. " + Constants.ErrorMsgs.LayerMissing);
+            return;
+        }
 
         for (int i = 0; i < 32; i++)
         {
@@ -111,24 +118,24 @@ public abstract class VRInteraction : MonoBehaviour {
         OnDeselect -= action;
     }
 
-    public void OnManipulationStartAddListener(Action<Interactable> action)
+    public void OnManipulateAddListener(Action<Interactable> action)
     {
-        OnManipulationStart += action;
+        OnManipulate += action;
     }
 
-    public void OnManipulationStartRemoveListener(Action<Interactable> action)
+    public void OnManipulateRemoveListener(Action<Interactable> action)
     {
-        OnManipulationStart -= action;
+        OnManipulate -= action;
     }
 
-    public void OnManipulationEndListener(Action<Interactable> action)
+    public void OnReleaseAddListener(Action<Interactable> action)
     {
-        OnManipulationEnd += action;
+        OnRelease += action;
     }
 
-    public void OnManipulationEndRemoveListener(Action<Interactable> action)
+    public void OnReleaseRemoveListener(Action<Interactable> action)
     {
-        OnManipulationEnd -= action;
+        OnRelease -= action;
     }
     #endregion
 
@@ -242,11 +249,11 @@ public abstract class VRInteraction : MonoBehaviour {
         currManipulatedInteractable = interactable;
         DisableSelection();
 
-        interactable.OnManipulationStarted(this);
+        interactable.OnManipulated(this);
 
-        if (OnManipulationStart != null)
+        if (OnManipulate != null)
         {
-            OnManipulationStart(interactable);
+            OnManipulate(interactable);
         }
 
         return true;
@@ -265,11 +272,11 @@ public abstract class VRInteraction : MonoBehaviour {
 
         currManipulatedInteractable = null;
 
-        interactable.OnManipulationEnded(this);
+        interactable.OnReleased(this);
 
-        if (OnManipulationEnd != null)
+        if (OnRelease != null)
         {
-            OnManipulationEnd(interactable);
+            OnRelease(interactable);
         }
 
         return true;

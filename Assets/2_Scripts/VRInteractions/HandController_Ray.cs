@@ -45,6 +45,7 @@ public class HandController_Ray : HandController {
         SetSelectedInteractable(null);
         SetManipulatedInteractable(null);
         SetRenderLine(false);
+        walkTarget.gameObject.SetActive(false);
     }
 
     public override void OnTriggerPress(VRWand_Controller wand)
@@ -83,7 +84,7 @@ public class HandController_Ray : HandController {
                 }
                 else
                 {
-                    Debug.LogError("Collided object in the interact layer isn't an interactable.");
+                    Debug.LogError(string.Format("Collided object ({0}) in the interact layer isn't an interactable.", hit.collider.name));
                     return;
                 }
             }
@@ -116,6 +117,7 @@ public class HandController_Ray : HandController {
             walkTarget.gameObject.SetActive(true);
         }
     }
+
     public void InitializeLineRenderer()
     {
         lineRndr.useWorldSpace = true;
