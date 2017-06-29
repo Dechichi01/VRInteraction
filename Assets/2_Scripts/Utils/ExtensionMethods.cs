@@ -86,3 +86,11 @@ public static class CanvasExtensions
                            (viewport_position.y * canvasRect.sizeDelta.y) - (canvasRect.sizeDelta.y * 0.5f));
     }
 }
+
+public static class ColorExtensions
+{
+    public static Color SetAlfa(this Color col, float alfa)
+    {
+        return new Color(col.r, col.g, col.b, alfa);
+    }
+}

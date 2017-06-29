@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Conductor : Rope {
+public class Conductor : VirtualRope {
 
     private ConductorHead startHead;
     private ConductorHead endHead;
@@ -13,8 +13,8 @@ public class Conductor : Rope {
     protected override void Start()
     {
         base.Start();
-        startHead = startRb.GetComponent<ConductorHead>();
-        endHead = endRb.GetComponent<ConductorHead>();
+        startHead = start.GetComponent<ConductorHead>();
+        endHead = end.GetComponent<ConductorHead>();
 
         startHead.positivePolarity = true;
         endHead.positivePolarity = false;
