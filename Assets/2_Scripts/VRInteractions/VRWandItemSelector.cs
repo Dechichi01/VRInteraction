@@ -14,15 +14,15 @@ public class VRWandItemSelector : MonoBehaviour {
 
     private float radius { get { return _radius * .01f; } }
     private int halfItems { get { return (itemsShown - 1) / 2; } }
-    private CircList<SpriteRenderer> circItems;
+    private CircList<InteractableSpriteBase> circItems;
 
-    private SpriteRenderer[] allItems;
-    private SpriteRenderer[] currentVisibles;
+    private InteractableSpriteBase[] allItems;
+    private InteractableSpriteBase[] currentVisibles;
     private float[] visibleAngles;
     private float[] angles;
 
     private VRInputManager inputManager;
-    private VRInteraction[] otherInteractions;
+    private VRInteraction otherInteraction;
 
     private bool hidden = false;
     private bool rotating = false;
@@ -31,9 +31,9 @@ public class VRWandItemSelector : MonoBehaviour {
     private void Start()
     {
         inputManager = GetComponent<VRInputManager>();
-        otherInteractions = GetComponentsInChildren<VRInteraction>();
-        allItems = rotationContainer.GetComponentsInChildren<SpriteRenderer>();
-        circItems = new CircList<SpriteRenderer>(allItems);
+        otherInteraction = GetComponentInChildren<VRInteraction>();
+        allItems = rotationContainer.GetComponentsInChildren<InteractableSpriteBase>();
+        circItems = new CircList<InteractableSpriteBase>(allItems);
         SetUpItems();
     }
 
@@ -61,6 +61,16 @@ public class VRWandItemSelector : MonoBehaviour {
             {
                 RotateItems(-1);
             }
+
+            if (!rotating && inputManager.GetPressDown(VRInput.Vive.triggerButton))
+            {
+                Interactable interactable = circItems.current.InstantiatePrefab(otherInteraction);
+                if (interactable != null)
+                {
+                    HideSelection();
+                    otherInteraction.ForceManipulatedInteractable(interactable);
+                }
+            }
         }
     }
 
@@ -75,9 +85,9 @@ public class VRWandItemSelector : MonoBehaviour {
 
         direction = (int) Mathf.Sign(direction);
 
-        SpriteRenderer newInvisible;
-        SpriteRenderer newVisible;
-        SpriteRenderer[] all = new SpriteRenderer[currentVisibles.Length + 1];
+        InteractableSpriteBase newInvisible;
+        InteractableSpriteBase newVisible;
+        InteractableSpriteBase[] all = new InteractableSpriteBase[currentVisibles.Length + 1];
         float[] previousAngles = new float[angles.Length-1];
         float[] newAngles = new float[angles.Length - 1];
 
@@ -114,7 +124,7 @@ public class VRWandItemSelector : MonoBehaviour {
 
         for (int i = 0; i < allItems.Length; i++)
         {
-            allItems[i].color = ColorUtils.SetAlfa(allItems[i].color, 0);
+            allItems[i].spriteRender.color = ColorUtils.SetAlfa(allItems[i].spriteRender.color, 0);
         }
 
         currentVisibles = circItems.PickFromCurrent(halfItems, halfItems);
@@ -145,10 +155,7 @@ public class VRWandItemSelector : MonoBehaviour {
             return;
         }
 
-        foreach (var other in otherInteractions)
-        {
-            other.enabled = true;
-        }
+        otherInteraction.enabled = true;
 
         selectionChanging = true;
         StartCoroutine(HideShowItems(1f, 0f));
@@ -161,17 +168,14 @@ public class VRWandItemSelector : MonoBehaviour {
             return;
         }
 
-        foreach (var other in otherInteractions)
-        {
-            other.SetManipulatedInteractable(null);
-            other.enabled = false;
-        }
+        otherInteraction.SetManipulatedInteractable(null);
+        otherInteraction.enabled = false;
 
         selectionChanging = true;
         StartCoroutine(HideShowItems(0f, 1f));
     }
 
-    private void SetGroupCircle(SpriteRenderer[] items, float[] angles, float radius)
+    private void SetGroupCircle(InteractableSpriteBase[] items, float[] angles, float radius)
     {
         int count = angles.Length;
         Vector3 center = rotationContainer.position;
@@ -192,7 +196,7 @@ public class VRWandItemSelector : MonoBehaviour {
         }
     }
 
-    private IEnumerator PerformItemRotation(SpriteRenderer[] allItems, SpriteRenderer newVisible, SpriteRenderer newInvisible, float[] previousAngles, float[] newAngles)
+    private IEnumerator PerformItemRotation(InteractableSpriteBase[] allItems, InteractableSpriteBase newVisible, InteractableSpriteBase newInvisible, float[] previousAngles, float[] newAngles)
     {
         float[] lerpAngles = new float[previousAngles.Length];
 
@@ -203,8 +207,8 @@ public class VRWandItemSelector : MonoBehaviour {
         {
             LerpAngleGroup(lerpAngles, previousAngles, newAngles, p);
             SetGroupCircle(allItems, lerpAngles, radius);
-            newVisible.color = ColorUtils.SetAlfa(newVisible.color, Mathf.Lerp(0f, 1f, p));
-            newInvisible.color = ColorUtils.SetAlfa(newInvisible.color, Mathf.Lerp(1f, 0f, p));
+            newVisible.spriteRender.color = ColorUtils.SetAlfa(newVisible.spriteRender.color, Mathf.Lerp(0f, 1f, p));
+            newInvisible.spriteRender.color = ColorUtils.SetAlfa(newInvisible.spriteRender.color, Mathf.Lerp(1f, 0f, p));
         };
 
         while (percent < 1)
@@ -230,7 +234,7 @@ public class VRWandItemSelector : MonoBehaviour {
         float percent = 0f;
         float speed = 1f / turnTime;
 
-        SpriteRenderer[] items = circItems.PickFromCurrent(halfItems, halfItems);
+        InteractableSpriteBase[] items = circItems.PickFromCurrent(halfItems, halfItems);
         Vector3 center = rotationContainer.position;
         
         while (percent < 1)
@@ -239,7 +243,7 @@ public class VRWandItemSelector : MonoBehaviour {
             foreach (var item in items)
             {
                 item.transform.position = center + (item.transform.position - center).normalized * Mathf.Lerp(startRadius, endRadius, percent);  
-                item.color = ColorUtils.SetAlfa(item.color, Mathf.Lerp(startPercent, endPercent, percent));
+                item.spriteRender.color = ColorUtils.SetAlfa(item.spriteRender.color, Mathf.Lerp(startPercent, endPercent, percent));
             }
 
             yield return null;

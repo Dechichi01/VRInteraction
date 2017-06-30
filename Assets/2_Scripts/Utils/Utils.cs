@@ -31,3 +31,11 @@ public static class ColorUtils
         return new Color(col.r, col.g, col.b, alfa);
     }
 }
+
+public static class LayerMaskUtils
+{
+    public static bool LayerInMask(LayerMask layer, LayerMask mask)
+    {
+        return ((1 << layer) & mask) > 0;
+    }
+}

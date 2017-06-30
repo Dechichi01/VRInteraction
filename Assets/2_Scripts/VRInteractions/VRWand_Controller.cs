@@ -62,6 +62,7 @@ public class VRWand_Controller : MonoBehaviour {
     {
         inputManager = GetComponent<VRInputManager>();
         SetVRInteraction(transform.GetActiveComponentInChildren<VRInteraction>());
+        isLeftHand = transform.name.ToLower().Contains("left");
     }
 
     void Update ()

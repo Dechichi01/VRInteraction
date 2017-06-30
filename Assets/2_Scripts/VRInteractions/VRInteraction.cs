@@ -90,7 +90,7 @@ public abstract class VRInteraction : MonoBehaviour {
         for (int i = 0; i < 32; i++)
         {
             Physics.IgnoreLayerCollision(objectLayer, i, true);
-            if (((1 << i) & interactMask) > 0)
+            if (LayerMaskUtils.LayerInMask(i, interactMask))
             {
                 Physics.IgnoreLayerCollision(objectLayer, i, false);
             }
@@ -237,6 +237,12 @@ public abstract class VRInteraction : MonoBehaviour {
         {
             ReleaseManipulatedInteractable(currManipulatedInteractable);
         }
+    }
+
+    public void ForceManipulatedInteractable(Interactable interactable)
+    {
+        interactable.transform.root.position = transform.position;
+        SetManipulatedInteractable(interactable);
     }
 
     private bool ManipulateInteractable(Interactable interactable)

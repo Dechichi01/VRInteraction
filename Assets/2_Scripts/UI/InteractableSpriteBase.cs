@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class InteractableSprite : MonoBehaviour {
+public abstract class InteractableSpriteBase : MonoBehaviour {
 
-    [SerializeField] private Interactable prefab;
     private SpriteRenderer _spriteRenderer;
     public SpriteRenderer spriteRender
     {
@@ -19,13 +17,7 @@ public class InteractableSprite : MonoBehaviour {
         }
     }
 
-    public Interactable InstantiatePrefab(Vector3 position, Quaternion rotation)
-    {
-        return Instantiate(prefab, position, rotation);
-    }
-
-    public Interactable InstantiatePrefab()
-    {
-        return Instantiate(prefab);
-    }
+    public abstract Interactable InstantiatePrefab(Vector3 position, Quaternion rotation);
+    public abstract Interactable InstantiatePrefab();
+    public abstract Interactable InstantiatePrefab(VRInteraction caller);
 }

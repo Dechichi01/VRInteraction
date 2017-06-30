@@ -7,6 +7,11 @@ public class MultInteractableManager : MonoBehaviour {
 
     [SerializeField] private Interactable[] managedInteractables;
 
+    public Interactable[] GetManagedInteractables()
+    {
+        return managedInteractables;
+    }
+
     private void OnEnable()
     {
         foreach (var interactable in managedInteractables)
@@ -42,6 +47,13 @@ public class MultInteractableManager : MonoBehaviour {
         {
             Array.ForEach(managedInteractables, i => i.enabled = true);
         }
+    }
+
+    public Interactable GetAppropriateInteractable(VRInteraction interaction)
+    {
+        LayerMask interactLayer = interaction.interactMask;
+
+        return Array.Find(managedInteractables, i => LayerMaskUtils.LayerInMask(i.gameObject.layer, interactLayer));
     }
 }
 
