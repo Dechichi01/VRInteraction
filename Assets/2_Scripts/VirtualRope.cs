@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(BezierCurve))]
 public class VirtualRope : MonoBehaviour {
 
+    private Transform thisT;
     [SerializeField] protected Transform start;
     [SerializeField] protected Transform end;
     [SerializeField] private float ropeMass = 1f;
@@ -20,13 +21,24 @@ public class VirtualRope : MonoBehaviour {
 
     protected virtual void Start()
     {
+        thisT = transform;
         curve = GetComponent<BezierCurve>();
         lineRnd = GetComponent<LineRenderer>();
     }
-    private void Update()
+
+    protected virtual void Update()
     {
-        Vector3 centroid = (end.localPosition - start.localPosition) / 2 + Vector3.down * .01f * ropeMass;
-        curve.SetPoints(start.localPosition, centroid, end.localPosition);
+        Vector3 startLocal = thisT.InverseTransformPoint(start.position);
+        Vector3 endLocal = thisT.InverseTransformPoint(end.position);
+
+        Vector3 centroid = (endLocal - startLocal) / 2 + GetCentroidDisplacement();
+        Vector3 centroidToStart = startLocal - centroid;
+        if (Vector3.Dot(centroidToStart, start.forward) < 0)
+        {
+            centroid = startLocal - Vector3.Reflect(centroidToStart, start.forward);
+        }
+
+        curve.SetPoints(startLocal, centroid, endLocal);
 
         int sectionsNum = GetSectionsNumber();
 
@@ -46,6 +58,11 @@ public class VirtualRope : MonoBehaviour {
     private int GetSectionsNumber()
     {
         return (int)Mathf.Max(minSections, Vector3.Distance(start.transform.position, end.transform.position) * sectionsPerMeter);
+    }
+
+    private Vector3 GetCentroidDisplacement()
+    {
+        return 0.1f*ropeMass*(start.position - end.position).sqrMagnitude*((start.forward + end.forward) / 2).normalized;
     }
 }
 

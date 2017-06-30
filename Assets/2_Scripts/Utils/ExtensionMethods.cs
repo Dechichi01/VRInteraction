@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
+using System.Xml.Serialization;
 
 public static class MonoBehaviorExtensions
 {
@@ -87,10 +89,20 @@ public static class CanvasExtensions
     }
 }
 
-public static class ColorExtensions
+public static class StringSerializer
 {
-    public static Color SetAlfa(this Color col, float alfa)
+    public static T StringDeserialize<T>(this string toDeserialize)
     {
-        return new Color(col.r, col.g, col.b, alfa);
+        XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+        StringReader textReader = new StringReader(toDeserialize);
+        return (T)xmlSerializer.Deserialize(textReader);
+    }
+
+    public static string StringSerialize<T>(this T toSerialize)
+    {
+        XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+        StringWriter textWriter = new StringWriter();
+        xmlSerializer.Serialize(textWriter, toSerialize);
+        return textWriter.ToString();
     }
 }

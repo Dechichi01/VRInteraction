@@ -5,12 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class EletricConnection : MonoBehaviour {
 
-    [SerializeField] private bool _isInput = false;
+    [SerializeField] private ConnectionType type;
     public bool isAvailable { get; private set; }
     public float voltage = 0f;
     public float current = 0f;
 
-    public bool isInput { get { return _isInput; } }
+    public bool isInput { get { return type == ConnectionType.Input; } }
+    public bool isOutput { get { return type == ConnectionType.Output; } }
 
     private void Start()
     {
@@ -27,4 +28,19 @@ public class EletricConnection : MonoBehaviour {
 
         isAvailable = head == null;
     }
+
+    public void ReceivePower(float voltage, float current)
+    {
+        if (isOutput)
+        {
+            Debug.Log("Error: Transfering power to an output source");
+        }
+        else
+        {
+            this.voltage = voltage;
+            this.current = current;
+        }
+    }
+
+    public enum ConnectionType { Input = -1, Output = 1}
 }

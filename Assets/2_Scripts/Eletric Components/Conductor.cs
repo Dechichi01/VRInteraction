@@ -7,8 +7,8 @@ public class Conductor : VirtualRope {
     private ConductorHead startHead;
     private ConductorHead endHead;
 
-    private float voltage;
-    private float current;
+    private EletricConnection sourceConnection;
+    private EletricConnection receiverConnection;
 
     protected override void Start()
     {
@@ -16,50 +16,65 @@ public class Conductor : VirtualRope {
         startHead = start.GetComponent<ConductorHead>();
         endHead = end.GetComponent<ConductorHead>();
 
-        startHead.positivePolarity = true;
-        endHead.positivePolarity = false;
         startHead.parent = endHead.parent = this;
 
-        startHead.OnConnectedAddListener(OnPlusConnected);
-        startHead.OnDisconnectedAddListener(OnPlusDisconnected);
-        endHead.OnConnectedAddListener(OnMinusConnected);
-        endHead.OnDisconnectedAddListener(OnMinusDisconnected);
+        startHead.OnConnectedAddListener(OnHeadConnect);
+        startHead.OnDisconnectedAddListener(OnHeadDisconnect);
+        endHead.OnConnectedAddListener(OnHeadConnect);
+        endHead.OnDisconnectedAddListener(OnHeadDisconnect);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (receiverConnection != null)
+        {
+            float voltage = 0f;
+            float current = 0f;
+            if (sourceConnection != null)
+            {
+                voltage = sourceConnection.voltage;
+                current = sourceConnection.current;
+            }
+
+            receiverConnection.ReceivePower(voltage, current);
+        }
     }
 
     private void OnDestroy()
     {
-        startHead.OnConnectedRemoveListener(OnPlusConnected);
-        startHead.OnDisconnectedRemoveListener(OnPlusDisconnected);
-        endHead.OnConnectedRemoveListener(OnMinusConnected);
-        endHead.OnDisconnectedRemoveListener(OnMinusDisconnected);
+        startHead.OnConnectedRemoveListener(OnHeadConnect);
+        startHead.OnDisconnectedRemoveListener(OnHeadDisconnect);
+        endHead.OnConnectedRemoveListener(OnHeadConnect);
+        endHead.OnDisconnectedRemoveListener(OnHeadDisconnect);
     }
 
-    private void OnPlusConnected(EletricConnection elConnection)
+    private void OnHeadConnect(EletricConnection elConnection)
     {
-        voltage = elConnection.voltage;
-        current = elConnection.current;
-    }
-
-    private void OnPlusDisconnected(EletricConnection elConnection)
-    {
-        voltage = current = 0f;
-    }
-
-    private void OnMinusConnected(EletricConnection elConnection)
-    {
-        if (elConnection.isInput)
+        if (elConnection.isOutput)
         {
-            elConnection.voltage = voltage;
-            elConnection.current = current;
+            sourceConnection = elConnection;
         }
         else
         {
-            Debug.Log("Connecdting on output, butn equipement");
+            receiverConnection = elConnection;
         }
     }
 
-    private void OnMinusDisconnected(EletricConnection elConnection)
+    private void OnHeadDisconnect(EletricConnection elConnection)
     {
-        elConnection.voltage = elConnection.current = 0f;
+        if (elConnection.isOutput)
+        {
+            if (elConnection == sourceConnection)
+            {
+                sourceConnection = null;
+            }
+        }
+        else if (elConnection == receiverConnection)
+        {
+            receiverConnection.ReceivePower(0, 0);
+            receiverConnection = null;
+        }
     }
 }

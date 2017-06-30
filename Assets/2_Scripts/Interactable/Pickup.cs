@@ -12,10 +12,10 @@ public abstract class Pickup : Interactable
     [SerializeField] protected AnimatorOverrideController animOverride;
     #endregion
 
-    [SerializeField] [HideInInspector] protected Vector3 rightHeldPosition;
-    [SerializeField] [HideInInspector] protected Vector3 leftHeldPosition;
-    [SerializeField] [HideInInspector] protected Vector3 rightHeldRotation;
-    [SerializeField] [HideInInspector] protected Vector3 leftHeldRotation;
+    [SerializeField] [ReadOnly] protected Vector3 rightHeldPosition;
+    [SerializeField] [ReadOnly] protected Vector3 leftHeldPosition;
+    [SerializeField] [ReadOnly] protected Vector3 rightHeldRotation;
+    [SerializeField] [ReadOnly] protected Vector3 leftHeldRotation;
 
     public bool isBeingHeld { get { return holder != null; } }
 
@@ -106,7 +106,7 @@ public abstract class Pickup : Interactable
         }
     }
 
-    public void UpdateOffSetsFromCurrentPos()
+    public void UpdateHoldParamsFromCurrentPos()
     {
         if (isBeingHeld)
         {
@@ -116,9 +116,8 @@ public abstract class Pickup : Interactable
                 leftHeldRotation = _pickupT.localRotation.eulerAngles;
                 if (useMirroredRotations)
                 {
-                    rightHeldPosition = new Vector3(-_pickupT.localPosition.x, _pickupT.localPosition.y, _pickupT.localPosition.z);
-                    rightHeldRotation = new Quaternion(_pickupT.localRotation.x, -_pickupT.localRotation.y,
-                        -_pickupT.localRotation.z, _pickupT.localRotation.w).eulerAngles;
+                    rightHeldPosition = MathUtils.GetMirroredPosition(leftHeldPosition);
+                    rightHeldRotation = MathUtils.GetMirroredRotation(Quaternion.Euler(leftHeldRotation)).eulerAngles;
                 }
             }
             else
@@ -127,9 +126,8 @@ public abstract class Pickup : Interactable
                 rightHeldRotation = _pickupT.localRotation.eulerAngles;
                 if (useMirroredRotations)
                 {
-                    leftHeldPosition = new Vector3(-_pickupT.localPosition.x, _pickupT.localPosition.y, _pickupT.localPosition.z);
-                    leftHeldRotation = new Quaternion(_pickupT.localRotation.x, -_pickupT.localRotation.y,
-                        -_pickupT.localRotation.z, _pickupT.localRotation.w).eulerAngles;
+                    leftHeldPosition = MathUtils.GetMirroredPosition(rightHeldPosition);
+                    leftHeldRotation = MathUtils.GetMirroredRotation(Quaternion.Euler(rightHeldRotation)).eulerAngles;
                 }
             }
         }
@@ -141,6 +139,19 @@ public abstract class Pickup : Interactable
         {
             OnManipulated(holder);
         }
+    }
+
+    public Vector3[] GetHoldParameters()
+    {
+        return new Vector3[4] { rightHeldPosition, rightHeldRotation, leftHeldPosition, leftHeldRotation };
+    }
+
+    public void SetHoldParameters(Vector3 rightPos, Vector3 rightRot, Vector3 leftPos, Vector3 leftRot)
+    {
+        rightHeldPosition = rightPos;
+        rightHeldRotation = rightRot;
+        leftHeldPosition = leftPos;
+        leftHeldRotation = leftRot;
     }
     #endregion
 

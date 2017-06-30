@@ -1,109 +1,170 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using System;
 
 public class VRWandItemSelector : MonoBehaviour {
 
     [SerializeField] private Transform rotationContainer;
     [SerializeField] private float radius = .5f;
-    [SerializeField] private float minAngle = 80f;
+    [SerializeField] [Range(0,10)] private int itemsShown = 3;
+    [SerializeField] [Range(10, 360)] private float angleDelta = 30;
+    [SerializeField] private float turnTime = .5f;
+
+    private int halfItems { get { return (itemsShown - 1) / 2; } }
     private CircList<SpriteRenderer> circItems;
-    private int choosenIndex;
+
+    private SpriteRenderer[] allItems;
+    private SpriteRenderer[] currentVisibles;
+    private float[] visibleAngles;
     private float[] angles;
-    private bool rotatingItens = false;
+
+    private bool rotating = false;
 
     private void Start()
     {
-        circItems = new CircList<SpriteRenderer>(GetComponentsInChildren<SpriteRenderer>());
+        allItems = GetComponentsInChildren<SpriteRenderer>();
+        circItems = new CircList<SpriteRenderer>(allItems);
         SetUpItems();
     }
 
     private void Update()
     {
-        if (!rotatingItens && Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            circItems.MoveForward();
-            StartCoroutine(RotateItems());
+            RotateItems(1);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            RotateItems(-1);
         }
     }
 
-    private float GetAngleIncrement()
+    private void RotateItems(int direction)
     {
-        if (angles != null && angles.Length > 1)
+        if (rotating)
         {
-            return angles[1] - angles[0];
+            return;
         }
-        return Mathf.Max(minAngle, 360f / circItems.Count);
+
+        rotating = true;
+
+        direction = (int) Mathf.Sign(direction);
+
+        SpriteRenderer newInvisible;
+        SpriteRenderer newVisible;
+        SpriteRenderer[] all = new SpriteRenderer[currentVisibles.Length + 1];
+        float[] previousAngles = new float[angles.Length-1];
+        float[] newAngles = new float[angles.Length - 1];
+
+        if (direction > 0)
+        {
+            newInvisible = all[0] = currentVisibles[0];
+            circItems.MoveForward();
+            currentVisibles = circItems.PickFromCurrent(halfItems, halfItems);
+            newVisible = currentVisibles[currentVisibles.Length - 1];
+
+            Array.Copy(currentVisibles, 0, all, 1, currentVisibles.Length);
+            Array.Copy(angles, 1, previousAngles, 0, previousAngles.Length);
+            Array.Copy(angles, 0, newAngles, 0, newAngles.Length);
+        }
+        else
+        {
+            newInvisible = all[all.Length - 1] = currentVisibles[currentVisibles.Length - 1];
+            circItems.MoveBackwards();
+            currentVisibles = circItems.PickFromCurrent(halfItems, halfItems);
+            newVisible = currentVisibles[0];
+
+            Array.Copy(currentVisibles, 0, all, 0, currentVisibles.Length);
+
+            Array.Copy(angles, 0, previousAngles, 0, previousAngles.Length);
+            Array.Copy(angles, 1, newAngles, 0, newAngles.Length);
+        }
+
+        StartCoroutine(PerformItemRotation(all, newVisible, newInvisible, previousAngles, newAngles));
     }
 
     private void SetUpItems()
     {
-        float increment = GetAngleIncrement();
-        int angleCount = Mathf.CeilToInt(350f / increment);
-        angles = new float[angleCount];
-        for (int i = 0; i < angleCount; i++)
+        SetUpAngles();
+
+        for (int i = 0; i < allItems.Length; i++)
         {
-            angles[i] = i * increment;
+            allItems[i].color = ColorUtils.SetAlfa(allItems[i].color, 0);
         }
 
-        SpriteRenderer[] itemList = circItems.GetArrayForward();
+        currentVisibles = circItems.PickFromCurrent(halfItems, halfItems);
 
-        Vector3 referencePos = transform.position;
-        Vector3 referenceDir = transform.forward * radius;
-        Vector3 rotationDir = transform.up;
+        for (int i = 0; i < currentVisibles.Length; i++)
+        {
+            currentVisibles[i].color = ColorUtils.SetAlfa(currentVisibles[i].color, 1);
+        }
 
-        int count = itemList.Length;
+        SetGroupCircle(currentVisibles, visibleAngles, radius);
+    }
+
+    private void SetUpAngles()
+    {
+        angles = new float[itemsShown + 2];
+
+        int aux = -halfItems -1;
+        for (int i = 0; i < angles.Length; i++)
+        {
+            angles[i] = aux * angleDelta;
+            aux++;
+        }
+
+        visibleAngles = new float[angles.Length - 2];
+        Array.Copy(angles, 1, visibleAngles, 0, visibleAngles.Length);
+    }
+
+    private void SetGroupCircle(SpriteRenderer[] items, float[] angles, float radius)
+    {
+        int count = angles.Length;
+        Vector3 center = rotationContainer.position;
         for (int i = 0; i < count; i++)
         {
-            float angle = angles[i % angleCount];
-            Vector3 dir = Quaternion.AngleAxis(angle, rotationDir) * referenceDir;
-            itemList[i].transform.position = referencePos + dir;
-            itemList[i].transform.forward = dir;
-            itemList[i].color = itemList[i].color.SetAlfa(0f);
-        }
-
-        for (int i = 0; i < angleCount; i++)
-        {
-            itemList[i].color = itemList[i].color.SetAlfa(1f);
+            float angle = angles[i];
+            Transform t = items[i].transform;
+            t.position = center + Quaternion.AngleAxis(angle, rotationContainer.up) * rotationContainer.forward * radius;
+            t.localRotation = Quaternion.Euler(0f, angle, 0f);
         }
     }
 
-    private SpriteRenderer[] GetVisibleItems(SpriteRenderer[] items)
+    private void LerpAngleGroup(float[] result, float[] start, float[] end, float percent)
     {
-        return items.Take(angles.Length).ToArray();
+        for (int i = 0; i < result.Length; i++)
+        {
+            result[i] = Mathf.LerpAngle(start[i], end[i], percent);
+        }
     }
 
-    private IEnumerator RotateItems()
+    private IEnumerator PerformItemRotation(SpriteRenderer[] allItems, SpriteRenderer newVisible, SpriteRenderer newInvisible, float[] previousAngles, float[] newAngles)
     {
-        rotatingItens = true;
-        SpriteRenderer[] items = circItems.GetArrayForward();
-        SpriteRenderer[] visibleItems = GetVisibleItems(items);
-        SpriteRenderer[] itemsToShow = Array.FindAll(visibleItems, i => i.color.a < .1f);
-        SpriteRenderer[] itemsToHide = Array.FindAll(
-            items, i => i.color.a > .9f && 
-            !Array.Exists(visibleItems, v => v == i));
+        float[] lerpAngles = new float[previousAngles.Length];
 
-        float angleIncrement = GetAngleIncrement();
-        float percent = 0f;
-        float speed = 1 / .5f;
-        Quaternion startRot = rotationContainer.rotation;
-        Quaternion endRot = Quaternion.AngleAxis(angleIncrement, rotationContainer.up) * startRot;
+        float percent = 0;
+        float speed = 1f / turnTime;
 
-        while (percent < 1f)
+        Action<float> SetItemsCircle = (p) =>
         {
-            percent += speed * Time.unscaledDeltaTime;
-            rotationContainer.rotation = Quaternion.Lerp(startRot, endRot, percent);
-            float alfa = Mathf.Lerp(0f, 1f, percent);
-            //Array.ForEach(itemsToShow, i => i.color = i.color.SetAlfa(alfa));
-            //Array.ForEach(itemsToHide, i => i.color = i.color.SetAlfa(1 - alfa));
+            LerpAngleGroup(lerpAngles, previousAngles, newAngles, p);
+            SetGroupCircle(allItems, lerpAngles, radius);
+            newVisible.color = ColorUtils.SetAlfa(newVisible.color, Mathf.Lerp(0f, 1f, p));
+            newInvisible.color = ColorUtils.SetAlfa(newInvisible.color, Mathf.Lerp(1f, 0f, p));
+        };
+
+        while (percent < 1)
+        {
+            percent += Time.deltaTime * speed;
+            SetItemsCircle(percent);
+
             yield return null;
         }
 
-        rotationContainer.rotation = endRot;
-        //Array.ForEach(itemsToShow, i => i.color = i.color.SetAlfa(1));
-        //Array.ForEach(itemsToHide, i => i.color = i.color.SetAlfa(0));
-        rotatingItens = false;
+        SetItemsCircle(1);
+
+        rotating = false;
     }
+
 }

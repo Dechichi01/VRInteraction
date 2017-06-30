@@ -71,6 +71,31 @@ public class CircList<T> : IEnumerable<T>
         return result;
     }
 
+    public T[] PickFromCurrent(int previousNumber, int nextNumber)
+    {
+        if (previousNumber + nextNumber + 1 > elements.Count)
+        {
+            previousNumber = nextNumber = (elements.Count - 1) / 2;
+        }
+
+        int startIndex = elements.IndexOf(current) - previousNumber;
+        if (startIndex < 0)
+        {
+            startIndex = elements.Count +startIndex;
+        }
+
+        int count = previousNumber + nextNumber + 1;
+        int elementsCount = elements.Count;
+        T[] result = new T[count];
+
+        for (int i = 0; i < count; i++)
+        {
+            result[i] = elements[(startIndex + i) % elementsCount];
+        }
+
+        return result;
+    }
+
     public IEnumerator<T> GetEnumerator()
     {
         return elements.GetEnumerator();

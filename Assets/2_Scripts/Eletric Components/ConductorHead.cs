@@ -8,11 +8,10 @@ using System;
 public class ConductorHead : MonoBehaviour {
 
     private bool connected = false;
-    [HideInInspector] public bool positivePolarity = false;
     [HideInInspector] public Conductor parent;
 
     private Pickup[] pickupSelfs;
-    private EletricConnection elConnection;
+    public EletricConnection elConnection { get; private set; }
 
     private Rigidbody rb;
     private Collider coll;
@@ -97,7 +96,6 @@ public class ConductorHead : MonoBehaviour {
             {
                 if (hits[i].collider.CompareTag("EletricConnection"))
                 {
-                    Debug.Log(hits[i].collider.name);
                     elConnection = hits[i].transform.GetComponent<EletricConnection>();
                     if (elConnection != null && elConnection.isAvailable)
                     {

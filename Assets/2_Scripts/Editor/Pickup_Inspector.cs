@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(Pickup), true)]
-public class PickupTouch_Inspector : Editor {
+public class Pickup_Inspector : Editor {
 
     Pickup pickUp;
 
@@ -16,6 +16,24 @@ public class PickupTouch_Inspector : Editor {
         {
             pickUp.SetPositionAndRotation();
             pickUp.UpdateSqueezeValue();
+        }
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Copy Hold Parameters"))
+        {
+            ClipBoard.value = pickUp.GetHoldParameters().StringSerialize();
+        }
+        if (GUILayout.Button("Past Hold Parameters"))
+        {
+            Vector3[] parameters = ClipBoard.value.StringDeserialize<Vector3[]>();
+            if (parameters != null && parameters.Length == 4)
+            {
+                pickUp.SetHoldParameters(parameters[0], parameters[1], parameters[2], parameters[3]);
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("Error!", "Hold parameters couldn't be pasted. Please be sure you've copied other parameters previously", "Ok");
+            }
         }
     }
 
@@ -53,7 +71,7 @@ public class PickupTouch_Inspector : Editor {
             pickUp.pickupT.localScale = localScale;
             if (Application.isPlaying)
             {
-                pickUp.UpdateOffSetsFromCurrentPos();
+                pickUp.UpdateHoldParamsFromCurrentPos();
             }
         }
     }

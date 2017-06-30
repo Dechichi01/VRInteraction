@@ -77,10 +77,8 @@ public class HandController_Ray : HandController {
     void OnTriggerExit(Collider obj)
     {
         Interactable interactable = obj.gameObject.GetActiveComponent<Interactable>();
-        Debug.Log("Trigger exit");
         if (interactable != null)
         {
-            Debug.Log("Exiting: " + interactable.transform.root.name);
             interactablesInRange.Remove(interactable);
         }
     }
