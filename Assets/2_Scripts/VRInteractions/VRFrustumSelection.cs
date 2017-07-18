@@ -142,7 +142,7 @@ public class VRFrustumSelection : VRInteraction
         {
             SetSelectedInteractable(currClosest);
         }
-
+        
         //Hide/Show selection node 
         if (currClosest != null)
         {

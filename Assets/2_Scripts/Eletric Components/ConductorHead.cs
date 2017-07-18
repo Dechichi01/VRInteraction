@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
@@ -53,6 +54,8 @@ public class ConductorHead : MonoBehaviour {
             pickupSelf.OnManipulateAddListener(OnPicked);
             pickupSelf.OnReleaseAddListener(OnReleased);
         }
+
+        OnConnectedAddListener(OnConnect);
     }
 
     private void OnDisable()
@@ -63,10 +66,14 @@ public class ConductorHead : MonoBehaviour {
             pickupSelf.OnManipulateRemoveListener(OnPicked);
             pickupSelf.OnReleaseRemoveListener(OnReleased);
         }
+
+        OnConnectedRemoveListener(OnConnect);
     }
 
     private void OnPicked(VRInteraction caller)
     {
+        coll.enabled = false;
+
         if (!connected)
         {
             return;
@@ -86,52 +93,49 @@ public class ConductorHead : MonoBehaviour {
     private void OnReleased(VRInteraction caller)
     {
         //It doesn't happen often, so not worthy assigning a layer for collision checking
-        RaycastHit[] hits = Physics.BoxCastAll(transform.position, coll.bounds.extents*1.5f, Vector3.forward, Quaternion.identity, 50);
+        RaycastHit[] hits = Physics.BoxCastAll(transform.position, coll.bounds.extents*1.5f, Vector3.forward, Quaternion.identity, 50).Where(h => h.collider.CompareTag("EletricConnection")).ToArray();
 
         if (hits.Length > 0)
         {
+            RaycastHit hit = hits.OrderBy(h => (transform.position - h.collider.transform.position).sqrMagnitude).First();
             EletricConnection elConnection;
 
-            for (int i = 0; i < hits.Length; i++)
+            elConnection = hit.collider.GetComponent<EletricConnection>();
+            if (elConnection != null && elConnection.isAvailable)
             {
-                if (hits[i].collider.CompareTag("EletricConnection"))
+                connected = true;
+                this.elConnection = elConnection;
+                elConnection.SetConnector(this);
+
+                if (OnConnected != null)
                 {
-                    elConnection = hits[i].transform.GetComponent<EletricConnection>();
-                    if (elConnection != null && elConnection.isAvailable)
-                    {
-                        connected = true;
-                        this.elConnection = elConnection;
-                        elConnection.SetConnector(this);
-
-                        StartCoroutine(Teste());
-
-                        if (OnConnected != null)
-                        {
-                            OnConnected(elConnection);
-                        }
-                        break;
-                    }
+                    OnConnected(elConnection);
                 }
             }
         }
+
+        if (!connected)
+        {
+            coll.enabled = true;
+        }
+
+    }
+
+    private void OnConnect(EletricConnection elConnection)
+    {
+        rb.isKinematic = true;
+        coll.enabled = false;
+        transform.SetParent(elConnection.transform);
+        transform.localPosition = Vector3.zero;
+        transform.forward = -elConnection.transform.forward;
     }
 
     private void OnDeselected(VRInteraction caller)
     {
         if (connected)
         {
-            StartCoroutine(Teste());
+            OnConnect(elConnection);
         }
     }
 
-    private IEnumerator Teste()
-    {
-        yield return new WaitForEndOfFrame();
-
-        rb.isKinematic = true;
-
-        transform.SetParent(elConnection.transform);
-        transform.localPosition = Vector3.zero;
-        transform.forward = -elConnection.transform.forward;
-    }
 }

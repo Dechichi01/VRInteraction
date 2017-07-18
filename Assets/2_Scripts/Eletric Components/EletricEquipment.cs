@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class EletricEquipment : MonoBehaviour {
 
-    [SerializeField] private EletricConnection[] inputConnections;
-    [SerializeField] private EletricConnection[] outputConnections;
+    [SerializeField] protected EletricConnection[] inputConnections;
+    [SerializeField] protected EletricConnection[] outputConnections;
 
-
-
+    
 }

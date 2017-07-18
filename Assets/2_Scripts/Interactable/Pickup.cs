@@ -47,6 +47,7 @@ public abstract class Pickup : Interactable
         base.Start();
         _rby = pickupT.GetComponent<Rigidbody>();
         holder = null;
+        pickupPrevParent = _pickupT.parent;
     }
 
     protected override void OnEnable()
@@ -179,7 +180,6 @@ public abstract class Pickup : Interactable
         if (hand != null)
         {
             holder = hand;
-            pickupPrevParent = _pickupT.parent;
             _pickupT.SetParent(holder.modelGrabPoint);
             hand.SetGrabAnimParams(this);
 

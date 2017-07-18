@@ -21,7 +21,7 @@ public class MultiInteractableSprite : InteractableSpriteBase {
     public override Interactable InstantiatePrefab(VRInteraction caller)
     {
         Interactable interactable = prefab.GetAppropriateInteractable(caller);
-        Interactable[] all = Instantiate(prefab).GetManagedInteractables();
+        Interactable[] all = Instantiate(prefab.transform.root).GetComponentInChildren<MultInteractableManager>().GetManagedInteractables();
 
         return Array.Find(all, i => i.GetType() == interactable.GetType());
     }

@@ -72,7 +72,7 @@ public class VRViewportSelectManager : VRFrustumSelection {
         }
 
         currInteractionType = interactionType;
-        interactablesInRange.Clear();
+        //interactablesInRange.Clear();
     }
 
     private void CashRayAndTouchInteractions()

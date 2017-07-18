@@ -1,0 +1,271 @@
+fileFormatVersion: 2
+guid: e65891b2d83513f4e995b876ccef60af
+timeCreated: 1499968350
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: block_state_show
+    100002: lever_base
+    100004: lever_block
+    100006: polySurface19
+    100008: polySurface19 1
+    100010: polySurface19 2
+    100012: ra_tower_cap
+    100014: ra_tower_cap 1
+    100016: ra_tower_cap 2
+    100018: ra_tower_crown_1
+    100020: ra_tower_crown_1 1
+    100022: ra_tower_crown_1 2
+    100024: ra_tower_crown_2
+    100026: ra_tower_crown_2 1
+    100028: ra_tower_crown_2 2
+    100030: ra_tower_crown_3
+    100032: ra_tower_crown_3 1
+    100034: ra_tower_crown_3 2
+    100036: ra_tower_crown_4
+    100038: ra_tower_crown_4 1
+    100040: ra_tower_crown_4 2
+    100042: ra_tower_crown_5
+    100044: ra_tower_crown_5 1
+    100046: ra_tower_crown_5 2
+    100048: ra_tower_fwd
+    100050: ra_tower_fwd 1
+    100052: ra_tower_fwd 2
+    100054: ra_tower_l
+    100056: ra_tower_m
+    100058: ra_tower_r
+    100060: ra_tower_sideprop
+    100062: ra_tower_sideprop 1
+    100064: ra_tower_sideprop 2
+    100066: ra_tower_sideprop_l
+    100068: ra_tower_sideprop_l 1
+    100070: ra_tower_sideprop_l 2
+    100072: ra_tower_sideprop_r
+    100074: ra_tower_sideprop_r 1
+    100076: ra_tower_sideprop_r 2
+    100078: ra_towers
+    100080: //RootNode
+    400000: block_state_show
+    400002: lever_base
+    400004: lever_block
+    400006: polySurface19
+    400008: polySurface19 1
+    400010: polySurface19 2
+    400012: ra_tower_cap
+    400014: ra_tower_cap 1
+    400016: ra_tower_cap 2
+    400018: ra_tower_crown_1
+    400020: ra_tower_crown_1 1
+    400022: ra_tower_crown_1 2
+    400024: ra_tower_crown_2
+    400026: ra_tower_crown_2 1
+    400028: ra_tower_crown_2 2
+    400030: ra_tower_crown_3
+    400032: ra_tower_crown_3 1
+    400034: ra_tower_crown_3 2
+    400036: ra_tower_crown_4
+    400038: ra_tower_crown_4 1
+    400040: ra_tower_crown_4 2
+    400042: ra_tower_crown_5
+    400044: ra_tower_crown_5 1
+    400046: ra_tower_crown_5 2
+    400048: ra_tower_fwd
+    400050: ra_tower_fwd 1
+    400052: ra_tower_fwd 2
+    400054: ra_tower_l
+    400056: ra_tower_m
+    400058: ra_tower_r
+    400060: ra_tower_sideprop
+    400062: ra_tower_sideprop 1
+    400064: ra_tower_sideprop 2
+    400066: ra_tower_sideprop_l
+    400068: ra_tower_sideprop_l 1
+    400070: ra_tower_sideprop_l 2
+    400072: ra_tower_sideprop_r
+    400074: ra_tower_sideprop_r 1
+    400076: ra_tower_sideprop_r 2
+    400078: ra_towers
+    400080: //RootNode
+    2300000: block_state_show
+    2300002: lever_base
+    2300004: lever_block
+    2300006: polySurface19
+    2300008: polySurface19 1
+    2300010: polySurface19 2
+    2300012: ra_tower_cap
+    2300014: ra_tower_cap 1
+    2300016: ra_tower_cap 2
+    2300018: ra_tower_crown_1
+    2300020: ra_tower_crown_1 1
+    2300022: ra_tower_crown_1 2
+    2300024: ra_tower_crown_2
+    2300026: ra_tower_crown_2 1
+    2300028: ra_tower_crown_2 2
+    2300030: ra_tower_crown_3
+    2300032: ra_tower_crown_3 1
+    2300034: ra_tower_crown_3 2
+    2300036: ra_tower_crown_4
+    2300038: ra_tower_crown_4 1
+    2300040: ra_tower_crown_4 2
+    2300042: ra_tower_crown_5
+    2300044: ra_tower_crown_5 1
+    2300046: ra_tower_crown_5 2
+    2300048: ra_tower_fwd
+    2300050: ra_tower_fwd 1
+    2300052: ra_tower_fwd 2
+    2300054: ra_tower_l
+    2300056: ra_tower_m
+    2300058: ra_tower_r
+    2300060: ra_tower_sideprop_l
+    2300062: ra_tower_sideprop_l 1
+    2300064: ra_tower_sideprop_l 2
+    2300066: ra_tower_sideprop_r
+    2300068: ra_tower_sideprop_r 1
+    2300070: ra_tower_sideprop_r 2
+    2300072: //RootNode
+    3300000: block_state_show
+    3300002: lever_base
+    3300004: lever_block
+    3300006: polySurface19
+    3300008: polySurface19 1
+    3300010: polySurface19 2
+    3300012: ra_tower_cap
+    3300014: ra_tower_cap 1
+    3300016: ra_tower_cap 2
+    3300018: ra_tower_crown_1
+    3300020: ra_tower_crown_1 1
+    3300022: ra_tower_crown_1 2
+    3300024: ra_tower_crown_2
+    3300026: ra_tower_crown_2 1
+    3300028: ra_tower_crown_2 2
+    3300030: ra_tower_crown_3
+    3300032: ra_tower_crown_3 1
+    3300034: ra_tower_crown_3 2
+    3300036: ra_tower_crown_4
+    3300038: ra_tower_crown_4 1
+    3300040: ra_tower_crown_4 2
+    3300042: ra_tower_crown_5
+    3300044: ra_tower_crown_5 1
+    3300046: ra_tower_crown_5 2
+    3300048: ra_tower_fwd
+    3300050: ra_tower_fwd 1
+    3300052: ra_tower_fwd 2
+    3300054: ra_tower_l
+    3300056: ra_tower_m
+    3300058: ra_tower_r
+    3300060: ra_tower_sideprop_l
+    3300062: ra_tower_sideprop_l 1
+    3300064: ra_tower_sideprop_l 2
+    3300066: ra_tower_sideprop_r
+    3300068: ra_tower_sideprop_r 1
+    3300070: ra_tower_sideprop_r 2
+    3300072: //RootNode
+    4300000: ra_base
+    4300002: ra_tower_m
+    4300004: ra_tower_cap
+    4300006: polySurface19
+    4300008: ra_tower_fwd
+    4300010: ra_tower_crown_1
+    4300012: ra_tower_crown_2
+    4300014: ra_tower_crown_3
+    4300016: ra_tower_crown_4
+    4300018: ra_tower_crown_5
+    4300020: ra_tower_sideprop_r
+    4300022: ra_tower_sideprop_l
+    4300024: ra_tower_l
+    4300026: ra_tower_cap
+    4300028: polySurface19
+    4300030: ra_tower_fwd
+    4300032: ra_tower_crown_1
+    4300034: ra_tower_crown_2
+    4300036: ra_tower_crown_3
+    4300038: ra_tower_crown_4
+    4300040: ra_tower_crown_5
+    4300042: ra_tower_sideprop_r
+    4300044: ra_tower_sideprop_l
+    4300046: ra_tower_r
+    4300048: ra_tower_cap
+    4300050: polySurface19
+    4300052: ra_tower_fwd
+    4300054: ra_tower_crown_1
+    4300056: ra_tower_crown_2
+    4300058: ra_tower_crown_3
+    4300060: ra_tower_crown_4
+    4300062: ra_tower_crown_5
+    4300064: ra_tower_sideprop_r
+    4300066: ra_tower_sideprop_l
+    4300068: lever_base
+    4300070: lever_block
+    4300072: block_state_show
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
