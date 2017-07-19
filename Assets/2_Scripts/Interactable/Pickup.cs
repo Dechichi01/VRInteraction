@@ -21,7 +21,7 @@ public abstract class Pickup : Interactable
 
     protected HandController holder = null;
     protected Rigidbody _rby;
-    private Transform pickupPrevParent = null;
+    protected Transform pickupPrevParent = null;
 
     public Transform pickupT { get { return _pickupT; } }
     public Rigidbody rby { get { return _rby; } }

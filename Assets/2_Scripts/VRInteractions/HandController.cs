@@ -8,9 +8,12 @@ public abstract class HandController : VRInteraction {
     #region Inspector Variables								
     [SerializeField] private Animator _animHand;
     [SerializeField] private AnimatorOverrideController baseRunTimeAnim;
-    public Transform modelGrabPoint;
+    [SerializeField] public Transform _modelGrabPoint;
+    [SerializeField] public Transform _handParent;
     #endregion																		
 
+    public Transform modelGrabPoint { get { return _modelGrabPoint; } }
+    public Transform handParent { get { return _handParent; } }
     protected VRWand_Controller _wand;
     public VRWand_Controller wand
     {

@@ -21,6 +21,8 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
     private Action<VRInteraction> OnManipulate;
     private Action<VRInteraction> OnRelease;
 
+    private Action OnDisabled;
+
     #region Callbacks
     public void OnSelectAddListener(Action<VRInteraction> action)
     {
@@ -61,12 +63,21 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
     {
         OnRelease -= action;
     }
+
+    public void OnDisableAddListener(Action action)
+    {
+        OnDisabled += action;
+    }
+
+    public void OnDisableRemoveListener(Action action)
+    {
+        OnDisabled -= action;
+    }
     #endregion
 
     protected virtual void Start()
     {
         _coll = GetComponent<Collider>();
-        canInteract = true;
         EnableInteractions();
         SetDefaultLayer();
     }
@@ -77,14 +88,21 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
         {
             _coll.enabled = true;
         }
+        canInteract = true;
         SetDefaultLayer();
     }
 
     protected virtual void OnDisable()
     {
+        canInteract = false;
         if (_coll != null)
         {
             _coll.enabled = false;
+        }
+
+        if (OnDisabled != null)
+        {
+            OnDisabled();
         }
     }
 
