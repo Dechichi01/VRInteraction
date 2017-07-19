@@ -10,6 +10,8 @@ public class MultimeterSelector : Pickup_Touch
     private Vector3 handPrevLocalPos;
     private Quaternion handPrevLocalRot;
 
+    public float zRotation { get { return transform.rotation.eulerAngles.z; } }
+
     protected override void OnManipulateCallback(VRInteraction caller)
     {
         Vector3 initialPos = _pickupT.position;
@@ -56,14 +58,14 @@ public class MultimeterSelector : Pickup_Touch
 
     private IEnumerator RotateWithWand(Transform wandTransform)
     {
-        Vector3 startRot = _pickupT.rotation.eulerAngles;
-        Vector3 wandReferenceRot = wandTransform.rotation.eulerAngles;
+        Vector3 startRot = _pickupT.localRotation.eulerAngles;
+        Vector3 wandReferenceRot = wandTransform.localRotation.eulerAngles;
 
         while (holder != null)
         {
-            Vector3 currRot = wandTransform.rotation.eulerAngles;
+            Vector3 currRot = wandTransform.localRotation.eulerAngles;
             float z = currRot.z - wandReferenceRot.z;
-            _pickupT.rotation = Quaternion.Euler(new Vector3(startRot.x, startRot.y, startRot.z - z));
+            _pickupT.localRotation = Quaternion.Euler(new Vector3(startRot.x, startRot.y, startRot.z - z));
             yield return null;
         }
     }

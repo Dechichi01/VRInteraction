@@ -1,11 +1,9 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Toon/Basic Outline" {
+Shader "Custom/Outline Only" {
 	Properties {
-		_Color ("Main Color", Color) = (.5,.5,.5,1)
 		_OutlineColor ("Outline Color", Color) = (0,0,0,1)
 		_Outline ("Outline width", Range (.002, 0.03)) = .005
-		_MainTex ("Base (RGB)", 2D) = "white" { }
 		_ToonShade ("ToonShader Cubemap(RGB)", CUBE) = "" { }
 	}
 	
@@ -46,7 +44,8 @@ Shader "Toon/Basic Outline" {
 
 	SubShader {
 		Tags { "RenderType"="Opaque" }
-		UsePass "Toon/Basic/BASE"
+		//UsePass "Toon/Basic/BASE"
+
 		Pass {
 			Name "OUTLINE"
 			Tags { "LightMode" = "Always" }

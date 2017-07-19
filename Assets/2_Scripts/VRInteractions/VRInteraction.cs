@@ -4,7 +4,7 @@ using System;
 
 public abstract class VRInteraction : MonoBehaviour {
 
-    protected List<Interactable> interactablesInRange = new List<Interactable>();
+    protected CallbackList<Interactable> interactablesInRange = new CallbackList<Interactable>();
 
     [SerializeField] protected Transform interactionPoint;
     public LayerMask interactMask;
@@ -58,6 +58,7 @@ public abstract class VRInteraction : MonoBehaviour {
     protected virtual void OnEnable()
     {
         SetCollisionRestrictions();
+        interactablesInRange.OnAddItemAddListener(RemoveFromListWhenDisabled);
     }
 
     protected virtual void OnDisable()
@@ -65,6 +66,8 @@ public abstract class VRInteraction : MonoBehaviour {
         SetManipulatedInteractable(null);
         SetSelectedInteractable(null);
         interactablesInRange.Clear();
+
+        interactablesInRange.OnAddItemRemoveListener(RemoveFromListWhenDisabled);
     }
 
     protected virtual void DisableSelection()
@@ -95,6 +98,11 @@ public abstract class VRInteraction : MonoBehaviour {
                 Physics.IgnoreLayerCollision(objectLayer, i, false);
             }
         }
+    }
+
+    private void RemoveFromListWhenDisabled(Interactable item)
+    {
+        item.OnDisableAddListener(i => interactablesInRange.Remove(i));
     }
 
     #region Callbacks
@@ -286,6 +294,7 @@ public abstract class VRInteraction : MonoBehaviour {
             OnRelease(interactable);
         }
 
+        DeselectInteractable(currSelectedInteractable);
         return true;
     }
     #endregion

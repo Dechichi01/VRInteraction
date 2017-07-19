@@ -22,6 +22,11 @@ public static class MathUtils
     {
         return new Quaternion(rot.x, -rot.y, -rot.z, rot.w);
     }
+
+    public static float AbsAngle(float angle)
+    {
+        return (angle % 360) + (angle < 0 ? 360 : 0);
+    }
 }
 
 public static class ColorUtils

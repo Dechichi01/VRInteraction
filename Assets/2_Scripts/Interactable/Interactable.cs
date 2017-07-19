@@ -21,7 +21,7 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
     private Action<VRInteraction> OnManipulate;
     private Action<VRInteraction> OnRelease;
 
-    private Action OnDisabled;
+    private Action<Interactable> OnDisabled;
 
     #region Callbacks
     public void OnSelectAddListener(Action<VRInteraction> action)
@@ -64,14 +64,9 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
         OnRelease -= action;
     }
 
-    public void OnDisableAddListener(Action action)
+    public void OnDisableAddListener(Action<Interactable> action)
     {
         OnDisabled += action;
-    }
-
-    public void OnDisableRemoveListener(Action action)
-    {
-        OnDisabled -= action;
     }
     #endregion
 
@@ -102,7 +97,8 @@ public abstract class Interactable : MonoBehaviour, IVRInteractionObject {
 
         if (OnDisabled != null)
         {
-            OnDisabled();
+            OnDisabled(this);
+            OnDisabled = null;
         }
     }
 
