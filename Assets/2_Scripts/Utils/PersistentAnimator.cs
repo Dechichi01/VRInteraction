@@ -35,7 +35,10 @@ public class PersistentAnimator {
 
         anim.runtimeAnimatorController = animOverride;
 
-        mono.StartCoroutine(WaitForTransition(anim, anim.GetCurrentAnimatorStateInfo(0).fullPathHash));
+        if (mono.enabled)
+        {
+            mono.StartCoroutine(WaitForTransition(anim, anim.GetCurrentAnimatorStateInfo(0).fullPathHash));
+        }
     }
 
     private IEnumerator WaitForTransition(Animator anim, int initialStateNameHash)

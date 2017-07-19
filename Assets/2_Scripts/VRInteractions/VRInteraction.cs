@@ -294,7 +294,6 @@ public abstract class VRInteraction : MonoBehaviour {
             OnRelease(interactable);
         }
 
-        DeselectInteractable(currSelectedInteractable);
         return true;
     }
     #endregion

@@ -19,8 +19,13 @@ public class ConductorHead : MonoBehaviour {
     private Rigidbody rb;
     private Collider coll;
 
+    private List<EletricConnection> nearbyConnections = new List<EletricConnection>();
+    private EletricConnection closestConnection = null;
+
     private Action<EletricConnection> OnConnected;
     private Action<EletricConnection> OnDisconnected;
+
+    private Coroutine lookForClosestCoR;
 
     #region Callback
     public void OnConnectedAddListener(Action<EletricConnection> action)
@@ -48,6 +53,10 @@ public class ConductorHead : MonoBehaviour {
         coll = GetComponent<Collider>();
     }
 
+    private void Update()
+    {
+        Debug.Log(nearbyConnections.Count);
+    }
     private void OnEnable()
     {
         foreach (var pickupSelf in pickupSelfs)
@@ -72,9 +81,48 @@ public class ConductorHead : MonoBehaviour {
         OnConnectedRemoveListener(OnConnect);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("EletricConnection"))
+        {
+            EletricConnection elconnection = other.GetComponent<EletricConnection>();
+            if (elconnection != null && elconnection != backConnection && !nearbyConnections.Contains(elconnection))
+            {
+                nearbyConnections.Add(elconnection);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("EletricConnection"))
+        {
+            EletricConnection elconnection = other.GetComponent<EletricConnection>();
+            if (elconnection != null)
+            {
+                nearbyConnections.Remove(elconnection);
+            }
+        }
+    }
+
+    private void FindClosest()
+    {
+        if (nearbyConnections.Count > 0)
+        {
+            IOrderedEnumerable<EletricConnection> connections = nearbyConnections.Where(e => e.isAvailable).OrderBy(e => (transform.position - e.transform.position).sqrMagnitude);
+            EletricConnection elConnection = connections.Count() > 0 ? connections.First() : null;
+            SetClosestConnection(elConnection);
+        }
+        else if (closestConnection != null)
+        {
+            SetClosestConnection(null);
+        }
+    }
+
     private void OnPicked(VRInteraction caller)
     {
         coll.enabled = false;
+        lookForClosestCoR = StartCoroutine(LookForClosest());
 
         if (!connected)
         {
@@ -96,28 +144,19 @@ public class ConductorHead : MonoBehaviour {
 
     private void OnReleased(VRInteraction caller)
     {
-        //It doesn't happen often, so not worthy assigning a layer for collision checking
-        RaycastHit[] hits = Physics.BoxCastAll(transform.position, coll.bounds.extents*1.5f, Vector3.forward, Quaternion.identity, 50).Where(h => h.collider.CompareTag("EletricConnection")).ToArray();
-
-        if (hits.Length > 0)
+        FindClosest();
+        
+        if (closestConnection != null)
         {
-            EletricConnection elConnection = hits
-                .OrderBy(h => (transform.position - h.collider.transform.position).sqrMagnitude)
-                .Select(h => h.collider.GetComponent<EletricConnection>())
-                .Where(e => e != backConnection).First();
+            connected = true;
+            elConnection = closestConnection;
+            elConnection.SetConnector(this);
+            SetClosestConnection(null);
+            SetBackConnection(elConnection.voltage, elConnection.current);
 
-            if (elConnection != null && elConnection.isAvailable)
+            if (OnConnected != null)
             {
-                connected = true;
-                this.elConnection = elConnection;
-                elConnection.SetConnector(this);
-
-                SetBackConnection(elConnection.voltage, elConnection.current);
-
-                if (OnConnected != null)
-                {
-                    OnConnected(elConnection);
-                }
+                OnConnected(elConnection);
             }
         }
 
@@ -126,6 +165,11 @@ public class ConductorHead : MonoBehaviour {
             coll.enabled = true;
         }
 
+        if (lookForClosestCoR != null)
+        {
+            StopCoroutine(lookForClosestCoR);
+            lookForClosestCoR = null;
+        }
     }
 
     private void SetBackConnection(float voltage, float current)
@@ -151,6 +195,32 @@ public class ConductorHead : MonoBehaviour {
         if (connected)
         {
             OnConnect(elConnection);
+        }
+    }
+
+    private void SetClosestConnection(EletricConnection elConnection)
+    {
+        if (elConnection != closestConnection)
+        {
+            if (closestConnection != null)
+            {
+                closestConnection.SetConnectIndicator(false);
+            }
+            if (elConnection != null)
+            {
+                elConnection.SetConnectIndicator(true);
+            }
+
+            closestConnection = elConnection;
+        }
+    }
+
+    private IEnumerator LookForClosest()
+    {
+        while(true)
+        {
+            FindClosest();
+            yield return null;
         }
     }
 

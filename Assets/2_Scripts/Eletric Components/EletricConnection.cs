@@ -17,6 +17,8 @@ public class EletricConnection : MonoBehaviour {
 
     private void Start()
     {
+        GetComponent<Collider>().isTrigger = true;
+        connectIndicator = GetComponentInChildren<Canvas>();
         SetConnectIndicator(false);
         gameObject.tag = "EletricConnection";
         isAvailable = true;

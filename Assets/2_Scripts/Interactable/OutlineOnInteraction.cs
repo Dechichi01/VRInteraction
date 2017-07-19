@@ -6,7 +6,6 @@ using System;
 public class OutlineOnInteraction : ShaderOutlineCtrl {
 
     [SerializeField] private Transform _interactableParent;
-    [SerializeField] private bool outlineOnSelect = true;
 
     private Interactable[] interactables;
 
@@ -18,14 +17,11 @@ public class OutlineOnInteraction : ShaderOutlineCtrl {
 
     private void OnEnable()
     {
-        if (outlineOnSelect)
+        foreach (var interactable in interactables)
         {
-            foreach (var interactable in interactables)
-            {
-                interactable.OnSelectAddListener(EnableOutline);
-                interactable.OnDeselectAddListener(DisableOutline);
-                interactable.OnManipulateAddListener(DisableOutline);
-            }
+            interactable.OnSelectAddListener(EnableOutline);
+            interactable.OnDeselectAddListener(DisableOutline);
+            interactable.OnManipulateAddListener(DisableOutline);
         }
     }
 
@@ -41,11 +37,17 @@ public class OutlineOnInteraction : ShaderOutlineCtrl {
 
     private void EnableOutline(VRInteraction caller)
     {
-        EnableOutline();
+        if (! (caller is VRViewportSelectManager))
+        {
+            EnableOutline();
+        }
     }
 
     private void DisableOutline(VRInteraction caller)
     {
-        DisableOutline();
+        if (!(caller is VRViewportSelectManager))
+        {
+            DisableOutline();
+        }
     }
 }
