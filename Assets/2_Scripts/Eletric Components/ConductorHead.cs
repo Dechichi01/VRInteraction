@@ -8,6 +8,8 @@ using System.Linq;
 [RequireComponent(typeof(Collider))]
 public class ConductorHead : MonoBehaviour {
 
+    [SerializeField] private EletricConnection backConnection;
+
     private bool connected = false;
     [HideInInspector] public Conductor parent;
 
@@ -82,6 +84,8 @@ public class ConductorHead : MonoBehaviour {
         connected = false;
         elConnection.SetConnector(null);
 
+        SetBackConnection(0, 0);
+
         if (OnDisconnected != null)
         {
             OnDisconnected(elConnection);
@@ -97,15 +101,18 @@ public class ConductorHead : MonoBehaviour {
 
         if (hits.Length > 0)
         {
-            RaycastHit hit = hits.OrderBy(h => (transform.position - h.collider.transform.position).sqrMagnitude).First();
-            EletricConnection elConnection;
+            EletricConnection elConnection = hits
+                .OrderBy(h => (transform.position - h.collider.transform.position).sqrMagnitude)
+                .Select(h => h.collider.GetComponent<EletricConnection>())
+                .Where(e => e != backConnection).First();
 
-            elConnection = hit.collider.GetComponent<EletricConnection>();
             if (elConnection != null && elConnection.isAvailable)
             {
                 connected = true;
                 this.elConnection = elConnection;
                 elConnection.SetConnector(this);
+
+                SetBackConnection(elConnection.voltage, elConnection.current);
 
                 if (OnConnected != null)
                 {
@@ -119,6 +126,15 @@ public class ConductorHead : MonoBehaviour {
             coll.enabled = true;
         }
 
+    }
+
+    private void SetBackConnection(float voltage, float current)
+    {
+        if (backConnection != null)
+        {
+            backConnection.voltage = voltage;
+            backConnection.current = current;
+        }
     }
 
     private void OnConnect(EletricConnection elConnection)
